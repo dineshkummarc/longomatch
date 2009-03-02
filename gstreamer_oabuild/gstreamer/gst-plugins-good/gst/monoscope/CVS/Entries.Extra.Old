@@ -1,9 +1,0 @@
-/.cvsignore////*///
-/Makefile.am////*///
-/README////*///
-/convolve.c////*///
-/convolve.h////*///
-/gstmonoscope.c////*///
-/gstmonoscope.h////*///
-/monoscope.c////*///
-/monoscope.h////*///

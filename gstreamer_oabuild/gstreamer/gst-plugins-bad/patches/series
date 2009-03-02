@@ -1,7 +1,0 @@
-msvcrt_deprecation_fixes
-undef_prev_default_level_in_win32_config_h_in
-wasapi_plugin
-audiochunk_plugin
-gstmms_warning_fix
-dshowdecwrapper_warning_fixes
-dshowdecwrapper_mbcs_compat

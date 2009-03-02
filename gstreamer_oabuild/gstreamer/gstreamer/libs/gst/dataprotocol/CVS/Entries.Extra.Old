@@ -1,5 +1,0 @@
-/.cvsignore////*///
-/Makefile.am////*///
-/dataprotocol.c////*///
-/dataprotocol.h////*///
-/dp-private.h////*///

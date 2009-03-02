@@ -1,5 +1,0 @@
-/.cvsignore////*///
-/Makefile.am////*///
-/gstwavparse.c////*///
-/gstwavparse.h////*///
-/wavparse.vcproj////*///

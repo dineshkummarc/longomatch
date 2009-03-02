@@ -1,8 +1,0 @@
-/.cvsignore////*///
-/gstapev2mux.cc////*///
-/gstapev2mux.h////*///
-/gstid3v2mux.cc////*///
-/gstid3v2mux.h////*///
-/gsttaglibmux.c////*///
-/gsttaglibmux.h////*///
-/Makefile.am////*///

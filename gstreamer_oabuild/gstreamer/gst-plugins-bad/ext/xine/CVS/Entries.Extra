@@ -1,7 +1,0 @@
-/Makefile.am////*///
-/gstxine.h////*///
-/xine.c////*///
-/xineaudiodec.c////*///
-/xineaudiosink.c////*///
-/xinecaps.c////*///
-/xineinput.c////*///

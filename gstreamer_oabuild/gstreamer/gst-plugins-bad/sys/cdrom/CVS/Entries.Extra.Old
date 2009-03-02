@@ -1,8 +1,0 @@
-/Makefile.am////*///
-/gstcdplayer.c////*///
-/gstcdplayer.h////*///
-/gstcdplayer_ioctl.c////*///
-/gstcdplayer_ioctl.h////*///
-/gstcdplayer_ioctl_bsd.h////*///
-/gstcdplayer_ioctl_irix.h////*///
-/gstcdplayer_ioctl_solaris.h////*///

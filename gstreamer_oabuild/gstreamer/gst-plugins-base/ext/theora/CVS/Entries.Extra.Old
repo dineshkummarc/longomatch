@@ -1,8 +1,0 @@
-/Makefile.am////*///
-/gsttheoradec.h////*///
-/gsttheoraenc.h////*///
-/gsttheoraparse.h////*///
-/theora.c////*///
-/theoradec.c////*///
-/theoraenc.c////*///
-/theoraparse.c////*///

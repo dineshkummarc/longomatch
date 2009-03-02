@@ -1,7 +1,0 @@
-/Makefile.am////*///
-/flx_color.c////*///
-/flx_color.h////*///
-/flx_fmt.h////*///
-/flxdec.vcproj////*///
-/gstflxdec.c////*///
-/gstflxdec.h////*///

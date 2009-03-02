@@ -1,9 +1,0 @@
-/.cvsignore////*///
-/Makefile.am////*///
-/gstmpegdesc.c////*///
-/gstmpegdesc.h////*///
-/mpegtspacketizer.c////*///
-/mpegtspacketizer.h////*///
-/mpegtsparse.c////*///
-/mpegtsparse.h////*///
-/mpegtsparsemarshal.list////*///

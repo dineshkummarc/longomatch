@@ -1,8 +1,0 @@
-/.cvsignore////*///
-/gio.c////*///
-/simple-launch-lines.c////*///
-/theoraenc.c////*///
-/vorbisdec.c////*///
-/vorbisenc.c////*///
-/oggmux.c////*///
-/streamheader.c////*///

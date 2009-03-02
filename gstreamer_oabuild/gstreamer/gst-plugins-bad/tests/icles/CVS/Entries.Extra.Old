@@ -1,8 +1,0 @@
-/.cvsignore////*///
-/Makefile.am////*///
-/equalizer-test.c////*///
-/metadata_editor.c////*///
-/metadata_editor.glade////*///
-/pitch-test.c////*///
-/output-selector-test.c////*///
-/test-oss4.c////*///

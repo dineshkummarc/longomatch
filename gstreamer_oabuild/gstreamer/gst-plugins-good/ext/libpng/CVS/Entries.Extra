@@ -1,7 +1,0 @@
-/Makefile.am////*///
-/gstpng.c////*///
-/gstpng.h////*///
-/gstpngdec.h////*///
-/gstpngenc.c////*///
-/gstpngenc.h////*///
-/gstpngdec.c////*///

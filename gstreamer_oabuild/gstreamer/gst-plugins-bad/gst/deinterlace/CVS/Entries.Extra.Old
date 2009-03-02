@@ -1,5 +1,0 @@
-/.cvsignore////*///
-/Makefile.am////*///
-/deinterlace.vcproj////*///
-/gstdeinterlace.c////*///
-/gstdeinterlace.h////*///

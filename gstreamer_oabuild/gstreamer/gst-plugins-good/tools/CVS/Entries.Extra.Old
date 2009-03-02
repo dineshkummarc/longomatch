@@ -1,8 +1,0 @@
-/.cvsignore////*///
-/Makefile.am////*///
-/README.filterstamp////*///
-/filterstamp.sh////*///
-/gst-launch-ext-m.m////*///
-/gst-launch-ext.1.in////*///
-/gst-visualise-m.m////*///
-/gst-visualise.1.in////*///

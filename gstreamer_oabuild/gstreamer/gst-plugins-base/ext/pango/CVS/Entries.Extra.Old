@@ -1,9 +1,0 @@
-/Makefile.am////*///
-/gstclockoverlay.c////*///
-/gstclockoverlay.h////*///
-/gsttextoverlay.c////*///
-/gsttextoverlay.h////*///
-/gsttextrender.c////*///
-/gsttextrender.h////*///
-/gsttimeoverlay.c////*///
-/gsttimeoverlay.h////*///

@@ -1,7 +1,0 @@
-/.cvsignore////*///
-/Makefile.am////*///
-/gst_arts.c////*///
-/gst_arts.h////*///
-/gst_artsio.idl////*///
-/gst_artsio_impl.cc////*///
-/gst_artsio_impl.h////*///

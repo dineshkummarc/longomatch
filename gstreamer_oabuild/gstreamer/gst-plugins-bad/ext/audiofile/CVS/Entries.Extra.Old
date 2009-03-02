@@ -1,9 +1,0 @@
-/Makefile.am////*///
-/README////*///
-/gstaf.c////*///
-/gstafparse.c////*///
-/gstafparse.h////*///
-/gstafsink.c////*///
-/gstafsink.h////*///
-/gstafsrc.c////*///
-/gstafsrc.h////*///

@@ -1,6 +1,0 @@
-/Makefile.am////*///
-/gstspeex.c////*///
-/gstspeexdec.c////*///
-/gstspeexdec.h////*///
-/gstspeexenc.c////*///
-/gstspeexenc.h////*///

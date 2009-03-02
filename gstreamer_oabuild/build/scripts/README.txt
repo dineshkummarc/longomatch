@@ -1,1 +1,0 @@
-These scripts are essentially quick and dirty hacks. Handle with care.

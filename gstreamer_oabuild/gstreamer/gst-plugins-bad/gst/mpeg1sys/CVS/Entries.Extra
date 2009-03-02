@@ -1,9 +1,0 @@
-/.cvsignore////*///
-/Makefile.am////*///
-/buffer.c////*///
-/buffer.h////*///
-/gstmpeg1systemencode.c////*///
-/gstmpeg1systemencode.h////*///
-/main.h////*///
-/mpeg1systemencode.vcproj////*///
-/systems.c////*///

@@ -1,6 +1,0 @@
-/Makefile.am////*///
-/gstbz2.c////*///
-/gstbz2dec.c////*///
-/gstbz2dec.h////*///
-/gstbz2enc.c////*///
-/gstbz2enc.h////*///

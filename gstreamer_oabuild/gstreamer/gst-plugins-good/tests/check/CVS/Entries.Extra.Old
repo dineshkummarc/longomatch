@@ -1,8 +1,0 @@
-D/elements///////
-D/generic///////
-D/pipelines///////
-/.cvsignore////*///
-/Makefile.am////*///
-/gst-plugins-good.supp////*///
-/test-cert.pem////*///
-/test-key.pem////*///

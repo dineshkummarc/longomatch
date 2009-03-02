@@ -1,9 +1,0 @@
-/Makefile.am////*///
-/crc32.h////*///
-/filters.h////*///
-/gsttta.c////*///
-/gstttadec.c////*///
-/gstttadec.h////*///
-/gstttaparse.c////*///
-/gstttaparse.h////*///
-/ttadec.h////*///

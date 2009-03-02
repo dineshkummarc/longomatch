@@ -1,8 +1,0 @@
-/Makefile.am////*///
-/filter.vcproj////*///
-/gstfilter.c////*///
-/gstfilter.h////*///
-/gstiir.c////*///
-/gstiir.h////*///
-/iir.c////*///
-/iir.h////*///

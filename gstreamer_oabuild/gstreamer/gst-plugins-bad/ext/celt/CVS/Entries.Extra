@@ -1,6 +1,0 @@
-/Makefile.am////*///
-/gstcelt.c////*///
-/gstceltdec.c////*///
-/gstceltdec.h////*///
-/gstceltenc.c////*///
-/gstceltenc.h////*///

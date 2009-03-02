@@ -1,6 +1,0 @@
-/Makefile.am////*///
-/gstbpmdetect.cc////*///
-/gstbpmdetect.hh////*///
-/gstpitch.hh////*///
-/plugin.c////*///
-/gstpitch.cc////*///

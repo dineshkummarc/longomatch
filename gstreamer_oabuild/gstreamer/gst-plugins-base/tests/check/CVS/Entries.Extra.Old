@@ -1,8 +1,0 @@
-D/elements///////
-D/generic///////
-D/gst///////
-D/libs///////
-D/pipelines///////
-/.cvsignore////*///
-/Makefile.am////*///
-/gst-plugins-base.supp////*///

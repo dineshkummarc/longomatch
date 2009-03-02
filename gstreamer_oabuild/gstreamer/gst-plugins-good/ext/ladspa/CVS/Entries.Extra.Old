@@ -1,8 +1,0 @@
-/Makefile.am////*///
-/gstladspa.c////*///
-/gstladspa.h////*///
-/gstsignalprocessor.c////*///
-/gstsignalprocessor.h////*///
-/load.c////*///
-/search.c////*///
-/utils.h////*///

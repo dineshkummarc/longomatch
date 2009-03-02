@@ -1,6 +1,0 @@
-/.cvsignore////*///
-/Makefile.am////*///
-/gstreamer-libs-uninstalled.pc.in////*///
-/gstreamer-libs.pc.in////*///
-/gstreamer-plugins-uninstalled.pc.in////*///
-/gstreamer-plugins.pc.in////*///

@@ -1,7 +1,0 @@
-/.cvsignore////*///
-/Makefile.am////*///
-/category.c////*///
-/commandline.c////*///
-/global.c////*///
-/output.c////*///
-/printf_extension.c////*///

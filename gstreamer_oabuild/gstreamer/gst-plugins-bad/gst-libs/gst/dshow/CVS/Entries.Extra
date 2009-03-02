@@ -1,9 +1,0 @@
-/Makefile.am////*///
-/gstdshow.h////*///
-/gstdshowfakesink.cpp////*///
-/gstdshowfakesink.h////*///
-/gstdshowfakesrc.cpp////*///
-/gstdshowfakesrc.h////*///
-/gstdshowinterface.cpp////*///
-/gstdshowinterface.h////*///
-/gstdshow.cpp////*///

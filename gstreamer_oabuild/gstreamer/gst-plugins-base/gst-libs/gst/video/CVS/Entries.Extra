@@ -1,8 +1,0 @@
-/Makefile.am////*///
-/gstvideofilter.c////*///
-/gstvideofilter.h////*///
-/gstvideosink.c////*///
-/gstvideosink.h////*///
-/video.h////*///
-/video.vcproj////*///
-/video.c////*///
