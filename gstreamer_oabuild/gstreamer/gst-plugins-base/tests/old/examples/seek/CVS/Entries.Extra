@@ -1,0 +1,5 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/cdparanoia.c////*///
+/cdplayer.c////*///
+/chained.c////*///

@@ -1,0 +1,5 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/dfb-example.c////*///
+/dfbvideosink.c////*///
+/dfbvideosink.h////*///

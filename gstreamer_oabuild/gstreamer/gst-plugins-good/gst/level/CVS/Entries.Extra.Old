@@ -1,0 +1,4 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/gstlevel.c////*///
+/gstlevel.h////*///

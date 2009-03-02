@@ -1,0 +1,9 @@
+D/benchmarks///////
+D/check///////
+D/examples///////
+D/misc///////
+D/old///////
+/.cvsignore////*///
+/Makefile.am////*///
+/README////*///
+D/bufspeed///////

@@ -1,0 +1,1263 @@
+Index: gst-plugins-bad/sys/wasapi/Makefile.am
+===================================================================
+--- /dev/null
++++ gst-plugins-bad/sys/wasapi/Makefile.am
+@@ -0,0 +1,5 @@
++EXTRA_DIST = \
++	gstwasapi.c \
++	gstwasapisrc.c gstwasapisrc.h \
++	gstwasapisink.c gstwasapisink.h \
++	gstwasapiutil.c gstwasapiutil.h
+Index: gst-plugins-bad/sys/wasapi/gstwasapi.c
+===================================================================
+--- /dev/null
++++ gst-plugins-bad/sys/wasapi/gstwasapi.c
+@@ -0,0 +1,45 @@
++/*
++ * Copyright (C) 2008 Ole André Vadla Ravnås <ole.andre.ravnas@tandberg.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++#include "gstwasapisrc.h"
++#include "gstwasapisink.h"
++
++#ifdef HAVE_CONFIG_H
++#  include <config.h>
++#endif
++
++static gboolean
++plugin_init (GstPlugin * plugin)
++{
++  gboolean ret;
++
++  ret = gst_element_register (plugin, "wasapisrc",
++      GST_RANK_NONE, GST_TYPE_WASAPI_SRC);
++  if (!ret)
++    return ret;
++
++  return gst_element_register (plugin, "wasapisink",
++      GST_RANK_NONE, GST_TYPE_WASAPI_SINK);
++}
++
++GST_PLUGIN_DEFINE (GST_VERSION_MAJOR,
++    GST_VERSION_MINOR,
++    "wasapi",
++    "Windows audio session API plugin",
++    plugin_init, VERSION, "LGPL", "GStreamer", "http://gstreamer.net/")
+Index: gst-plugins-bad/sys/wasapi/gstwasapisink.c
+===================================================================
+--- /dev/null
++++ gst-plugins-bad/sys/wasapi/gstwasapisink.c
+@@ -0,0 +1,303 @@
++/*
++ * Copyright (C) 2008 Ole André Vadla Ravnås <ole.andre.ravnas@tandberg.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++/**
++ * SECTION:element-wasapisink
++ *
++ * <refsect2>
++ * <title>Example launch line</title>
++ * <para>
++ * <programlisting>
++ * gst-launch-0.10 -v audiotestsrc samplesperbuffer=160 ! wasapisink
++ * </programlisting>
++ * </para>
++ * </refsect2>
++ */
++
++#include "gstwasapisink.h"
++
++enum
++{
++  PROP_0,
++};
++
++GST_DEBUG_CATEGORY_STATIC (gst_wasapi_sink_debug);
++#define GST_CAT_DEFAULT gst_wasapi_sink_debug
++
++static GstStaticPadTemplate sink_template = GST_STATIC_PAD_TEMPLATE ("sink",
++    GST_PAD_SINK,
++    GST_PAD_ALWAYS,
++    GST_STATIC_CAPS ("audio/x-raw-int, "
++        "width = (int) 16, "
++        "depth = (int) 16, "
++        "rate = (int) 8000, "
++        "channels = (int) 1, "
++        "signed = (boolean) TRUE, "
++        "endianness = (int) " G_STRINGIFY (G_BYTE_ORDER)));
++
++static void gst_wasapi_sink_dispose (GObject * object);
++static void gst_wasapi_sink_finalize (GObject * object);
++static void gst_wasapi_sink_get_property (GObject * object, guint prop_id, GValue * value, GParamSpec * pspec);
++static void gst_wasapi_sink_set_property (GObject * object, guint prop_id, const GValue * value, GParamSpec * pspec);
++
++static void gst_wasapi_sink_get_times (GstBaseSink * sink, GstBuffer * buffer, GstClockTime * start, GstClockTime * end);
++static gboolean gst_wasapi_sink_start (GstBaseSink * sink);
++static gboolean gst_wasapi_sink_stop (GstBaseSink * sink);
++static GstFlowReturn gst_wasapi_sink_render (GstBaseSink * sink, GstBuffer * buffer);
++
++GST_BOILERPLATE (GstWasapiSink, gst_wasapi_sink, GstBaseSink, GST_TYPE_BASE_SINK);
++
++static void
++gst_wasapi_sink_base_init (gpointer gclass)
++{
++  GstElementClass * element_class = GST_ELEMENT_CLASS (gclass);
++  static GstElementDetails element_details = {
++    "WasapiSrc",
++    "Sink/Audio",
++    "Stream audio to an audio capture device through WASAPI",
++    "Ole André Vadla Ravnås <ole.andre.ravnas@tandberg.com>"
++  };
++
++  gst_element_class_add_pad_template (element_class,
++    gst_static_pad_template_get (&sink_template));
++  gst_element_class_set_details (element_class, &element_details);
++}
++
++static void
++gst_wasapi_sink_class_init (GstWasapiSinkClass * klass)
++{
++  GObjectClass * gobject_class = G_OBJECT_CLASS (klass);
++  GstBaseSinkClass * gstbasesink_class = GST_BASE_SINK_CLASS (klass);
++
++  gobject_class->dispose = gst_wasapi_sink_dispose;
++  gobject_class->finalize = gst_wasapi_sink_finalize;
++  gobject_class->get_property = gst_wasapi_sink_get_property;
++  gobject_class->set_property = gst_wasapi_sink_set_property;
++
++  gstbasesink_class->get_times = gst_wasapi_sink_get_times;
++  gstbasesink_class->start = gst_wasapi_sink_start;
++  gstbasesink_class->stop = gst_wasapi_sink_stop;
++  gstbasesink_class->render = gst_wasapi_sink_render;
++
++  GST_DEBUG_CATEGORY_INIT (gst_wasapi_sink_debug, "wasapisink",
++    0, "Windows audio session API sink");
++}
++
++static void
++gst_wasapi_sink_init (GstWasapiSink * self,
++                      GstWasapiSinkClass * gclass)
++{
++  self->rate = 8000;
++  self->buffer_time = 20 * GST_MSECOND;
++  self->period_time = 20 * GST_MSECOND;
++  self->latency = GST_CLOCK_TIME_NONE;
++
++  self->event_handle = CreateEvent (NULL, FALSE, FALSE, NULL);
++
++  CoInitialize (NULL);
++}
++
++static void
++gst_wasapi_sink_dispose (GObject * object)
++{
++  GstWasapiSink * self = GST_WASAPI_SINK (object);
++
++  if (self->event_handle != NULL) {
++    CloseHandle (self->event_handle);
++    self->event_handle = NULL;
++  }
++
++  G_OBJECT_CLASS (parent_class)->dispose (object);
++}
++
++static void
++gst_wasapi_sink_finalize (GObject * object)
++{
++  GstWasapiSink * self = GST_WASAPI_SINK (object);
++
++  CoUninitialize ();
++
++  G_OBJECT_CLASS (parent_class)->finalize (object);
++}
++
++static void
++gst_wasapi_sink_get_property (GObject * object, guint prop_id,
++                              GValue * value, GParamSpec * pspec)
++{
++  GstWasapiSink * self = GST_WASAPI_SINK (object);
++
++  switch (prop_id)
++  {
++    default:
++      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
++      break;
++  }
++}
++
++static void
++gst_wasapi_sink_set_property (GObject * object, guint prop_id,
++                              const GValue * value, GParamSpec * pspec)
++{
++  GstWasapiSink * self = GST_WASAPI_SINK (object);
++
++  switch (prop_id)
++  {
++    default:
++      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
++      break;
++  }
++}
++
++static void
++gst_wasapi_sink_get_times (GstBaseSink * sink,
++                           GstBuffer * buffer,
++                           GstClockTime * start,
++                           GstClockTime * end)
++{
++  GstWasapiSink * self = GST_WASAPI_SINK (sink);
++
++  if (GST_BUFFER_TIMESTAMP_IS_VALID (buffer)) {
++    *start = GST_BUFFER_TIMESTAMP (buffer);
++
++    if (GST_BUFFER_DURATION_IS_VALID (buffer)) {
++      *end = *start + GST_BUFFER_DURATION (buffer);
++    } else {
++      *end = *start + self->buffer_time;
++    }
++
++    *start += self->latency;
++    *end += self->latency;
++  }
++}
++
++static gboolean
++gst_wasapi_sink_start (GstBaseSink * sink)
++{
++  GstWasapiSink * self = GST_WASAPI_SINK (sink);
++  gboolean res = FALSE;
++  IAudioClient * client = NULL;
++  HRESULT hr;
++  IAudioRenderClient * render_client = NULL;
++
++  if (!gst_wasapi_util_get_default_device_client (GST_ELEMENT (self),
++      FALSE, self->rate, self->buffer_time, self->period_time,
++      AUDCLNT_STREAMFLAGS_EVENTCALLBACK, &client, &self->latency))
++    goto beach;
++
++  hr = IAudioClient_SetEventHandle (client, self->event_handle);
++  if (hr != S_OK) {
++    GST_ERROR_OBJECT (self, "IAudioClient::SetEventHandle () failed");
++    goto beach;
++  }
++
++  hr = IAudioClient_GetService (client, &IID_IAudioRenderClient,
++      &render_client);
++  if (hr != S_OK) {
++    GST_ERROR_OBJECT (self, "IAudioClient::GetService "
++        "(IID_IAudioRenderClient) failed");
++    goto beach;
++  }
++
++  hr = IAudioClient_Start (client);
++  if (hr != S_OK) {
++    GST_ERROR_OBJECT (self, "IAudioClient::Start failed");
++    goto beach;
++  }
++
++  self->client = client;
++  self->render_client = render_client;
++
++  res = TRUE;
++
++beach:
++  if (!res) {
++    if (render_client != NULL)
++      IUnknown_Release (render_client);
++
++    if (client != NULL)
++      IUnknown_Release (client);
++  }
++
++  return res;
++}
++
++static gboolean
++gst_wasapi_sink_stop (GstBaseSink * sink)
++{
++  GstWasapiSink * self = GST_WASAPI_SINK (sink);
++
++  if (self->client != NULL) {
++    IAudioClient_Stop (self->client);
++  }
++
++  if (self->render_client != NULL) {
++    IUnknown_Release (self->render_client);
++    self->render_client = NULL;
++  }
++
++  if (self->client != NULL) {
++    IUnknown_Release (self->client);
++    self->client = NULL;
++  }
++
++  return TRUE;
++}
++
++static GstFlowReturn
++gst_wasapi_sink_render (GstBaseSink * sink, GstBuffer * buffer)
++{
++  GstWasapiSink * self = GST_WASAPI_SINK (sink);
++  GstFlowReturn ret = GST_FLOW_OK;
++  HRESULT hr;
++  gint16 * src = (gint16 *) GST_BUFFER_DATA (buffer);
++  gint16 * dst = NULL;
++  guint nsamples = GST_BUFFER_SIZE (buffer) / sizeof (gint16);
++  guint i;
++
++  WaitForSingleObject (self->event_handle, INFINITE);
++
++  hr = IAudioRenderClient_GetBuffer (self->render_client, nsamples,
++      (BYTE **) &dst);
++  if (hr != S_OK) {
++    GST_ELEMENT_ERROR (self, RESOURCE, WRITE, (NULL),
++        ("IAudioRenderClient::GetBuffer () failed: %s",
++        gst_wasapi_util_hresult_to_string (hr)));
++    ret = GST_FLOW_ERROR;
++    goto beach;
++  }
++
++  for (i = 0; i < nsamples; i++) {
++    dst[0] = *src;
++    dst[1] = *src;
++
++    src ++;
++    dst += 2;
++  }
++
++  hr = IAudioRenderClient_ReleaseBuffer (self->render_client, nsamples, 0);
++  if (hr != S_OK) {
++    GST_ERROR_OBJECT (self, "IAudioRenderClient::ReleaseBuffer () failed: %s",
++        gst_wasapi_util_hresult_to_string (hr));
++    ret = GST_FLOW_ERROR;
++    goto beach;
++  }
++
++beach:
++  return ret;
++}
+Index: gst-plugins-bad/sys/wasapi/gstwasapisink.h
+===================================================================
+--- /dev/null
++++ gst-plugins-bad/sys/wasapi/gstwasapisink.h
+@@ -0,0 +1,66 @@
++/*
++ * Copyright (C) 2008 Ole André Vadla Ravnås <ole.andre.ravnas@tandberg.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++#ifndef __GST_WASAPI_SINK_H__
++#define __GST_WASAPI_SINK_H__
++
++#include "gstwasapiutil.h"
++
++#include <gst/base/gstbasesink.h>
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_WASAPI_SINK \
++  (gst_wasapi_sink_get_type ())
++#define GST_WASAPI_SINK(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST ((obj), GST_TYPE_WASAPI_SINK, GstWasapiSink))
++#define GST_WASAPI_SINK_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST ((klass), GST_TYPE_WASAPI_SINK, GstWasapiSinkClass))
++#define GST_IS_WASAPI_SINK(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GST_TYPE_WASAPI_SINK))
++#define GST_IS_WASAPI_SINK_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_TYPE ((klass), GST_TYPE_WASAPI_SINK))
++
++typedef struct _GstWasapiSink      GstWasapiSink;
++typedef struct _GstWasapiSinkClass GstWasapiSinkClass;
++
++struct _GstWasapiSink
++{
++  GstBaseSink base_sink;
++
++  guint rate;
++  GstClockTime buffer_time;
++  GstClockTime period_time;
++  GstClockTime latency;
++
++  IAudioClient * client;
++  IAudioRenderClient * render_client;
++  HANDLE event_handle;
++};
++
++struct _GstWasapiSinkClass
++{
++  GstBaseSinkClass parent_class;
++};
++
++GType gst_wasapi_sink_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_WASAPI_SINK_H__ */
+Index: gst-plugins-bad/sys/wasapi/gstwasapisrc.c
+===================================================================
+--- /dev/null
++++ gst-plugins-bad/sys/wasapi/gstwasapisrc.c
+@@ -0,0 +1,479 @@
++/*
++ * Copyright (C) 2008 Ole André Vadla Ravnås <ole.andre.ravnas@tandberg.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++/**
++ * SECTION:element-wasapisrc
++ *
++ * <refsect2>
++ * <title>Example launch line</title>
++ * <para>
++ * <programlisting>
++ * gst-launch-0.10 -v wasapisrc ! fakesink
++ * </programlisting>
++ * </para>
++ * </refsect2>
++ */
++
++#include "gstwasapisrc.h"
++#include <gst/audio/gstaudioclock.h>
++
++enum
++{
++  PROP_0,
++};
++
++GST_DEBUG_CATEGORY_STATIC (gst_wasapi_src_debug);
++#define GST_CAT_DEFAULT gst_wasapi_src_debug
++
++static GstStaticPadTemplate src_template = GST_STATIC_PAD_TEMPLATE ("src",
++    GST_PAD_SRC,
++    GST_PAD_ALWAYS,
++    GST_STATIC_CAPS ("audio/x-raw-int, "
++        "width = (int) 16, "
++        "depth = (int) 16, "
++        "rate = (int) 8000, "
++        "channels = (int) 1, "
++        "signed = (boolean) TRUE, "
++        "endianness = (int) " G_STRINGIFY (G_BYTE_ORDER)));
++
++static void gst_wasapi_src_dispose (GObject * object);
++static void gst_wasapi_src_finalize (GObject * object);
++static void gst_wasapi_src_get_property (GObject * object, guint prop_id, GValue * value, GParamSpec * pspec);
++static void gst_wasapi_src_set_property (GObject * object, guint prop_id, const GValue * value, GParamSpec * pspec);
++
++static GstClock * gst_wasapi_src_provide_clock (GstElement * element);
++
++static gboolean gst_wasapi_src_start (GstBaseSrc * src);
++static gboolean gst_wasapi_src_stop (GstBaseSrc * src);
++static gboolean gst_wasapi_src_query (GstBaseSrc * src, GstQuery * query);
++
++static GstFlowReturn gst_wasapi_src_create (GstPushSrc * src, GstBuffer ** buf);
++
++static GstClockTime gst_wasapi_src_get_time (GstClock * clock, gpointer user_data);
++
++GST_BOILERPLATE (GstWasapiSrc, gst_wasapi_src, GstPushSrc, GST_TYPE_PUSH_SRC);
++
++static void
++gst_wasapi_src_base_init (gpointer gclass)
++{
++  GstElementClass * element_class = GST_ELEMENT_CLASS (gclass);
++  static GstElementDetails element_details = {
++    "WasapiSrc",
++    "Source/Audio",
++    "Stream audio from an audio capture device through WASAPI",
++    "Ole André Vadla Ravnås <ole.andre.ravnas@tandberg.com>"
++  };
++
++  gst_element_class_add_pad_template (element_class,
++    gst_static_pad_template_get (&src_template));
++  gst_element_class_set_details (element_class, &element_details);
++}
++
++static void
++gst_wasapi_src_class_init (GstWasapiSrcClass * klass)
++{
++  GObjectClass * gobject_class = G_OBJECT_CLASS (klass);
++  GstElementClass * gstelement_class = GST_ELEMENT_CLASS (klass);
++  GstBaseSrcClass * gstbasesrc_class = GST_BASE_SRC_CLASS (klass);
++  GstPushSrcClass * gstpushsrc_class = GST_PUSH_SRC_CLASS (klass);
++
++  gobject_class->dispose = gst_wasapi_src_dispose;
++  gobject_class->finalize = gst_wasapi_src_finalize;
++  gobject_class->get_property = gst_wasapi_src_get_property;
++  gobject_class->set_property = gst_wasapi_src_set_property;
++
++  gstelement_class->provide_clock = gst_wasapi_src_provide_clock;
++
++  gstbasesrc_class->start = gst_wasapi_src_start;
++  gstbasesrc_class->stop = gst_wasapi_src_stop;
++  gstbasesrc_class->query = gst_wasapi_src_query;
++
++  gstpushsrc_class->create = gst_wasapi_src_create;
++
++  GST_DEBUG_CATEGORY_INIT (gst_wasapi_src_debug, "wasapisrc",
++    0, "Windows audio session API source");
++}
++
++static void
++gst_wasapi_src_init (GstWasapiSrc * self,
++                     GstWasapiSrcClass * gclass)
++{
++  GstBaseSrc * basesrc = GST_BASE_SRC (self);
++
++  gst_base_src_set_format (basesrc, GST_FORMAT_TIME);
++  gst_base_src_set_live (basesrc, TRUE);
++
++  self->rate = 8000;
++  self->buffer_time = 20 * GST_MSECOND;
++  self->period_time = 20 * GST_MSECOND;
++  self->latency = GST_CLOCK_TIME_NONE;
++  self->samples_per_buffer = self->rate / (GST_SECOND / self->period_time);
++
++  self->start_time = GST_CLOCK_TIME_NONE;
++  self->next_time = GST_CLOCK_TIME_NONE;
++
++  self->clock = gst_audio_clock_new ("GstWasapiSrcClock",
++    gst_wasapi_src_get_time, self);
++
++  CoInitialize (NULL);
++}
++
++static void
++gst_wasapi_src_dispose (GObject * object)
++{
++  GstWasapiSrc * self = GST_WASAPI_SRC (object);
++
++  if (self->clock != NULL)
++    gst_object_unref (self->clock);
++  self->clock = NULL;
++
++  G_OBJECT_CLASS (parent_class)->dispose (object);
++}
++
++static void
++gst_wasapi_src_finalize (GObject * object)
++{
++  GstWasapiSrc * self = GST_WASAPI_SRC (object);
++
++  CoUninitialize ();
++
++  G_OBJECT_CLASS (parent_class)->finalize (object);
++}
++
++static void
++gst_wasapi_src_get_property (GObject * object, guint prop_id,
++                             GValue * value, GParamSpec * pspec)
++{
++  GstWasapiSrc * self = GST_WASAPI_SRC (object);
++
++  switch (prop_id) {
++    default:
++      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
++      break;
++  }
++}
++
++static void
++gst_wasapi_src_set_property (GObject * object, guint prop_id,
++                             const GValue * value, GParamSpec * pspec)
++{
++  GstWasapiSrc * self = GST_WASAPI_SRC (object);
++
++  switch (prop_id) {
++    default:
++      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
++      break;
++  }
++}
++
++static GstClock *
++gst_wasapi_src_provide_clock (GstElement * element)
++{
++  GstWasapiSrc * self = GST_WASAPI_SRC (element);
++  GstClock * clock;
++
++  if (self->client_clock == NULL)
++    goto wrong_state;
++
++  GST_OBJECT_LOCK (self);
++  clock = GST_CLOCK (gst_object_ref (self->clock));
++  GST_OBJECT_UNLOCK (self);
++
++  return clock;
++
++wrong_state:
++  {
++    GST_DEBUG_OBJECT (self, "IAudioClock not acquired");
++    return NULL;
++  }
++}
++
++static gboolean
++gst_wasapi_src_start (GstBaseSrc * src)
++{
++  GstWasapiSrc * self = GST_WASAPI_SRC (src);
++  gboolean res = FALSE;
++  IAudioClient * client = NULL;
++  IAudioClock * client_clock = NULL;
++  guint64 client_clock_freq = 0;
++  IAudioCaptureClient * capture_client = NULL;
++  HRESULT hr;
++
++  if (!gst_wasapi_util_get_default_device_client (GST_ELEMENT (self),
++      TRUE, self->rate, self->buffer_time, self->period_time, 0, &client,
++      &self->latency))
++    goto beach;
++
++  hr = IAudioClient_GetService (client, &IID_IAudioClock, &client_clock);
++  if (hr != S_OK) {
++    GST_ERROR_OBJECT (self, "IAudioClient::GetService (IID_IAudioClock) "
++      "failed");
++    goto beach;
++  }
++
++  hr = IAudioClock_GetFrequency (client_clock, &client_clock_freq);
++  if (hr != S_OK) {
++    GST_ERROR_OBJECT (self, "IAudioClock::GetFrequency () failed");
++    goto beach;
++  }
++
++  hr = IAudioClient_GetService (client, &IID_IAudioCaptureClient,
++      &capture_client);
++  if (hr != S_OK) {
++    GST_ERROR_OBJECT (self, "IAudioClient::GetService "
++        "(IID_IAudioCaptureClient) failed");
++    goto beach;
++  }
++
++  hr = IAudioClient_Start (client);
++  if (hr != S_OK) {
++    GST_ERROR_OBJECT (self, "IAudioClient::Start failed");
++    goto beach;
++  }
++
++  self->client = client;
++  self->client_clock = client_clock;
++  self->client_clock_freq = client_clock_freq;
++  self->capture_client = capture_client;
++
++  res = TRUE;
++
++beach:
++  if (!res) {
++    if (capture_client != NULL)
++      IUnknown_Release (capture_client);
++
++    if (client_clock != NULL)
++      IUnknown_Release (client_clock);
++
++    if (client != NULL)
++      IUnknown_Release (client);
++  }
++
++  return res;
++}
++
++static gboolean
++gst_wasapi_src_stop (GstBaseSrc * src)
++{
++  GstWasapiSrc * self = GST_WASAPI_SRC (src);
++
++  if (self->client != NULL) {
++    IAudioClient_Stop (self->client);
++  }
++
++  if (self->capture_client != NULL) {
++    IUnknown_Release (self->capture_client);
++    self->capture_client = NULL;
++  }
++
++  if (self->client_clock != NULL) {
++    IUnknown_Release (self->client_clock);
++    self->client_clock = NULL;
++  }
++
++  if (self->client != NULL) {
++    IUnknown_Release (self->client);
++    self->client = NULL;
++  }
++
++  return TRUE;
++}
++
++static gboolean
++gst_wasapi_src_query (GstBaseSrc * src, GstQuery * query)
++{
++  GstWasapiSrc * self = GST_WASAPI_SRC (src);
++  gboolean ret = FALSE;
++
++  GST_DEBUG_OBJECT (self, "query for %s",
++      gst_query_type_get_name (GST_QUERY_TYPE (query)));
++
++  switch (GST_QUERY_TYPE (query)) {
++    case GST_QUERY_LATENCY: {
++      GstClockTime min_latency, max_latency;
++
++      min_latency = self->latency + self->period_time;
++      max_latency = min_latency;
++
++      GST_DEBUG_OBJECT (self, "reporting latency of min %" GST_TIME_FORMAT
++        " max %" GST_TIME_FORMAT,
++        GST_TIME_ARGS (min_latency), GST_TIME_ARGS (max_latency));
++
++      gst_query_set_latency (query, TRUE, min_latency, max_latency);
++      ret = TRUE;
++      break;
++    }
++
++    default:
++      ret = GST_BASE_SRC_CLASS (parent_class)->query (src, query);
++      break;
++  }
++
++  return ret;
++}
++
++static GstFlowReturn
++gst_wasapi_src_create (GstPushSrc * src, GstBuffer ** buf)
++{
++  GstWasapiSrc * self = GST_WASAPI_SRC (src);
++  GstFlowReturn ret = GST_FLOW_OK;
++  GstClock * clock;
++  GstClockTime timestamp, duration = self->period_time;
++  HRESULT hr;
++  gint16 * samples = NULL;
++  guint32 nsamples_read = 0, nsamples;
++  DWORD flags = 0;
++  guint64 devpos;
++
++  GST_OBJECT_LOCK (self);
++  clock = GST_ELEMENT_CLOCK (self);
++  if (clock != NULL)
++    gst_object_ref (clock);
++  GST_OBJECT_UNLOCK (self);
++
++  if (clock != NULL && GST_CLOCK_TIME_IS_VALID (self->next_time)) {
++    GstClockID id;
++
++    id = gst_clock_new_single_shot_id (clock, self->next_time);
++    gst_clock_id_wait (id, NULL);
++    gst_clock_id_unref (id);
++  }
++
++  do {
++    hr = IAudioCaptureClient_GetBuffer (self->capture_client,
++        (BYTE **) &samples, &nsamples_read, &flags, &devpos, NULL);
++  }
++  while (hr == AUDCLNT_S_BUFFER_EMPTY);
++
++  if (hr != S_OK) {
++    GST_ERROR_OBJECT (self, "IAudioCaptureClient::GetBuffer () failed: %s",
++        gst_wasapi_util_hresult_to_string (hr));
++    ret = GST_FLOW_ERROR;
++    goto beach;
++  }
++
++  if (flags != 0) {
++    GST_WARNING_OBJECT (self, "devpos %" G_GUINT64_FORMAT ": flags=0x%08x",
++      devpos, flags);
++  }
++
++  /* FIXME: Why do we get 1024 sometimes and not a multiple of
++   *        samples_per_buffer? Shouldn't WASAPI provide a DISCONT
++   *        flag if we read too slow?
++   */
++  nsamples = nsamples_read;
++  g_assert (nsamples >= self->samples_per_buffer);
++  if (nsamples > self->samples_per_buffer) {
++    GST_WARNING_OBJECT (self,
++      "devpos %" G_GUINT64_FORMAT ": got %d samples, expected %d, clipping!",
++      devpos, nsamples, self->samples_per_buffer);
++
++    nsamples = self->samples_per_buffer;
++  }
++
++  if (clock == NULL || clock == self->clock)
++  {
++    timestamp = gst_util_uint64_scale (
++      devpos, GST_SECOND, self->client_clock_freq);
++  }
++  else
++  {
++    GstClockTime base_time;
++
++    timestamp = gst_clock_get_time (clock);
++
++    base_time = GST_ELEMENT_CAST (self)->base_time;
++    if (timestamp > base_time)
++      timestamp -= base_time;
++    else
++      timestamp = 0;
++
++    if (timestamp > duration)
++      timestamp -= duration;
++    else
++      timestamp = 0;
++  }
++
++  ret = gst_pad_alloc_buffer_and_set_caps (GST_BASE_SRC_PAD (self),
++      devpos,
++      nsamples * sizeof (gint16),
++      GST_PAD_CAPS (GST_BASE_SRC_PAD (self)),
++      buf);
++
++  if (ret == GST_FLOW_OK) {
++    guint i;
++    gint16 * dst;
++
++    GST_BUFFER_OFFSET_END (*buf) = devpos + self->samples_per_buffer;
++    GST_BUFFER_TIMESTAMP (*buf) = timestamp;
++    GST_BUFFER_DURATION (*buf) = duration;
++
++    dst = (gint16 *) GST_BUFFER_DATA (*buf);
++    for (i = 0; i < nsamples; i++) {
++      *dst = *samples;
++
++      samples += 2;
++      dst ++;
++    }
++  }
++
++  hr = IAudioCaptureClient_ReleaseBuffer (self->capture_client, nsamples_read);
++  if (hr != S_OK) {
++    GST_ERROR_OBJECT (self, "IAudioCaptureClient::ReleaseBuffer () failed: %s",
++        gst_wasapi_util_hresult_to_string (hr));
++    ret = GST_FLOW_ERROR;
++    goto beach;
++  }
++
++beach:
++  if (clock != NULL)
++    gst_object_unref (clock);
++
++  return ret;
++}
++
++static GstClockTime
++gst_wasapi_src_get_time (GstClock * clock,
++                         gpointer user_data)
++{
++  GstWasapiSrc * self = GST_WASAPI_SRC (user_data);
++  HRESULT hr;
++  guint64 devpos;
++  GstClockTime result;
++
++  if (G_UNLIKELY (self->client_clock == NULL))
++    return GST_CLOCK_TIME_NONE;
++
++  hr = IAudioClock_GetPosition (self->client_clock, &devpos, NULL);
++  if (G_UNLIKELY (hr != S_OK))
++    return GST_CLOCK_TIME_NONE;
++
++  result = gst_util_uint64_scale_int (devpos, GST_SECOND,
++    self->client_clock_freq);
++
++  /*
++  GST_DEBUG_OBJECT (self, "devpos = %" G_GUINT64_FORMAT
++    " frequency = %" G_GUINT64_FORMAT
++    " result = %" G_GUINT64_FORMAT " ms",
++    devpos, self->client_clock_freq, GST_TIME_AS_MSECONDS (result));
++  */
++
++  return result;
++}
+Index: gst-plugins-bad/sys/wasapi/gstwasapisrc.h
+===================================================================
+--- /dev/null
++++ gst-plugins-bad/sys/wasapi/gstwasapisrc.h
+@@ -0,0 +1,73 @@
++/*
++ * Copyright (C) 2008 Ole André Vadla Ravnås <ole.andre.ravnas@tandberg.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++#ifndef __GST_WASAPI_SRC_H__
++#define __GST_WASAPI_SRC_H__
++
++#include "gstwasapiutil.h"
++
++#include <gst/base/gstpushsrc.h>
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_WASAPI_SRC \
++  (gst_wasapi_src_get_type ())
++#define GST_WASAPI_SRC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST ((obj), GST_TYPE_WASAPI_SRC, GstWasapiSrc))
++#define GST_WASAPI_SRC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST ((klass), GST_TYPE_WASAPI_SRC, GstWasapiSrcClass))
++#define GST_IS_WASAPI_SRC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GST_TYPE_WASAPI_SRC))
++#define GST_IS_WASAPI_SRC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_TYPE ((klass), GST_TYPE_WASAPI_SRC))
++
++typedef struct _GstWasapiSrc      GstWasapiSrc;
++typedef struct _GstWasapiSrcClass GstWasapiSrcClass;
++
++struct _GstWasapiSrc
++{
++  GstPushSrc audio_src;
++
++  GstClock * clock;
++
++  guint rate;
++  GstClockTime buffer_time;
++  GstClockTime period_time;
++  GstClockTime latency;
++  guint samples_per_buffer;
++
++  IAudioClient * client;
++  IAudioClock * client_clock;
++  guint64 client_clock_freq;
++  IAudioCaptureClient * capture_client;
++
++  GstClockTime start_time;
++  GstClockTime next_time;
++};
++
++struct _GstWasapiSrcClass
++{
++  GstPushSrcClass parent_class;
++};
++
++GType gst_wasapi_src_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_WASAPI_SRC_H__ */
+Index: gst-plugins-bad/sys/wasapi/gstwasapiutil.c
+===================================================================
+--- /dev/null
++++ gst-plugins-bad/sys/wasapi/gstwasapiutil.c
+@@ -0,0 +1,211 @@
++/*
++ * Copyright (C) 2008 Ole André Vadla Ravnås <ole.andre.ravnas@tandberg.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++#include "gstwasapiutil.h"
++
++#include <mmdeviceapi.h>
++
++/* These seem to be missing in the Windows SDK... */
++const CLSID CLSID_MMDeviceEnumerator = { 0xbcde0395, 0xe52f, 0x467c,
++    { 0x8e, 0x3d, 0xc4, 0x57, 0x92, 0x91, 0x69, 0x2e } };
++const IID IID_IMMDeviceEnumerator = { 0xa95664d2, 0x9614, 0x4f35,
++    { 0xa7, 0x46, 0xde, 0x8d, 0xb6, 0x36, 0x17, 0xe6 } };
++const IID IID_IAudioClient = { 0x1cb9ad4c, 0xdbfa, 0x4c32,
++    { 0xb1, 0x78, 0xc2, 0xf5, 0x68, 0xa7, 0x03, 0xb2 } };
++const IID IID_IAudioClock = { 0xcd63314f, 0x3fba, 0x4a1b,
++    { 0x81, 0x2c, 0xef, 0x96, 0x35, 0x87, 0x28, 0xe7 } };
++const IID IID_IAudioCaptureClient = { 0xc8adbd64, 0xe71e, 0x48a0,
++    { 0xa4, 0xde, 0x18, 0x5c, 0x39, 0x5c, 0xd3, 0x17 } };
++const IID IID_IAudioRenderClient = { 0xf294acfc, 0x3146, 0x4483,
++    { 0xa7, 0xbf, 0xad, 0xdc, 0xa7, 0xc2, 0x60, 0xe2 } };
++
++const gchar *
++gst_wasapi_util_hresult_to_string (HRESULT hr)
++{
++  const gchar * s = "AUDCLNT_E_UNKNOWN";
++
++  switch (hr) {
++    case AUDCLNT_E_NOT_INITIALIZED: s = "AUDCLNT_E_NOT_INITIALIZED"; break;
++    case AUDCLNT_E_ALREADY_INITIALIZED: s = "AUDCLNT_E_ALREADY_INITIALIZED"; break;
++    case AUDCLNT_E_WRONG_ENDPOINT_TYPE: s = "AUDCLNT_E_WRONG_ENDPOINT_TYPE"; break;
++    case AUDCLNT_E_DEVICE_INVALIDATED: s = "AUDCLNT_E_DEVICE_INVALIDATED"; break;
++    case AUDCLNT_E_NOT_STOPPED: s = "AUDCLNT_E_NOT_STOPPED"; break;
++    case AUDCLNT_E_BUFFER_TOO_LARGE: s = "AUDCLNT_E_BUFFER_TOO_LARGE"; break;
++    case AUDCLNT_E_OUT_OF_ORDER: s = "AUDCLNT_E_OUT_OF_ORDER"; break;
++    case AUDCLNT_E_UNSUPPORTED_FORMAT: s = "AUDCLNT_E_UNSUPPORTED_FORMAT"; break;
++    case AUDCLNT_E_INVALID_SIZE: s = "AUDCLNT_E_INVALID_SIZE"; break;
++    case AUDCLNT_E_DEVICE_IN_USE: s = "AUDCLNT_E_DEVICE_IN_USE"; break;
++    case AUDCLNT_E_BUFFER_OPERATION_PENDING: s = "AUDCLNT_E_BUFFER_OPERATION_PENDING"; break;
++    case AUDCLNT_E_THREAD_NOT_REGISTERED: s = "AUDCLNT_E_THREAD_NOT_REGISTERED"; break;
++    case AUDCLNT_E_EXCLUSIVE_MODE_NOT_ALLOWED: s = "AUDCLNT_E_EXCLUSIVE_MODE_NOT_ALLOWED"; break;
++    case AUDCLNT_E_ENDPOINT_CREATE_FAILED: s = "AUDCLNT_E_ENDPOINT_CREATE_FAILED"; break;
++    case AUDCLNT_E_SERVICE_NOT_RUNNING: s = "AUDCLNT_E_SERVICE_NOT_RUNNING"; break;
++    case AUDCLNT_E_EVENTHANDLE_NOT_EXPECTED: s = "AUDCLNT_E_EVENTHANDLE_NOT_EXPECTED"; break;
++    case AUDCLNT_E_EXCLUSIVE_MODE_ONLY: s = "AUDCLNT_E_EXCLUSIVE_MODE_ONLY"; break;
++    case AUDCLNT_E_BUFDURATION_PERIOD_NOT_EQUAL: s = "AUDCLNT_E_BUFDURATION_PERIOD_NOT_EQUAL"; break;
++    case AUDCLNT_E_EVENTHANDLE_NOT_SET: s = "AUDCLNT_E_EVENTHANDLE_NOT_SET"; break;
++    case AUDCLNT_E_INCORRECT_BUFFER_SIZE: s = "AUDCLNT_E_INCORRECT_BUFFER_SIZE"; break;
++    case AUDCLNT_E_BUFFER_SIZE_ERROR: s = "AUDCLNT_E_BUFFER_SIZE_ERROR"; break;
++    case AUDCLNT_E_CPUUSAGE_EXCEEDED: s = "AUDCLNT_E_CPUUSAGE_EXCEEDED"; break;
++    case AUDCLNT_S_BUFFER_EMPTY: s = "AUDCLNT_S_BUFFER_EMPTY"; break;
++    case AUDCLNT_S_THREAD_ALREADY_REGISTERED: s = "AUDCLNT_S_THREAD_ALREADY_REGISTERED"; break;
++    case AUDCLNT_S_POSITION_STALLED: s = "AUDCLNT_S_POSITION_STALLED"; break;
++  }
++
++  return s;
++}
++
++gboolean
++gst_wasapi_util_get_default_device_client (GstElement * element,
++                                           gboolean capture,
++                                           guint rate,
++                                           GstClockTime buffer_time,
++                                           GstClockTime period_time,
++                                           DWORD flags,
++                                           IAudioClient ** ret_client,
++                                           GstClockTime * ret_latency)
++{
++  gboolean res = FALSE;
++  HRESULT hr;
++  IMMDeviceEnumerator * enumerator = NULL;
++  IMMDevice * device = NULL;
++  IAudioClient * client = NULL;
++  REFERENCE_TIME latency_rt, def_period, min_period;
++  WAVEFORMATEXTENSIBLE format;
++
++  hr = CoCreateInstance (&CLSID_MMDeviceEnumerator, NULL, CLSCTX_ALL,
++      &IID_IMMDeviceEnumerator, &enumerator);
++  if (hr != S_OK) {
++    GST_ERROR_OBJECT (element, "CoCreateInstance (MMDeviceEnumerator) failed");
++    goto beach;
++  }
++
++  hr = IMMDeviceEnumerator_GetDefaultAudioEndpoint (enumerator,
++      (capture) ? eCapture : eRender,
++      eCommunications, &device);
++  if (hr != S_OK) {
++    GST_ERROR_OBJECT (element, "IMMDeviceEnumerator::GetDefaultAudioEndpoint () failed");
++    goto beach;
++  }
++
++  hr = IMMDevice_Activate (device, &IID_IAudioClient, CLSCTX_ALL, NULL,
++      &client);
++  if (hr != S_OK) {
++    GST_ERROR_OBJECT (element, "IMMDevice::Activate (IID_IAudioClient) failed");
++    goto beach;
++  }
++
++  hr = IAudioClient_GetDevicePeriod (client, &def_period, &min_period);
++  if (hr != S_OK) {
++    GST_ERROR_OBJECT (element, "IAudioClient::GetDevicePeriod () failed");
++    goto beach;
++  }
++
++  ZeroMemory (&format, sizeof (format));
++  format.Format.cbSize = sizeof (format) - sizeof (format.Format);
++  format.Format.wFormatTag = WAVE_FORMAT_EXTENSIBLE;
++  format.Format.nChannels = 2;
++  format.Format.nSamplesPerSec = rate;
++  format.Format.wBitsPerSample = 16;
++  format.Format.nBlockAlign = format.Format.nChannels
++      * (format.Format.wBitsPerSample / 8);
++  format.Format.nAvgBytesPerSec = format.Format.nSamplesPerSec
++      * format.Format.nBlockAlign;
++  format.Samples.wValidBitsPerSample = 16;
++  format.dwChannelMask = SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT;
++  format.SubFormat = KSDATAFORMAT_SUBTYPE_PCM;
++
++  hr = IAudioClient_Initialize (client,
++      AUDCLNT_SHAREMODE_EXCLUSIVE, /* or AUDCLNT_SHAREMODE_SHARED */
++      flags,
++      buffer_time / 100, /* buffer duration in 100s of ns */
++      period_time / 100, /* periodicity in 100s of ns */
++      (WAVEFORMATEX *) &format,
++      NULL);
++  if (hr != S_OK) {
++    GST_ELEMENT_ERROR (element, RESOURCE, OPEN_READ, (NULL),
++        ("IAudioClient::Initialize () failed: %s",
++        gst_wasapi_util_hresult_to_string (hr)));
++    goto beach;
++  }
++
++  hr = IAudioClient_GetStreamLatency (client, &latency_rt);
++  if (hr != S_OK) {
++    GST_ERROR_OBJECT (element, "IAudioClient::GetStreamLatency () failed");
++    goto beach;
++  }
++
++  GST_INFO_OBJECT (element, "default period: %d (%d ms), "
++      "minimum period: %d (%d ms), "
++      "latency: %d (%d ms)",
++      (guint32) def_period, (guint32) def_period / 10000,
++      (guint32) min_period, (guint32) min_period / 10000,
++      (guint32) latency_rt, (guint32) latency_rt / 10000);
++
++  IUnknown_AddRef (client);
++  *ret_client = client;
++
++  *ret_latency = latency_rt * 100;
++
++  res = TRUE;
++
++beach:
++  if (client != NULL)
++    IUnknown_Release (client);
++
++  if (device != NULL)
++    IUnknown_Release (device);
++
++  if (enumerator != NULL)
++    IUnknown_Release (enumerator);
++
++  return res;
++}
++
++#if 0
++static WAVEFORMATEXTENSIBLE *
++gst_wasapi_src_probe_device_format (GstWasapiSrc * self,
++                                    IMMDevice * device)
++{
++  HRESULT hr;
++  IPropertyStore * props = NULL;
++  PROPVARIANT format_prop;
++  WAVEFORMATEXTENSIBLE * format = NULL;
++
++  hr = IMMDevice_OpenPropertyStore (device, STGM_READ, &props);
++  if (hr != S_OK)
++    goto beach;
++
++  PropVariantInit (&format_prop);
++  hr = IPropertyStore_GetValue (props, &PKEY_AudioEngine_DeviceFormat,
++      &format_prop);
++  if (hr != S_OK)
++    goto beach;
++
++  format = (WAVEFORMATEXTENSIBLE *) format_prop.blob.pBlobData;
++
++  /* hmm: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Capture\{64adb8b7-9716-4c02-8929-96e53f5642da}\Properties */
++
++beach:
++  if (props != NULL)
++    IUnknown_Release (props);
++
++  return format;
++}
++#endif
+Index: gst-plugins-bad/sys/wasapi/gstwasapiutil.h
+===================================================================
+--- /dev/null
++++ gst-plugins-bad/sys/wasapi/gstwasapiutil.h
+@@ -0,0 +1,40 @@
++/*
++ * Copyright (C) 2008 Ole André Vadla Ravnås <ole.andre.ravnas@tandberg.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++#ifndef __GST_WASAPI_UTIL_H__
++#define __GST_WASAPI_UTIL_H__
++
++#include <gst/gst.h>
++
++#include <audioclient.h>
++
++const gchar *
++gst_wasapi_util_hresult_to_string (HRESULT hr);
++
++gboolean
++gst_wasapi_util_get_default_device_client (GstElement * element,
++                                           gboolean capture,
++                                           guint rate,
++                                           GstClockTime buffer_time,
++                                           GstClockTime period_time,
++                                           DWORD flags,
++                                           IAudioClient ** ret_client,
++                                           GstClockTime * ret_latency);
++
++#endif /* __GST_WASAPI_UTIL_H__ */
+\ No newline at end of file

@@ -1,0 +1,13 @@
+Linking against libmingwex.a with mingw runtime > 3.15
+
+1. Go to mingw/lib where you have libmingwex.a
+
+2. use command "lib -remove:mbrtowc.o libmingwex.a"
+
+3. use command "lib -remove:wcrtomb.o libmingwex.lib" note the ending .lib
+
+4. link with libmingwex.lib and 
+
+Compiling ffmpeg
+
+1) export LDFLAGS=-L/usr/local/lib

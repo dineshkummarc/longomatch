@@ -1,0 +1,12 @@
+/Makefile.am////*///
+/gstdccp.c////*///
+/gstdccp.h////*///
+/gstdccpclientsink.c////*///
+/gstdccpclientsink.h////*///
+/gstdccpclientsrc.c////*///
+/gstdccpclientsrc.h////*///
+/gstdccpplugin.c////*///
+/gstdccpserversink.c////*///
+/gstdccpserversink.h////*///
+/gstdccpserversrc.c////*///
+/gstdccpserversrc.h////*///

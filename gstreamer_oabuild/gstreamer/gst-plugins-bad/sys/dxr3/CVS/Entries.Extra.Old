@@ -1,0 +1,13 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/ac3_padder.c////*///
+/ac3_padder.h////*///
+/dxr3audiosink.c////*///
+/dxr3audiosink.h////*///
+/dxr3common.h////*///
+/dxr3init.c////*///
+/dxr3marshal.list////*///
+/dxr3spusink.c////*///
+/dxr3spusink.h////*///
+/dxr3videosink.c////*///
+/dxr3videosink.h////*///

@@ -1,0 +1,8 @@
+/Makefile.am////*///
+/README////*///
+/drv_gst.c////*///
+/gstmikmod.c////*///
+/gstmikmod.h////*///
+/mikmod_reader.c////*///
+/mikmod_types.c////*///
+/mikmod_types.h////*///

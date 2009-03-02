@@ -1,0 +1,17 @@
+/Makefile.am/1.3/Sat May 24 14:08:50 2008//
+/gstaggregator.c/1.6/Sat May 24 14:08:50 2008//
+/gstaggregator.h/1.3/Sat May 24 14:08:50 2008//
+/gstelements.c/1.3/Sat May 24 14:08:50 2008//
+/gstfdsink.c/1.4/Sat May 24 14:08:50 2008//
+/gstfdsink.h/1.2/Sat May 24 14:08:50 2008//
+/gstmd5sink.c/1.6/Sat May 24 14:08:50 2008//
+/gstmd5sink.h/1.3/Sat May 24 14:08:50 2008//
+/gstmultifilesrc.c/1.9/Sat May 24 14:08:50 2008//
+/gstmultifilesrc.h/1.4/Sat May 24 14:08:50 2008//
+/gstpipefilter.c/1.7/Sat May 24 14:08:50 2008//
+/gstpipefilter.h/1.4/Sat May 24 14:08:50 2008//
+/gstshaper.c/1.6/Sat May 24 14:08:50 2008//
+/gstshaper.h/1.3/Sat May 24 14:08:50 2008//
+/gststatistics.c/1.5/Sat May 24 14:08:50 2008//
+/gststatistics.h/1.2/Sat May 24 14:08:50 2008//
+D

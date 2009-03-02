@@ -1,0 +1,14 @@
+/Makefile.am////*///
+/gstwavpackcommon.c////*///
+/gstwavpackcommon.h////*///
+/gstwavpackdec.c////*///
+/gstwavpackdec.h////*///
+/gstwavpackparse.h////*///
+/gstwavpackstreamreader.c////*///
+/gstwavpackstreamreader.h////*///
+/md5.c////*///
+/md5.h////*///
+/gstwavpackparse.c////*///
+/gstwavpack.c////*///
+/gstwavpackenc.c////*///
+/gstwavpackenc.h////*///

@@ -1,0 +1,7 @@
+/Makefile.am////*///
+/gstxvid.c////*///
+/gstxvid.h////*///
+/gstxviddec.c////*///
+/gstxviddec.h////*///
+/gstxvidenc.c////*///
+/gstxvidenc.h////*///

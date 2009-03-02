@@ -1,0 +1,7 @@
+/gdkpixbufsink-test.c////*///
+/v4l2src-test.c////*///
+/videocrop-test.c////*///
+/ximagesrc-test.c////*///
+/.cvsignore////*///
+/Makefile.am////*///
+/videobox-test.c////*///

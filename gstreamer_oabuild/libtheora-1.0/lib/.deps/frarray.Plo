@@ -1,0 +1,52 @@
+frarray.lo: enc/frarray.c \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/string.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/_mingw.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/include/stddef.h \
+  enc/codec_internal.h ../config.h enc/dsp.h ../include/theora/theora.h \
+  C:/msys/1.0/include/ogg/ogg.h C:/msys/1.0/include/ogg/os_types.h \
+  enc/../cpu.h enc/../internal.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/stdlib.h \
+  ../include/theora/codec.h enc/../dec/ocintrin.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/math.h \
+  enc/../dec/huffman.h enc/../dec/ocintrin.h enc/../dec/quant.h \
+  enc/encoder_huffman.h enc/block_inline.h
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/string.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/_mingw.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/include/stddef.h:
+
+enc/codec_internal.h:
+
+../config.h:
+
+enc/dsp.h:
+
+../include/theora/theora.h:
+
+C:/msys/1.0/include/ogg/ogg.h:
+
+C:/msys/1.0/include/ogg/os_types.h:
+
+enc/../cpu.h:
+
+enc/../internal.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/stdlib.h:
+
+../include/theora/codec.h:
+
+enc/../dec/ocintrin.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/math.h:
+
+enc/../dec/huffman.h:
+
+enc/../dec/ocintrin.h:
+
+enc/../dec/quant.h:
+
+enc/encoder_huffman.h:
+
+enc/block_inline.h:

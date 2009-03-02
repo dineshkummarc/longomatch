@@ -1,0 +1,16 @@
+D/inspect///////
+D/tmpl///////
+/.cvsignore////*///
+/Makefile.am////*///
+/gst-plugins-base-plugins-docs.sgml////*///
+/gst-plugins-base-plugins-overrides.txt////*///
+/gst-plugins-base-plugins-sections.txt////*///
+/gst-plugins-base-plugins.args////*///
+/gst-plugins-base-plugins.hierarchy////*///
+/gst-plugins-base-plugins.interfaces////*///
+/gst-plugins-base-plugins.prerequisites////*///
+/gst-plugins-base-plugins.signals////*///
+/gst-plugins-base-plugins.types////*///
+/inspect-build.stamp////*///
+/inspect.stamp////*///
+/scanobj-build.stamp////*///

@@ -1,0 +1,5 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/gstmedian.c////*///
+/gstmedian.h////*///
+/median.vcproj////*///

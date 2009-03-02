@@ -1,0 +1,12 @@
+/Makefile.am////*///
+/gstsunaudio.c////*///
+/gstsunaudiomixer.c////*///
+/gstsunaudiomixer.h////*///
+/gstsunaudiomixerctrl.h////*///
+/gstsunaudiomixertrack.c////*///
+/gstsunaudiomixertrack.h////*///
+/gstsunaudiosink.c////*///
+/gstsunaudiosink.h////*///
+/gstsunaudiosrc.c////*///
+/gstsunaudiosrc.h////*///
+/gstsunaudiomixerctrl.c////*///

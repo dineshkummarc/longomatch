@@ -1,0 +1,6 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/gstdvdspu-render.c////*///
+/gstdvdspu.h////*///
+/gstdvdspu.c////*///
+/Notes.txt////*///

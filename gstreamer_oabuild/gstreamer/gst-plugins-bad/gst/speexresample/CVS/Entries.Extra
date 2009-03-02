@@ -1,0 +1,11 @@
+/Makefile.am////*///
+/README////*///
+/arch.h////*///
+/fixed_generic.h////*///
+/gstspeexresample.h////*///
+/resample.c////*///
+/speex_resampler.h////*///
+/speex_resampler_float.c////*///
+/speex_resampler_int.c////*///
+/speex_resampler_wrapper.h////*///
+/gstspeexresample.c////*///

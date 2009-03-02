@@ -1,0 +1,6 @@
+/Makefile.am////*///
+/cdxaparse.vcproj////*///
+/gstcdxaparse.c////*///
+/gstcdxaparse.h////*///
+/gstvcdparse.c////*///
+/gstvcdparse.h////*///

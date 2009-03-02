@@ -1,0 +1,13 @@
+/Makefile.am/1.1/Thu Aug 21 13:22:30 2008//
+/gstdccp.c/1.4/Thu Aug 28 17:16:51 2008//
+/gstdccp.h/1.1/Thu Aug 21 13:22:31 2008//
+/gstdccpclientsink.c/1.1/Thu Aug 21 13:22:31 2008//
+/gstdccpclientsink.h/1.1/Thu Aug 21 13:22:31 2008//
+/gstdccpclientsrc.c/1.2/Thu Aug 28 17:16:51 2008//
+/gstdccpclientsrc.h/1.1/Thu Aug 21 13:22:31 2008//
+/gstdccpplugin.c/1.1/Thu Aug 21 13:22:32 2008//
+/gstdccpserversink.c/1.2/Tue Aug 26 11:18:38 2008//
+/gstdccpserversink.h/1.2/Tue Aug 26 11:18:38 2008//
+/gstdccpserversrc.c/1.1/Thu Aug 21 13:22:32 2008//
+/gstdccpserversrc.h/1.1/Thu Aug 21 13:22:32 2008//
+D

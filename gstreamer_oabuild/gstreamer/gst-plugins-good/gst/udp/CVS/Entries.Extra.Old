@@ -1,0 +1,17 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/README////*///
+/gstdynudpsink.h////*///
+/gstmultiudpsink.h////*///
+/gstudp-marshal.list////*///
+/gstudp.c////*///
+/gstudp.h////*///
+/gstudpsink.c////*///
+/gstudpsink.h////*///
+/udp.vcproj////*///
+/gstudpsrc.h////*///
+/gstdynudpsink.c////*///
+/gstudpsrc.c////*///
+/gstmultiudpsink.c////*///
+/gstudpnetutils.c////*///
+/gstudpnetutils.h////*///

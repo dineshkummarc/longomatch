@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="gstreamer-@GSTREAMER_API_VERSION@"
+	InheritedPropertySheets="glib-@GLIB_API_VERSION@.vsprops;gobject-@GLIB_API_VERSION@.vsprops;gmodule-@GLIB_API_VERSION@.vsprops;gthread-@GLIB_API_VERSION@.vsprops"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="$(GSTSDK_DIR)\include\gstreamer-@GSTREAMER_API_VERSION@"
+	/>
+	<Tool
+		Name="VCLibrarianTool"
+		AdditionalLibraryDirectories="$(GSTSDK_DIR)\lib"
+		AdditionalDependencies="libgstreamer-@GSTREAMER_API_VERSION@.lib"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalLibraryDirectories="$(GSTSDK_DIR)\lib"
+		AdditionalDependencies="libgstreamer-@GSTREAMER_API_VERSION@.lib"
+	/>
+</VisualStudioPropertySheet>

@@ -1,0 +1,4 @@
+/Makefile.am////*///
+/gstwaveformplugin.c////*///
+/gstwaveformsink.c////*///
+/gstwaveformsink.h////*///

@@ -1,0 +1,6 @@
+/Makefile.am////*///
+/gstcairo.c////*///
+/gsttextoverlay.c////*///
+/gsttextoverlay.h////*///
+/gsttimeoverlay.c////*///
+/gsttimeoverlay.h////*///

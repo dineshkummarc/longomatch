@@ -1,0 +1,6 @@
+/Makefile.am////*///
+/mpegpacketiser.c////*///
+/mpegpacketiser.h////*///
+/mpegvideoparse.vcproj////*///
+/mpegvideoparse.c////*///
+/mpegvideoparse.h////*///

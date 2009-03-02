@@ -1,0 +1,7 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/formats.c////*///
+/sinesrc.c////*///
+/sinesrc.h////*///
+/srcstate.c////*///
+/state.c////*///

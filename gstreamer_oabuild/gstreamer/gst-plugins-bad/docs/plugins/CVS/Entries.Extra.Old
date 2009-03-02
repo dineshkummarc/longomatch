@@ -1,0 +1,15 @@
+D/inspect///////
+/gst-plugins-bad-plugins-overrides.txt////*///
+/gst-plugins-bad-plugins.types////*///
+/inspect-build.stamp////*///
+/inspect.stamp////*///
+/scanobj-build.stamp////*///
+/.cvsignore////*///
+/Makefile.am////*///
+/gst-plugins-bad-plugins-docs.sgml////*///
+/gst-plugins-bad-plugins-sections.txt////*///
+/gst-plugins-bad-plugins.args////*///
+/gst-plugins-bad-plugins.hierarchy////*///
+/gst-plugins-bad-plugins.interfaces////*///
+/gst-plugins-bad-plugins.prerequisites////*///
+/gst-plugins-bad-plugins.signals////*///

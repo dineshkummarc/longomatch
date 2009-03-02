@@ -1,0 +1,23 @@
+/.cvsignore/1.2/Sat May 24 14:08:24 2008//
+/Makefile.am/1.6/Tue May 27 12:31:35 2008//
+/gstrtsp.h/1.1/Sat May 24 14:08:24 2008//
+/gstrtspbase64.c/1.3/Sat May 24 14:08:24 2008//
+/gstrtspbase64.h/1.3/Sat May 24 14:08:24 2008//
+/gstrtspdefs.c/1.3/Sat May 24 14:08:24 2008//
+/gstrtspdefs.h/1.5/Sat May 24 14:08:24 2008//
+/gstrtspextension.c/1.2/Sat May 24 14:08:24 2008//
+/gstrtspextension.h/1.1/Sat May 24 14:08:24 2008//
+/gstrtspmessage.c/1.6/Sat May 24 14:08:24 2008//
+/gstrtspmessage.h/1.3/Sat May 24 14:08:24 2008//
+/gstrtsprange.c/1.3/Sat May 24 14:08:24 2008//
+/gstrtsprange.h/1.2/Sat May 24 14:08:24 2008//
+/gstrtsptransport.c/1.3/Sat May 24 14:08:24 2008//
+/gstrtsptransport.h/1.2/Tue May 27 12:31:35 2008//
+/gstrtspurl.c/1.2/Sat May 24 14:08:24 2008//
+/gstrtspurl.h/1.2/Sat May 24 14:08:24 2008//
+/md5.c/1.1/Thu May  8 14:46:27 2008//
+/md5.h/1.1/Thu May  8 14:46:27 2008//
+/rtsp-marshal.list/1.1/Sat May 24 14:08:24 2008//
+/gstrtspconnection.c/1.20/Sun Aug  3 17:36:31 2008//
+/gstrtspconnection.h/1.6/Sun Aug  3 17:36:31 2008//
+D

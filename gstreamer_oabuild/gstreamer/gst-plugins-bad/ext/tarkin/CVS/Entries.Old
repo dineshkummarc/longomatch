@@ -1,0 +1,24 @@
+/Makefile.am/1.6/Sat Aug  9 23:56:40 2003//
+/README/1.1/Sun Feb  3 16:30:31 2002//
+/TODO/1.1/Sun Feb  3 16:30:31 2002//
+/WHAT_THE_HECK_IS_THIS_CODE_DOING/1.1/Sun Feb  3 16:30:31 2002//
+/bitcoder.h/1.4/Mon Mar 15 16:32:38 2004//
+/golomb.h/1.4/Mon Mar 15 16:32:38 2004//
+/gsttarkin.c/1.14/Sat Apr  1 10:09:07 2006//
+/gsttarkindec.c/1.23/Tue Apr 25 21:56:31 2006//
+/gsttarkindec.h/1.7/Thu Jun  1 22:00:23 2006//
+/gsttarkinenc.c/1.23/Tue Apr 25 21:56:31 2006//
+/gsttarkinenc.h/1.7/Thu Jun  1 22:00:23 2006//
+/info.c/1.5/Mon Mar 15 19:31:57 2004//
+/mem.c/1.4/Mon Mar 15 19:31:57 2004//
+/mem.h/1.4/Tue Feb  8 10:37:43 2005//
+/rle.h/1.3/Mon Mar 15 16:32:38 2004//
+/tarkin.c/1.7/Thu Oct 13 15:31:20 2005//
+/tarkin.h/1.3/Mon Mar 15 16:32:38 2004//
+/wavelet.c/1.5/Wed Nov  9 01:04:04 2005//
+/wavelet.h/1.5/Wed Nov  9 01:04:04 2005//
+/wavelet_coeff.c/1.5/Mon Mar 15 19:31:57 2004//
+/wavelet_xform.c/1.4/Mon Mar 15 19:31:57 2004//
+/yuv.c/1.3/Sun Mar 14 22:34:04 2004//
+/yuv.h/1.4/Tue Feb  8 10:37:43 2005//
+D

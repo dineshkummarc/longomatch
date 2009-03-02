@@ -1,0 +1,13 @@
+/Makefile.am////*///
+/gstannodex.c////*///
+/gstannodex.h////*///
+/gstcmmldec.c////*///
+/gstcmmldec.h////*///
+/gstcmmlenc.c////*///
+/gstcmmlenc.h////*///
+/gstcmmlparser.c////*///
+/gstcmmlparser.h////*///
+/gstcmmltag.c////*///
+/gstcmmltag.h////*///
+/gstcmmlutils.c////*///
+/gstcmmlutils.h////*///

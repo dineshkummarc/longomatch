@@ -1,0 +1,5 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/bin.c////*///
+/locked.c////*///
+/parent.c////*///

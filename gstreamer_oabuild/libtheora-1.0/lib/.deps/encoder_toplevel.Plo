@@ -1,0 +1,54 @@
+encoder_toplevel.lo: enc/encoder_toplevel.c ../config.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/stdlib.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/_mingw.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/include/stddef.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/string.h \
+  enc/toplevel_lookup.h enc/codec_internal.h enc/dsp.h \
+  ../include/theora/theora.h C:/msys/1.0/include/ogg/ogg.h \
+  C:/msys/1.0/include/ogg/os_types.h enc/../cpu.h enc/../internal.h \
+  ../include/theora/codec.h enc/../dec/ocintrin.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/math.h \
+  enc/../dec/huffman.h enc/../dec/ocintrin.h enc/../dec/quant.h \
+  enc/encoder_huffman.h enc/../internal.h
+
+../config.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/stdlib.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/_mingw.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/include/stddef.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/string.h:
+
+enc/toplevel_lookup.h:
+
+enc/codec_internal.h:
+
+enc/dsp.h:
+
+../include/theora/theora.h:
+
+C:/msys/1.0/include/ogg/ogg.h:
+
+C:/msys/1.0/include/ogg/os_types.h:
+
+enc/../cpu.h:
+
+enc/../internal.h:
+
+../include/theora/codec.h:
+
+enc/../dec/ocintrin.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/math.h:
+
+enc/../dec/huffman.h:
+
+enc/../dec/ocintrin.h:
+
+enc/../dec/quant.h:
+
+enc/encoder_huffman.h:
+
+enc/../internal.h:

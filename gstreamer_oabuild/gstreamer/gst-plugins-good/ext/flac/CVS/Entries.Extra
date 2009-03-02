@@ -1,0 +1,8 @@
+/Makefile.am////*///
+/gstflac.c////*///
+/gstflacdec.c////*///
+/gstflacdec.h////*///
+/gstflacenc.h////*///
+/gstflactag.c////*///
+/gstflactag.h////*///
+/gstflacenc.c////*///

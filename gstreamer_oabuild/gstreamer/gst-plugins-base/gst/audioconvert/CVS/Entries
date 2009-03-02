@@ -1,0 +1,16 @@
+/.cvsignore/1.1/Sat May 24 14:08:23 2008//
+/audioconvert.c/1.22/Tue May 27 12:31:34 2008//
+/audioconvert.vcproj/1.4/Sat May 24 14:08:23 2008//
+/channelmixtest.c/1.3/Sat May 24 14:08:23 2008//
+/gstaudioconvert.h/1.6/Tue May 27 12:31:34 2008//
+/gstaudioquantize.h/1.1/Sat May 24 14:08:23 2008//
+/gstchannelmix.h/1.7/Sat May 24 14:08:23 2008//
+/plugin.c/1.7/Sat May 24 14:08:23 2008//
+/plugin.h/1.3/Sat May 24 14:08:23 2008//
+/Makefile.am/1.17/Sun Aug  3 17:36:30 2008//
+/audioconvert.h/1.10/Sun Aug  3 17:36:30 2008//
+/gstaudioconvert.c/1.130/Sun Aug  3 17:36:30 2008//
+/gstaudioquantize.c/1.4/Sun Aug  3 17:36:30 2008//
+/gstchannelmix.c/1.21/Sun Aug  3 17:36:30 2008//
+/gstfastrandom.h/1.1/Wed Jul 23 18:34:19 2008//
+D

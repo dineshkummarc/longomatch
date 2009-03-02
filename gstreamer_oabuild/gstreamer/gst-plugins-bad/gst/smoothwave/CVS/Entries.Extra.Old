@@ -1,0 +1,6 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/README////*///
+/demo-osssrc.c////*///
+/gstsmoothwave.c////*///
+/gstsmoothwave.h////*///

@@ -1,0 +1,6 @@
+/Makefile.am////*///
+/videotestsrc.c////*///
+/videotestsrc.h////*///
+/videotestsrc.vcproj////*///
+/gstvideotestsrc.c////*///
+/gstvideotestsrc.h////*///

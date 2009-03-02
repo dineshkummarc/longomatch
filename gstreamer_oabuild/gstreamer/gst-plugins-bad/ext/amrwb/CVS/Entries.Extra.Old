@@ -1,0 +1,10 @@
+/Makefile.am////*///
+/README////*///
+/gstamrwb.c////*///
+/gstamrwbdec.h////*///
+/gstamrwbenc.h////*///
+/gstamrwbparse.h////*///
+/gstamrwbdec.c////*///
+/gstamrwbenc.c////*///
+/gstamrwbparse.c////*///
+D/amrwb-code///////

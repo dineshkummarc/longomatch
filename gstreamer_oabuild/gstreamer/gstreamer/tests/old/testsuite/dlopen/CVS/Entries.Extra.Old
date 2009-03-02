@@ -1,0 +1,4 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/dlopen_gst.c////*///
+/loadgst.c////*///

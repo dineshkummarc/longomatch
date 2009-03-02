@@ -1,0 +1,10 @@
+/gstosxaudioelement.c////*///
+/gstosxaudioelement.h////*///
+/Makefile.am////*///
+/gstosxaudio.c////*///
+/gstosxaudiosink.c////*///
+/gstosxaudiosink.h////*///
+/gstosxaudiosrc.c////*///
+/gstosxaudiosrc.h////*///
+/gstosxringbuffer.c////*///
+/gstosxringbuffer.h////*///

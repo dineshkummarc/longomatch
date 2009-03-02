@@ -1,0 +1,12 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/README////*///
+/gstvideoscale.c////*///
+/gstvideoscale.h////*///
+/videoscale.vcproj////*///
+/vs_4tap.c////*///
+/vs_4tap.h////*///
+/vs_image.c////*///
+/vs_image.h////*///
+/vs_scanline.c////*///
+/vs_scanline.h////*///

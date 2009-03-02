@@ -1,0 +1,8 @@
+/Makefile.am////*///
+/gsttagdemux.c////*///
+/gsttageditingprivate.h////*///
+/gstid3tag.c////*///
+/gstvorbistag.c////*///
+/tag.h////*///
+/gsttagdemux.h////*///
+/tags.c////*///

@@ -1,0 +1,100 @@
+Index: gst-plugins-good/gst/udp/gstudpnetutils.c
+===================================================================
+--- gst-plugins-good.orig/gst/udp/gstudpnetutils.c
++++ gst-plugins-good/gst/udp/gstudpnetutils.c
+@@ -35,6 +35,9 @@
+ 
+ #ifdef G_OS_WIN32
+ 
++#define snprintf(buffer, count, format, ...) \
++    _snprintf (buffer, count, format, __VA_ARGS__)
++
+ gboolean
+ gst_udp_net_utils_win32_wsa_startup (GstObject * obj)
+ {
+@@ -79,7 +82,12 @@ gst_udp_get_addr (const char *hostname, 
+ 
+   nres = res;
+   while (nres) {
++#ifndef G_OS_WIN32
+     if (nres->ai_family == AF_INET || nres->ai_family == AF_INET6)
++#else
++    /* FIXME */
++    if (nres->ai_family == AF_INET)
++#endif
+       break;
+     nres = nres->ai_next;
+   }
+Index: gst-plugins-good/gst/udp/gstudpnetutils.h
+===================================================================
+--- gst-plugins-good.orig/gst/udp/gstudpnetutils.h
++++ gst-plugins-good/gst/udp/gstudpnetutils.h
+@@ -55,6 +55,19 @@
+ #define WSA_STARTUP(obj) gst_udp_net_utils_win32_wsa_startup(GST_OBJECT(obj))
+ #define WSA_CLEANUP(obj) WSACleanup ()
+ 
++#ifndef EAFNOSUPPORT
++#define EAFNOSUPPORT WSAEAFNOSUPPORT
++#endif
++#ifndef EAI_ADDRFAMILY
++#define EAI_ADDRFAMILY 1
++#endif
++#ifndef SOL_IP
++#define SOL_IP IPPROTO_IP
++#endif
++
++#define ERRNO_IS_NOT_EAGAIN (WSAGetLastError () != WSAEWOULDBLOCK)
++#define ERRNO_IS_NOT_EINTR (WSAGetLastError () != WSAEINTR)
++
+ #else
+ 
+ #define IOCTL_SOCKET ioctl
+@@ -63,6 +76,9 @@
+ #define WSA_STARTUP(obj)
+ #define WSA_CLEANUP(obj)
+ 
++#define ERRNO_IS_NOT_EAGAIN (errno != EAGAIN)
++#define ERRNO_IS_NOT_EINTR (errno != EINTR)
++
+ #endif
+ 
+ #ifdef G_OS_WIN32
+Index: gst-plugins-good/gst/udp/gstmultiudpsink.c
+===================================================================
+--- gst-plugins-good.orig/gst/udp/gstmultiudpsink.c
++++ gst-plugins-good/gst/udp/gstmultiudpsink.c
+@@ -399,13 +399,15 @@ gst_multiudpsink_render (GstBaseSink * b
+           (struct sockaddr *) &client->theiraddr, sizeof (client->theiraddr));
+ 
+       if (ret < 0) {
++#ifndef G_OS_WIN32
+         /* we get a non-posix EPERM on Linux when a firewall rule blocks this
+          * destination. We will simply ignore this. */
+         if (errno == EPERM)
+           break;
+-        if (errno != EINTR && errno != EAGAIN) {
++#endif
++
++        if (ERRNO_IS_NOT_EINTR && ERRNO_IS_NOT_EAGAIN)
+           goto send_error;
+-        }
+       } else {
+         client->bytes_sent += ret;
+         client->packets_sent++;
+@@ -612,8 +614,15 @@ gst_multiudpsink_init_send (GstMultiUDPS
+   GstUDPClient *client;
+ 
+   if (sink->sockfd == -1) {
+-    /* create sender socket try IP6, fall back to IP4 */
++    /* Create sender socket try IP6, fall back to IPv4.
++     *
++     * This needs to be resolved for Windows, as sendto() returns
++     * WSAEAFNOSUPPORT when trying to send to IPv4 addresses from an
++     * IPv6 socket.
++     */
++#ifndef G_OS_WIN32
+     if ((sink->sock = socket (AF_INET6, SOCK_DGRAM, 0)) == -1)
++#endif
+       if ((sink->sock = socket (AF_INET, SOCK_DGRAM, 0)) == -1)
+         goto no_socket;
+ 

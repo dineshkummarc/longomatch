@@ -1,0 +1,16 @@
+/Makefile.am////*///
+/gstaggregator.c////*///
+/gstaggregator.h////*///
+/gstelements.c////*///
+/gstfdsink.c////*///
+/gstfdsink.h////*///
+/gstmd5sink.c////*///
+/gstmd5sink.h////*///
+/gstmultifilesrc.c////*///
+/gstmultifilesrc.h////*///
+/gstpipefilter.c////*///
+/gstpipefilter.h////*///
+/gstshaper.c////*///
+/gstshaper.h////*///
+/gststatistics.c////*///
+/gststatistics.h////*///

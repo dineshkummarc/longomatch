@@ -1,0 +1,9 @@
+/Makefile.am////*///
+/gsthalaudiosink.c////*///
+/gsthalaudiosink.h////*///
+/gsthalaudiosrc.c////*///
+/gsthalaudiosrc.h////*///
+/gsthalelements.c////*///
+/gsthalelements.h////*///
+/hal.c////*///
+/hal.h////*///

@@ -1,0 +1,5 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/gstfileindex.c////*///
+/gstindexers.c////*///
+/gstmemindex.c////*///

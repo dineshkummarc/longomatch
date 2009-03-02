@@ -1,0 +1,6 @@
+/Makefile.am////*///
+/gstgsm.c////*///
+/gstgsmdec.c////*///
+/gstgsmdec.h////*///
+/gstgsmenc.c////*///
+/gstgsmenc.h////*///

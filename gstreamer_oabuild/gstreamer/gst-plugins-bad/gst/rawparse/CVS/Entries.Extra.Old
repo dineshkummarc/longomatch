@@ -1,0 +1,9 @@
+/Makefile.am////*///
+/README////*///
+/gstaudioparse.c////*///
+/gstaudioparse.h////*///
+/gstrawparse.c////*///
+/gstrawparse.h////*///
+/gstvideoparse.c////*///
+/gstvideoparse.h////*///
+/plugin.c////*///

@@ -1,0 +1,6 @@
+/Makefile.am////*///
+/vorbis.c////*///
+/vorbisdec.h////*///
+/vorbisenc.h////*///
+/vorbisfile.c////*///
+/vorbisdec.c////*///

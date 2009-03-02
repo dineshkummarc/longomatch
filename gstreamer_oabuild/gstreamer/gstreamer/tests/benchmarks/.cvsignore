@@ -1,0 +1,7 @@
+Makefile
+Makefile.in
+caps
+complexity
+gstpollstress
+mass-elements
+*.gcno

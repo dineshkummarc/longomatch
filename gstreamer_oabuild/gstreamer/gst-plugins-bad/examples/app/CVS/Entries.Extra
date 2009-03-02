@@ -1,0 +1,8 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/appsink-src.c////*///
+/appsrc-ra.c////*///
+/appsrc-seekable.c////*///
+/appsrc-stream.c////*///
+/appsrc-stream2.c////*///
+/appsrc_ex.c////*///

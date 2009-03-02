@@ -1,0 +1,10 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/gstmplex.hh////*///
+/gstmplexibitstream.cc////*///
+/gstmplexibitstream.hh////*///
+/gstmplexjob.cc////*///
+/gstmplexjob.hh////*///
+/gstmplexoutputstream.cc////*///
+/gstmplexoutputstream.hh////*///
+/gstmplex.cc////*///

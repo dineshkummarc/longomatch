@@ -1,0 +1,4 @@
+/Makefile.am////*///
+/ximage.c////*///
+/ximagesink.c////*///
+/ximagesink.h////*///

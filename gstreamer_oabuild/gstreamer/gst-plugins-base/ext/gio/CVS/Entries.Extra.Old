@@ -1,0 +1,15 @@
+/Makefile.am////*///
+/gstgio.c////*///
+/gstgio.h////*///
+/gstgiobasesink.c////*///
+/gstgiobasesink.h////*///
+/gstgiobasesrc.c////*///
+/gstgiobasesrc.h////*///
+/gstgiosink.c////*///
+/gstgiosink.h////*///
+/gstgiosrc.c////*///
+/gstgiosrc.h////*///
+/gstgiostreamsink.c////*///
+/gstgiostreamsink.h////*///
+/gstgiostreamsrc.c////*///
+/gstgiostreamsrc.h////*///

@@ -1,0 +1,18 @@
+/.cvsignore/1.11/Sat May 24 14:08:02 2008//
+/adapter.c/1.4/Sat May 24 14:08:02 2008//
+/basesrc.c/1.6/Tue May 27 12:29:33 2008//
+/collectpads.c/1.4/Sat May 24 14:08:02 2008//
+/gstnetclientclock.c/1.8/Sat May 24 14:08:02 2008//
+/gstnettimeprovider.c/1.7/Sat May 24 14:08:02 2008//
+/libsabi.c/1.10/Sat May 24 14:08:02 2008//
+/struct_hppa.h/1.2/Sat May 24 14:08:02 2008//
+/struct_i386.h/1.4/Sat May 24 14:08:02 2008//
+/struct_ppc32.h/1.2/Sat May 24 14:08:02 2008//
+/struct_ppc64.h/1.3/Sat May 24 14:08:02 2008//
+/struct_x86_64.h/1.2/Sat May 24 14:08:02 2008//
+/typefindhelper.c/1.3/Sat May 24 14:08:02 2008//
+/controller.c/1.32/Sun Aug  3 17:36:10 2008//
+/gdp.c/1.19/Sun Aug  3 17:36:10 2008//
+/test_transform.c/1.3/Wed Jun 25 17:27:30 2008//
+/transform1.c/1.6/Wed Aug 27 14:57:49 2008//
+D

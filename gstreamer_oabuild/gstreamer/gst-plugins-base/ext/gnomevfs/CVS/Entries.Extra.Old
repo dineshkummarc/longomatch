@@ -1,0 +1,9 @@
+/Makefile.am////*///
+/gstgnomevfs.c////*///
+/gstgnomevfs.h////*///
+/gstgnomevfssink.h////*///
+/gstgnomevfssrc.h////*///
+/gstgnomevfsuri.c////*///
+/gstgnomevfsuri.h////*///
+/gstgnomevfssink.c////*///
+/gstgnomevfssrc.c////*///

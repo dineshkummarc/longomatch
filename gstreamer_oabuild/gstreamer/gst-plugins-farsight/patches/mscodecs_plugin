@@ -1,0 +1,1685 @@
+Index: gst-plugins-farsight/ext/mscodecs/gstmscodecs.c
+===================================================================
+--- /dev/null
++++ gst-plugins-farsight/ext/mscodecs/gstmscodecs.c
+@@ -0,0 +1,261 @@
++/*
++ * Farsight Voice+Video library
++ *
++ *   @author: Ole André Vadla Ravnås <oleavr@gmail.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <gst/gst.h>
++
++#ifdef G_OS_WIN32
++#include <windows.h>
++#else
++#include <winbase.h>
++#endif
++#include <psapi.h>
++
++#include "mscodec.h"
++#include "gstmsenc.h"
++#include "gstmsdec.h"
++#include "gstrtprtaudiopay.h"
++#include "gstrtprtaudiodepay.h"
++
++GST_DEBUG_CATEGORY (mscodecs_debug);
++#define GST_CAT_DEFAULT (mscodecs_debug)
++
++#ifdef G_OS_WIN32
++#define RTMPLPTFM_PATH "C:\\Program Files\\Windows Live\\Messenger\\RTMPLTFM.dll"
++#else
++#define RTMPLPTFM_PATH "RTMPLTFM.dll"
++#endif
++
++typedef struct {
++  const gchar * element_name;
++  const gchar * mimetype;
++  gint bitrate_offset;          /*< offset into encoder object, as there's no
++                                 *  accessor method on the encoder interface */
++  const gchar * canonical_name;
++  const guint signature[3];
++} KnownCodec;
++
++static const KnownCodec known_codecs[] =
++{
++  { "mulaw",  "audio/x-mulaw",  -1, "G.711-MuLaw",    {  4,  5,   0 } },
++  { "gsm610", "audio/x-gsm610", -1, "GSM6.10",        { 10, 11,   3 } },
++  { "g7231",  "audio/x-g7231",  -1, "G.723.1",        {  7,  8,   4 } },
++  { "alaw",   "audio/x-alaw",   -1, "G.711-ALaw",     {  3,  4,   8 } },
++  { "siren",  "audio/x-siren",  -1, "SIREN",          {  8,  9, 111 } },
++  { "g7221",  "audio/x-g7221",  -1, "G.722.1",        {  9, 10, 112 } },
++  { "rta16",  "audio/x-msrta",  24, "MSRTAudio16KHz", {  6,  7, 114 } },
++  { "rta8",   "audio/x-msrta",  24, "MSRTAudio8KHz",  {  5,  6, 115 } },
++  { "g726",   "audio/x-g726",    8, "G.726",          { 11, 12, 116 } },
++};
++
++#define KNOWN_CODECS_MAX_X 11
++#define KNOWN_CODECS_MAX_Y 12
++#define KNOWN_CODECS_MAX_Z 116
++
++static const guint num_known_codecs = sizeof (known_codecs) / sizeof (known_codecs[0]);
++
++#ifdef G_OS_WIN32
++#pragma region Debugging infrastructure interception
++
++const guint8 debug_func_signature[] = { 0x8B, 0xFF, 0x55, 0x8B, 0xEC, 0x8B, 0x45, 0x08, 0x56, 0x57, 0x8B, 0xF0, 0x33, 0xFF, 0x83, 0xE6, 0x0F, 0x39 };
++
++#define OPCODE_JMP 0xE9
++
++static gint __stdcall
++gst_mscodecs_debug_handler (gint a, gint b, gint c, gint d,
++                            gchar * format, va_list args)
++{
++  vprintf (format, args);
++  printf ("\n");
++  fflush (stdout);
++  return 0;
++}
++
++static gboolean
++gst_mscodecs_intercept_debug_handler (guint8 * mod_start, guint8 * mod_end)
++{
++  guint8 * func_addr = NULL;
++  guint8 * p = mod_start;
++  DWORD old_protect;
++  BOOL result;
++
++  while (p <= mod_end - sizeof (debug_func_signature))
++  {
++    if (memcmp (p, debug_func_signature, sizeof (debug_func_signature)) == 0)
++    {
++      func_addr = p;
++      break;
++    }
++
++    p++;
++  }
++
++  if (func_addr == NULL)
++  {
++    GST_DEBUG ("debug function not found");
++    return FALSE;
++  }
++
++  GST_DEBUG ("found debug function at 0x%p", func_addr);
++
++  result = VirtualProtect (func_addr, 5, PAGE_EXECUTE_READWRITE, &old_protect);
++  g_assert (result);
++
++  *func_addr = OPCODE_JMP;
++  *((guint32 *) (func_addr + 1)) =
++      (guint8 *) gst_mscodecs_debug_handler - (func_addr + 5);
++
++  return TRUE;
++}
++
++#pragma endregion
++#endif /* G_OS_WIN32 */
++
++static gboolean
++gst_mscodecs_register_codecs (GstPlugin * plugin)
++{
++  gboolean ret = FALSE;
++  HMODULE mod = NULL;
++  MODULEINFO mi = { 0, };
++  BOOL result;
++  guint8 * mod_start, * mod_end, * p;
++  guint count = 0;
++  GTimer * timer;
++
++#ifndef G_OS_WIN32
++  Setup_LDT_Keeper ();
++
++  Check_FS_Segment ();
++#endif
++
++  /* FIXME: auto-detect/probe for the path */
++  mod = LoadLibrary (RTMPLPTFM_PATH);
++  if (mod == NULL)
++  {
++    GST_ERROR_OBJECT (plugin, "Failed to load RTMPLTFM.dll");
++    goto beach;
++  }
++
++#ifdef G_OS_WIN32
++  result = GetModuleInformation (GetCurrentProcess (), mod, &mi, sizeof (mi));
++  if (!result)
++  {
++    GST_ERROR_OBJECT (plugin, "GetModuleInformation failed");
++    goto beach;
++  }
++#else /* !G_OS_WIN32 */
++  mi.SizeOfImage = 3851024; /* FIXME: hack */
++#endif /* !G_OS_WIN32 */
++
++  mod_start = (guint8 *) mod;
++  mod_end = mod_start + mi.SizeOfImage;
++
++#ifdef G_OS_WIN32
++  gst_mscodecs_intercept_debug_handler (mod_start, mod_end);
++#endif
++
++  timer = g_timer_new ();
++
++  p = mod_start;
++  while (p < mod_end - sizeof (known_codecs[0].signature))
++  {
++    guint * magic = (guint *) p;
++    guint i;
++
++    if (magic[0] <= KNOWN_CODECS_MAX_X &&
++        magic[1] <= KNOWN_CODECS_MAX_Y &&
++        magic[2] <= KNOWN_CODECS_MAX_Z)
++    {
++      for (i = 0; i < num_known_codecs && count < num_known_codecs; i++)
++      {
++        const KnownCodec * kc = &known_codecs[i];
++
++        if (memcmp (p, kc->signature, sizeof (kc->signature)) == 0)
++        {
++          MSCodec * codec = (MSCodec *) p;
++          gint name_len = strlen (kc->canonical_name);
++
++          if (codec->name != NULL &&
++#ifdef G_OS_WIN32
++              !IsBadStringPtrA (codec->name, name_len) &&
++#endif
++              codec->name[name_len] == '\0' &&
++              strcmp (codec->name, kc->canonical_name) == 0)
++          {
++            GST_INFO_OBJECT (plugin, "found %6s [%-14s] at %p",
++                kc->element_name, kc->canonical_name, p);
++            count++;
++
++            gst_msenc_register (plugin, kc->element_name, kc->mimetype,
++              kc->bitrate_offset, codec);
++            gst_msdec_register (plugin, kc->element_name, kc->mimetype, codec);
++          }
++        }
++      }
++    }
++
++    p++;
++  }
++
++  GST_INFO_OBJECT (plugin, "registered %d codecs in %.0f ms",
++      count, g_timer_elapsed (timer, NULL) * 1000.0f);
++
++  g_timer_destroy (timer);
++
++  ret = TRUE;
++
++beach:
++  /* FIXME: handle unloading */
++  if (!ret && mod != NULL)
++    FreeLibrary (mod);
++
++  return ret;
++}
++
++static gboolean
++gst_mscodecs_plugin_init (GstPlugin * plugin)
++{
++  gboolean codecs_ret, pay_ret, depay_ret;
++
++  GST_DEBUG_CATEGORY_INIT (mscodecs_debug, "mscodecs", 0,
++      "Microsoft binary codecs");
++
++  codecs_ret = gst_mscodecs_register_codecs (plugin);
++
++  pay_ret = gst_element_register (plugin, "rtprtaudiopay", GST_RANK_NONE,
++      GST_TYPE_RTP_RTAUDIO_PAY);
++
++  depay_ret = gst_element_register (plugin, "rtprtaudiodepay", GST_RANK_NONE,
++      GST_TYPE_RTP_RTAUDIO_DEPAY);
++
++  return (codecs_ret || pay_ret || depay_ret);
++}
++
++GST_PLUGIN_DEFINE (GST_VERSION_MAJOR,
++    GST_VERSION_MINOR,
++    "mscodecs",
++    "Microsoft binary codecs",
++    gst_mscodecs_plugin_init,
++    VERSION, "LGPL", "Farsight",
++    "http://farsight.sf.net")
+Index: gst-plugins-farsight/ext/mscodecs/gstmsenc.c
+===================================================================
+--- /dev/null
++++ gst-plugins-farsight/ext/mscodecs/gstmsenc.c
+@@ -0,0 +1,381 @@
++/*
++ * Farsight Voice+Video library
++ *
++ *   @author: Ole André Vadla Ravnås <oleavr@gmail.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++/*
++ * TODO:
++ * - Use GstAdapter and take into account what the encoder prefers as input.
++ * - Actually implement transform_size().
++ * - Support setting bitrate for codecs supporting it.
++ */
++
++#include "gstmsenc.h"
++
++#include <string.h>
++
++#ifdef G_OS_WIN32
++#include <windows.h>
++#else
++#include <winbase.h>
++#endif
++
++GST_DEBUG_CATEGORY_EXTERN (mscodecs_debug);
++#define GST_CAT_DEFAULT (mscodecs_debug)
++
++#define GST_MSENC_PARAMS_QDATA g_quark_from_static_string ("msenc-params")
++
++enum
++{
++  PROP_0,
++  PROP_BITRATE
++};
++
++static GstBaseTransformClass * parent_class = NULL;
++
++static void gst_msenc_finalize (GObject * object);
++static void gst_msenc_get_property (GObject * object,
++                                    guint prop_id,
++                                    GValue * value,
++                                    GParamSpec * pspec);
++static void gst_msenc_set_property (GObject * object,
++                                    guint prop_id,
++                                    const GValue * value,
++                                    GParamSpec * pspec);
++
++static gboolean gst_msenc_transform_size (GstBaseTransform * base,
++                                          GstPadDirection direction,
++                                          GstCaps * caps,
++                                          guint size,
++                                          GstCaps * other_caps,
++                                          guint * othersize);
++static GstCaps * gst_msenc_transform_caps (GstBaseTransform * base,
++                                           GstPadDirection direction,
++                                           GstCaps * caps);
++static GstFlowReturn gst_msenc_transform (GstBaseTransform * base,
++                                          GstBuffer * inbuf,
++                                          GstBuffer * outbuf);
++
++static void
++gst_msenc_base_init (GstMSEncClass * klass)
++{
++  GstMSEncClassParams * params = GST_MSENC_CLASS_GET_PARAMS (klass);
++  GstElementClass * element_class = GST_ELEMENT_CLASS (klass);
++  GstPadTemplate * sink_template, * src_template;
++  GstElementDetails details;
++
++  sink_template = gst_pad_template_new ("sink",
++      GST_PAD_SINK,
++      GST_PAD_ALWAYS,
++      gst_caps_new_simple ("audio/x-raw-int",
++          "width", G_TYPE_INT, 16,
++          "depth", G_TYPE_INT, 16,
++          "endianness", G_TYPE_INT, G_BYTE_ORDER,
++          "signed", G_TYPE_BOOLEAN, TRUE,
++          "rate", G_TYPE_INT, params->codec->rate,
++          "channels", G_TYPE_INT, 1,
++          NULL));
++  src_template = gst_pad_template_new ("src",
++      GST_PAD_SRC,
++      GST_PAD_ALWAYS,
++      gst_caps_new_simple (params->mimetype,
++          "rate", G_TYPE_INT, params->codec->rate,
++          "channels", G_TYPE_INT, 1,
++          NULL));
++
++  gst_element_class_add_pad_template (element_class, sink_template);
++  gst_element_class_add_pad_template (element_class, src_template);
++
++  details.longname = g_strdup_printf ("%s encoder", params->codec->name);
++  details.klass = g_strdup_printf ("Codec/Encoder/Audio");
++  details.description = g_strdup_printf ("%s encoder", params->codec->name);
++  details.author = "Ole André Vadla Ravnås <oleavr@gmail.com>";
++  gst_element_class_set_details (element_class, &details);
++  g_free (details.longname);
++  g_free (details.klass);
++  g_free (details.description);
++}
++
++static void
++gst_msenc_class_init (GstMSEncClass * klass)
++{
++  GObjectClass * gobject_class;
++  GstBaseTransformClass * gstbasetransform_class;
++  GstMSEncClassParams * params = GST_MSENC_CLASS_GET_PARAMS (klass);
++
++  gobject_class = (GObjectClass *) klass;
++  gstbasetransform_class = (GstBaseTransformClass *) klass;
++
++  parent_class = g_type_class_peek_parent (klass);
++
++  gobject_class->finalize = gst_msenc_finalize;
++
++  gstbasetransform_class->transform_size = gst_msenc_transform_size;
++  gstbasetransform_class->transform_caps = gst_msenc_transform_caps;
++  gstbasetransform_class->transform = gst_msenc_transform;
++
++  if (params->bitrate_offset >= 0)
++  {
++    gobject_class->get_property = gst_msenc_get_property;
++    gobject_class->set_property = gst_msenc_set_property;
++
++    g_object_class_install_property (gobject_class, PROP_BITRATE,
++        g_param_spec_uint ("bitrate", "Bitrate",
++            "The bitrate used for encoding",
++            0, G_MAXUINT, 0, G_PARAM_READWRITE));
++  }
++}
++
++static void
++gst_msenc_init (GstMSEnc * enc)
++{
++  GstMSEncClass * klass = (GstMSEncClass *) G_OBJECT_GET_CLASS (enc);
++  MSCodec * codec = GST_MSENC_CLASS_GET_PARAMS (klass)->codec;
++  gint ret;
++
++#ifndef G_OS_WIN32
++  Check_FS_Segment ();
++#endif
++
++  ret = codec->create_encoder (&enc->encoder);
++  if (ret != 0)
++  {
++    GST_ERROR_OBJECT (enc, "Failed to create %s encoder", codec->name);
++    return;
++  }
++
++  ret = ms_encoder_init (enc->encoder);
++  if (ret != 0)
++  {
++    GST_ERROR_OBJECT (enc, "Failed to initialize %s encoder: %d",
++        codec->name, ret);
++    return;
++  }
++
++  GST_DEBUG_OBJECT (enc, "%s encoder initialized successfully",
++      codec->name);
++}
++
++static void
++gst_msenc_finalize (GObject * object)
++{
++  GstMSEnc * enc = (GstMSEnc *) object;
++  GstMSEncClass * klass = (GstMSEncClass *) G_OBJECT_GET_CLASS (object);
++  MSCodec * codec = GST_MSENC_CLASS_GET_PARAMS (klass)->codec;
++  gint ret;
++
++#ifndef G_OS_WIN32
++  Check_FS_Segment ();
++#endif
++
++  ret = codec->destroy_encoder (enc->encoder);
++  if (ret != 0)
++  {
++    GST_WARNING_OBJECT (enc, "Failed to destroy %s encoder",
++        codec->name);
++  }
++
++  G_OBJECT_CLASS (parent_class)->finalize (object);
++}
++
++static void
++gst_msenc_get_property (GObject * object,
++                        guint prop_id,
++                        GValue * value,
++                        GParamSpec * pspec)
++{
++  GstMSEnc * self = (GstMSEnc *) object;
++
++  switch (prop_id)
++  {
++    case PROP_BITRATE:
++    {
++      GstMSEncClass * klass = (GstMSEncClass *) G_OBJECT_GET_CLASS (object);
++      GstMSEncClassParams * params = GST_MSENC_CLASS_GET_PARAMS (klass);
++      guint bitrate;
++
++      bitrate =
++        *((guint *) ((guint8 *) self->encoder + params->bitrate_offset));
++
++      g_value_set_uint (value, bitrate);
++      break;
++    }
++    default:
++      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
++      break;
++  }
++}
++
++static void
++gst_msenc_set_property (GObject * object,
++                        guint prop_id,
++                        const GValue * value,
++                        GParamSpec * pspec)
++{
++  GstMSEnc * self = (GstMSEnc *) object;
++
++  switch (prop_id)
++  {
++    case PROP_BITRATE:
++#ifndef G_OS_WIN32
++      Check_FS_Segment ();
++#endif
++      ms_encoder_set_bitrate (self->encoder, g_value_get_uint (value));
++      break;
++    default:
++      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
++      break;
++  }
++}
++
++static gboolean
++gst_msenc_transform_size (GstBaseTransform * base,
++                          GstPadDirection direction,
++                          GstCaps * caps,
++                          guint size,
++                          GstCaps * other_caps,
++                          guint * other_size)
++{
++  GstMSEncClass * klass = (GstMSEncClass *) G_OBJECT_GET_CLASS (base);
++  GstMSEncClassParams * params = GST_MSENC_CLASS_GET_PARAMS (klass);
++  GstStructure * structure;
++  const gchar * in_name, * out_name;
++
++  if (caps == NULL || other_caps == NULL)
++    return FALSE;
++
++  structure = gst_caps_get_structure (caps, 0);
++  in_name = gst_structure_get_name (structure);
++  structure = gst_caps_get_structure (other_caps, 0);
++  out_name = gst_structure_get_name (structure);
++
++  if (in_name == NULL || out_name == NULL)
++  {
++    return FALSE;
++  }
++  else if (strcmp (in_name, "audio/x-raw-int") == 0 &&
++      strcmp (out_name, params->mimetype) == 0)
++  {
++    *other_size = size;
++  }
++  else
++  {
++    return FALSE;
++  }
++
++  return TRUE;
++}
++
++static GstCaps *
++gst_msenc_transform_caps (GstBaseTransform * base,
++                          GstPadDirection direction,
++                          GstCaps * caps)
++{
++  GstElementClass * element_class = GST_ELEMENT_CLASS (
++      G_OBJECT_GET_CLASS (base));
++  GstPadTemplate * tpl;
++
++  if (direction == GST_PAD_SRC)
++    tpl = gst_element_class_get_pad_template (element_class, "sink");
++  else
++    tpl = gst_element_class_get_pad_template (element_class, "src");
++
++  return gst_caps_ref (gst_pad_template_get_caps (tpl));
++}
++
++static GstFlowReturn
++gst_msenc_transform (GstBaseTransform * base,
++                     GstBuffer * inbuf,
++                     GstBuffer * outbuf)
++{
++  GstMSEnc * self = (GstMSEnc *) base;
++  guint out_size = GST_BUFFER_SIZE (outbuf);
++  gint ret;
++
++#ifndef G_OS_WIN32
++  Check_FS_Segment ();
++#endif
++
++  GST_DEBUG_OBJECT (self, "calling ms_encoder_encode with buffer of size %d",
++      GST_BUFFER_SIZE (inbuf));
++
++  ret = ms_encoder_encode (self->encoder,
++      GST_BUFFER_DATA (inbuf), GST_BUFFER_SIZE (inbuf),
++      GST_BUFFER_DATA (outbuf), &out_size);
++
++  GST_DEBUG_OBJECT (self, "called ms_encoder_encode, ret = 0x%08x", ret);
++
++  if (ret != 0)
++  {
++    GST_ELEMENT_ERROR (self, STREAM, ENCODE,
++      (("ms_encoder_encode returned 0x%08x"), ret),
++      NULL);
++    return GST_FLOW_ERROR;
++  }
++
++  GST_BUFFER_SIZE (outbuf) = out_size;
++  GST_BUFFER_OFFSET (outbuf) = GST_BUFFER_OFFSET (inbuf);
++  GST_BUFFER_TIMESTAMP (outbuf) = GST_BUFFER_TIMESTAMP (inbuf);
++  GST_BUFFER_DURATION (outbuf) = GST_BUFFER_DURATION (inbuf);
++
++  return GST_FLOW_OK;
++}
++
++void
++gst_msenc_register (GstPlugin * plugin,
++                    const gchar * element_name,
++                    const gchar * mimetype,
++                    gint bitrate_offset,
++                    MSCodec * codec)
++{
++  GTypeInfo type_info = {
++    sizeof (GstMSEncClass),
++    (GBaseInitFunc) gst_msenc_base_init,
++    NULL,
++    (GClassInitFunc) gst_msenc_class_init,
++    NULL,
++    NULL,
++    sizeof (GstMSEncClass),
++    0,
++    (GInstanceInitFunc) gst_msenc_init,
++  };
++  gchar * type_name;
++  GType type;
++  GstMSEncClassParams * params;
++  gboolean result;
++
++  type_name = g_strdup_printf ("msenc_%s", element_name);
++
++  type = g_type_register_static (GST_TYPE_BASE_TRANSFORM, type_name,
++      &type_info, 0);
++
++  params = g_new0 (GstMSEncClassParams, 1);
++  params->codec = codec;
++  params->mimetype = mimetype;
++  params->bitrate_offset = bitrate_offset;
++  g_type_set_qdata (type, GST_MSENC_PARAMS_QDATA, params);
++
++  result = gst_element_register (plugin, type_name, GST_RANK_NONE, type);
++  if (!result)
++  {
++    GST_ERROR_OBJECT (plugin, "failed to register element %s", type_name);
++  }
++
++  g_free (type_name);
++}
+Index: gst-plugins-farsight/ext/mscodecs/gstmsenc.h
+===================================================================
+--- /dev/null
++++ gst-plugins-farsight/ext/mscodecs/gstmsenc.h
+@@ -0,0 +1,79 @@
++/*
++ * Farsight Voice+Video library
++ *
++ *   @author: Ole André Vadla Ravnås <oleavr@gmail.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++#ifndef __GST_MSENC_H__
++#define __GST_MSENC_H__
++
++#include <gst/gst.h>
++#include <gst/base/gstbasetransform.h>
++
++#include "mscodec.h"
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_MSENC \
++  (gst_msenc_get_type ())
++#define GST_MSENC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST ((obj), GST_TYPE_MSENC, GstMSEnc))
++#define GST_MSENC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST ((klass), GST_TYPE_MSENC, GstMSEncClass))
++#define GST_IS_MSENC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GST_TYPE_MSENC))
++#define GST_IS_MSENC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE ((klass), GST_TYPE_MSENC))
++#define GST_MSENC_CLASS_GET_PARAMS(klass) \
++  ((GstMSEncClassParams *) g_type_get_qdata (G_OBJECT_CLASS_TYPE (klass), \
++      GST_MSENC_PARAMS_QDATA))
++
++typedef struct _GstMSEncClassParams GstMSEncClassParams;
++typedef struct _GstMSEncClass GstMSEncClass;
++typedef struct _GstMSEnc GstMSEnc;
++
++struct _GstMSEncClassParams
++{
++  MSCodec * codec;
++  const gchar * mimetype;
++  gint bitrate_offset;
++};
++
++struct _GstMSEncClass
++{
++  GstBaseTransformClass parent_class;
++};
++
++struct _GstMSEnc
++{
++  GstBaseTransform parent;
++
++  MSEncoder * encoder;
++};
++
++GType gst_msenc_get_type (void);
++
++void gst_msenc_register (GstPlugin * plugin,
++                         const gchar * element_name,
++                         const gchar * mimetype,
++                         gint bitrate_offset,
++                         MSCodec * codec);
++
++G_END_DECLS
++
++#endif /* __GST_MSENC_H__ */
+Index: gst-plugins-farsight/ext/mscodecs/mscodec.c
+===================================================================
+--- /dev/null
++++ gst-plugins-farsight/ext/mscodecs/mscodec.c
+@@ -0,0 +1,72 @@
++/*
++ * Farsight Voice+Video library
++ *
++ *   @author: Ole André Vadla Ravnås <oleavr@gmail.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++#include "mscodec.h"
++
++#define INVOKE_VFUNC(func_offset) \
++  __asm { \
++    /* fill in ecx with 'this' pointer */ \
++    __asm mov ecx, [esp + 4] \
++    \
++    /* put return address where 'this' pointer was */ \
++    __asm pop edx \
++    __asm mov [esp], edx \
++    \
++    /* call the function in the vtable */ \
++    __asm mov edx, [ecx + 0] \
++    __asm mov edx, [edx + func_offset] \
++    __asm jmp edx \
++  }
++
++__declspec(naked) gint __stdcall
++ms_encoder_init (MSEncoder * encoder)
++{
++  INVOKE_VFUNC (0);
++}
++
++__declspec(naked) gint __stdcall
++ms_encoder_set_bitrate (MSEncoder * encoder,
++                        guint bitrate)
++{
++  INVOKE_VFUNC (16);
++}
++
++__declspec(naked) gint __stdcall
++ms_encoder_encode (MSEncoder * encoder,
++                   guint8 * in_buf, guint in_size,
++                   guint8 * out_buf, guint * out_size)
++{
++  INVOKE_VFUNC (4);
++}
++
++__declspec(naked) gint __stdcall
++ms_decoder_init (MSDecoder * decoder)
++{
++  INVOKE_VFUNC (0);
++}
++
++__declspec(naked) gint __stdcall
++ms_decoder_decode (MSDecoder * decoder,
++                   guint8 * in_buf, guint in_size,
++                   guint8 * out_buf, guint * out_size)
++{
++  INVOKE_VFUNC (4);
++}
+Index: gst-plugins-farsight/ext/mscodecs/mscodec.h
+===================================================================
+--- /dev/null
++++ gst-plugins-farsight/ext/mscodecs/mscodec.h
+@@ -0,0 +1,71 @@
++/*
++ * Farsight Voice+Video library
++ *
++ *   @author: Ole André Vadla Ravnås <oleavr@gmail.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++#ifndef __MSCODEC_H__
++#define __MSCODEC_H__
++
++#include <glib.h>
++#ifndef G_OS_WIN32
++#include <windef.h> /* for __stdcall on non-Windows */
++#endif
++
++G_BEGIN_DECLS
++
++typedef struct _MSEncoder MSEncoder;
++typedef struct _MSDecoder MSDecoder;
++
++typedef int (__stdcall * MSEncoderCreateFunc)  (MSEncoder ** enc);
++typedef int (__stdcall * MSEncoderDestroyFunc) (MSEncoder * enc);
++typedef int (__stdcall * MSDecoderCreateFunc)  (MSDecoder ** dec);
++typedef int (__stdcall * MSDecoderDestroyFunc) (MSDecoder * dec);
++
++#ifdef _MSC_VER
++#pragma pack(push, 1)
++#else
++
++#endif
++
++typedef struct {
++  const gint signature[3];
++  const gchar * name;
++  gint rate;
++  gint x;
++  gint y;
++  MSEncoderCreateFunc  create_encoder;
++  MSEncoderDestroyFunc destroy_encoder;
++  MSDecoderCreateFunc  create_decoder;
++  MSDecoderDestroyFunc destroy_decoder;
++} MSCodec;
++
++#ifdef _MSC_VER
++#pragma pack(pop)
++#endif
++
++gint __stdcall ms_encoder_init (MSEncoder * encoder);
++gint __stdcall ms_encoder_set_bitrate (MSEncoder * encoder, guint bitrate);
++gint __stdcall ms_encoder_encode (MSEncoder * encoder, guint8 * in_buf, guint in_size, guint8 * out_buf, guint * out_size);
++
++gint __stdcall ms_decoder_init (MSDecoder * decoder);
++gint __stdcall ms_decoder_decode (MSDecoder * decoder, guint8 * in_buf, guint in_size, guint8 * out_buf, guint * out_size);
++
++G_END_DECLS
++
++#endif /* __MSCODEC_H__ */
+Index: gst-plugins-farsight/ext/mscodecs/gstmsdec.c
+===================================================================
+--- /dev/null
++++ gst-plugins-farsight/ext/mscodecs/gstmsdec.c
+@@ -0,0 +1,276 @@
++/*
++ * Farsight Voice+Video library
++ *
++ *   @author: Ole André Vadla Ravnås <oleavr@gmail.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++#include "gstmsdec.h"
++
++#include <string.h>
++
++GST_DEBUG_CATEGORY_EXTERN (mscodecs_debug);
++#define GST_CAT_DEFAULT (mscodecs_debug)
++
++#define GST_MSDEC_PARAMS_QDATA g_quark_from_static_string ("msdec-params")
++
++static GstBaseTransformClass * parent_class = NULL;
++
++static void gst_msdec_finalize (GObject * object);
++
++static gboolean gst_msdec_transform_size (GstBaseTransform * base,
++                                          GstPadDirection direction,
++                                          GstCaps * caps,
++                                          guint size,
++                                          GstCaps * other_caps,
++                                          guint * othersize);
++static GstCaps * gst_msdec_transform_caps (GstBaseTransform * base,
++                                           GstPadDirection direction,
++                                           GstCaps * caps);
++static GstFlowReturn gst_msdec_transform (GstBaseTransform * base,
++                                          GstBuffer * inbuf,
++                                          GstBuffer * outbuf);
++
++static void
++gst_msdec_base_init (GstMSDecClass * klass)
++{
++  GstMSDecClassParams * params = GST_MSDEC_CLASS_GET_PARAMS (klass);
++  GstElementClass * element_class = GST_ELEMENT_CLASS (klass);
++  GstPadTemplate * sink_template, * src_template;
++  GstElementDetails details;
++
++  sink_template = gst_pad_template_new ("sink",
++      GST_PAD_SINK,
++      GST_PAD_ALWAYS,
++      gst_caps_new_simple (params->mimetype,
++          "rate", G_TYPE_INT, params->codec->rate,
++          "channels", G_TYPE_INT, 1,
++          NULL));
++  src_template = gst_pad_template_new ("src",
++      GST_PAD_SRC,
++      GST_PAD_ALWAYS,
++      gst_caps_new_simple ("audio/x-raw-int",
++          "width", G_TYPE_INT, 16,
++          "depth", G_TYPE_INT, 16,
++          "endianness", G_TYPE_INT, G_BYTE_ORDER,
++          "signed", G_TYPE_BOOLEAN, TRUE,
++          "rate", G_TYPE_INT, params->codec->rate,
++          "channels", G_TYPE_INT, 1,
++          NULL));
++
++  gst_element_class_add_pad_template (element_class, sink_template);
++  gst_element_class_add_pad_template (element_class, src_template);
++
++  details.longname = g_strdup_printf ("%s decoder", params->codec->name);
++  details.klass = g_strdup_printf ("Codec/Decoder/Audio");
++  details.description = g_strdup_printf ("%s decoder", params->codec->name);
++  details.author = "Ole André Vadla Ravnås <oleavr@gmail.com>";
++  gst_element_class_set_details (element_class, &details);
++  g_free (details.longname);
++  g_free (details.klass);
++  g_free (details.description);
++}
++
++static void
++gst_msdec_class_init (GstMSDecClass * klass)
++{
++  GObjectClass * gobject_class;
++  GstBaseTransformClass * gstbasetransform_class;
++
++  gobject_class = (GObjectClass *) klass;
++  gstbasetransform_class = (GstBaseTransformClass *) klass;
++
++  parent_class = g_type_class_peek_parent (klass);
++
++  gobject_class->finalize = gst_msdec_finalize;
++
++  gstbasetransform_class->transform_size = gst_msdec_transform_size;
++  gstbasetransform_class->transform_caps = gst_msdec_transform_caps;
++  gstbasetransform_class->transform = gst_msdec_transform;
++}
++
++static void
++gst_msdec_init (GstMSDec * dec)
++{
++  GstMSDecClass * klass = (GstMSDecClass *) G_OBJECT_GET_CLASS (dec);
++  MSCodec * codec = GST_MSDEC_CLASS_GET_PARAMS (klass)->codec;
++  gint ret;
++
++  ret = codec->create_decoder (&dec->decoder);
++  if (ret != 0)
++  {
++    GST_ERROR_OBJECT (dec, "Failed to create %s decoder", codec->name);
++    return;
++  }
++
++  ret = ms_decoder_init (dec->decoder);
++  if (ret != 0)
++  {
++    GST_ERROR_OBJECT (dec, "Failed to initialize %s decoder: %d", codec->name,
++        ret);
++    return;
++  }
++
++  GST_DEBUG_OBJECT (dec, "%s decoder initialized successfully", codec->name);
++}
++
++static void
++gst_msdec_finalize (GObject * object)
++{
++  GstMSDec * dec = (GstMSDec *) object;
++  GstMSDecClass * klass = (GstMSDecClass *) G_OBJECT_GET_CLASS (object);
++  MSCodec * codec = GST_MSDEC_CLASS_GET_PARAMS (klass)->codec;
++  gint ret;
++
++  ret = codec->destroy_decoder (dec->decoder);
++  if (ret != 0)
++  {
++    GST_WARNING_OBJECT (dec, "Failed to destroy %s decoder", codec->name);
++  }
++
++  G_OBJECT_CLASS (parent_class)->finalize (object);
++}
++
++static gboolean
++gst_msdec_transform_size (GstBaseTransform * base,
++                          GstPadDirection direction,
++                          GstCaps * caps,
++                          guint size,
++                          GstCaps * other_caps,
++                          guint * other_size)
++{
++  GstMSDecClass * klass = (GstMSDecClass *) G_OBJECT_GET_CLASS (base);
++  GstMSDecClassParams * params = GST_MSDEC_CLASS_GET_PARAMS (klass);
++  GstStructure * structure;
++  const gchar * in_name, * out_name;
++
++  if (caps == NULL || other_caps == NULL)
++    return FALSE;
++
++  structure = gst_caps_get_structure (caps, 0);
++  in_name = gst_structure_get_name (structure);
++  structure = gst_caps_get_structure (other_caps, 0);
++  out_name = gst_structure_get_name (structure);
++
++  if (in_name == NULL || out_name == NULL)
++  {
++    return FALSE;
++  }
++  else if (strcmp (in_name, params->mimetype) == 0 &&
++    strcmp (out_name, "audio/x-raw-int") == 0)
++  {
++    *other_size = 1000; /* FIXME: not good, but enough for a 60 ms chunk */
++  }
++  else
++  {
++    return FALSE;
++  }
++
++  return TRUE;
++}
++
++static GstCaps *
++gst_msdec_transform_caps (GstBaseTransform * base,
++                          GstPadDirection direction,
++                          GstCaps * caps)
++{
++  GstElementClass * element_class = GST_ELEMENT_CLASS (
++      G_OBJECT_GET_CLASS (base));
++  GstPadTemplate * tpl;
++
++  if (direction == GST_PAD_SRC)
++    tpl = gst_element_class_get_pad_template (element_class, "sink");
++  else
++    tpl = gst_element_class_get_pad_template (element_class, "src");
++
++  return gst_caps_ref (gst_pad_template_get_caps (tpl));
++}
++
++static GstFlowReturn
++gst_msdec_transform (GstBaseTransform * base,
++                     GstBuffer * inbuf,
++                     GstBuffer * outbuf)
++{
++  GstMSDec * self = (GstMSDec *) base;
++  guint out_size = GST_BUFFER_SIZE (outbuf);
++  gint ret;
++
++  GST_DEBUG_OBJECT (self, "calling ms_decoder_decode with buffer of size %d",
++      GST_BUFFER_SIZE (inbuf));
++
++  ret = ms_decoder_decode (self->decoder,
++      GST_BUFFER_DATA (inbuf), GST_BUFFER_SIZE (inbuf),
++      GST_BUFFER_DATA (outbuf), &out_size);
++
++  GST_DEBUG_OBJECT (self, "called ms_decoder_decode, ret = 0x%08x", ret);
++
++  if (ret != 0)
++  {
++    GST_ELEMENT_ERROR (self, STREAM, ENCODE,
++      (("ms_decoder_decode returned 0x%08x"), ret),
++      NULL);
++    return GST_FLOW_ERROR;
++  }
++
++  GST_BUFFER_SIZE (outbuf) = out_size;
++  GST_BUFFER_OFFSET (outbuf) = GST_BUFFER_OFFSET (inbuf);
++  GST_BUFFER_TIMESTAMP (outbuf) = GST_BUFFER_TIMESTAMP (inbuf);
++  GST_BUFFER_DURATION (outbuf) = GST_BUFFER_DURATION (inbuf);
++
++  return GST_FLOW_OK;
++}
++
++void
++gst_msdec_register (GstPlugin * plugin,
++                    const gchar * element_name,
++                    const gchar * mimetype,
++                    MSCodec * codec)
++{
++  GTypeInfo type_info = {
++    sizeof (GstMSDecClass),
++    (GBaseInitFunc) gst_msdec_base_init,
++    NULL,
++    (GClassInitFunc) gst_msdec_class_init,
++    NULL,
++    NULL,
++    sizeof (GstMSDecClass),
++    0,
++    (GInstanceInitFunc) gst_msdec_init,
++  };
++  gchar * type_name;
++  GType type;
++  GstMSDecClassParams * params;
++  gboolean result;
++
++  type_name = g_strdup_printf ("msdec_%s", element_name);
++
++  type = g_type_register_static (GST_TYPE_BASE_TRANSFORM, type_name,
++      &type_info, 0);
++
++  params = g_new0 (GstMSDecClassParams, 1);
++  params->codec = codec;
++  params->mimetype = mimetype;
++  g_type_set_qdata (type, GST_MSDEC_PARAMS_QDATA, params);
++
++  result = gst_element_register (plugin, type_name, GST_RANK_NONE, type);
++  if (!result)
++  {
++    GST_ERROR_OBJECT (plugin, "failed to register element %s", type_name);
++  }
++
++  g_free (type_name);
++}
+Index: gst-plugins-farsight/ext/mscodecs/gstmsdec.h
+===================================================================
+--- /dev/null
++++ gst-plugins-farsight/ext/mscodecs/gstmsdec.h
+@@ -0,0 +1,77 @@
++/*
++ * Farsight Voice+Video library
++ *
++ *   @author: Ole André Vadla Ravnås <oleavr@gmail.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++#ifndef __GST_MSDEC_H__
++#define __GST_MSDEC_H__
++
++#include <gst/gst.h>
++#include <gst/base/gstbasetransform.h>
++
++#include "mscodec.h"
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_MSDEC \
++  (gst_msdec_get_type ())
++#define GST_MSDEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST ((obj), GST_TYPE_MSDEC, GstMSDec))
++#define GST_MSDEC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST ((klass), GST_TYPE_MSDEC, GstMSDecClass))
++#define GST_IS_MSDEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GST_TYPE_MSDEC))
++#define GST_IS_MSDEC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE ((klass), GST_TYPE_MSDEC))
++#define GST_MSDEC_CLASS_GET_PARAMS(klass) \
++  ((GstMSDecClassParams *) g_type_get_qdata (G_OBJECT_CLASS_TYPE (klass), \
++      GST_MSDEC_PARAMS_QDATA))
++
++typedef struct _GstMSDecClassParams GstMSDecClassParams;
++typedef struct _GstMSDecClass GstMSDecClass;
++typedef struct _GstMSDec GstMSDec;
++
++struct _GstMSDecClassParams
++{
++  MSCodec * codec;
++  const gchar * mimetype;
++};
++
++struct _GstMSDecClass
++{
++  GstBaseTransformClass parent_class;
++};
++
++struct _GstMSDec
++{
++  GstBaseTransform parent;
++
++  MSDecoder * decoder;
++};
++
++GType gst_msdec_get_type (void);
++
++void gst_msdec_register (GstPlugin * plugin,
++                         const gchar * element_name,
++                         const gchar * mimetype,
++                         MSCodec * codec);
++
++G_END_DECLS
++
++#endif /* __GST_MSDEC_H__ */
+Index: gst-plugins-farsight/ext/mscodecs/gstrtprtaudiopay.c
+===================================================================
+--- /dev/null
++++ gst-plugins-farsight/ext/mscodecs/gstrtprtaudiopay.c
+@@ -0,0 +1,164 @@
++/*
++ * Farsight Voice+Video library
++ *
++ *   @author: Ole André Vadla Ravnås <oleavr@gmail.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <string.h>
++
++#include "gstrtprtaudiopay.h"
++#include <gst/rtp/gstrtpbuffer.h>
++
++static GstElementDetails gst_rtp_rtaudio_pay_details = {
++  "RTP Payloader for RTAudio",
++  "Codec/Payloader/Network",
++  "Packetize RTAudio streams into RTP packets",
++  "Ole André Vadla Ravnås <oleavr@gmail.com>"
++};
++
++GST_DEBUG_CATEGORY_STATIC (gst_rtp_rtaudio_pay_debug);
++#define GST_CAT_DEFAULT (gst_rtp_rtaudio_pay_debug)
++
++static GstStaticPadTemplate gst_rtp_rtaudio_pay_sink_template =
++    GST_STATIC_PAD_TEMPLATE ("sink",
++        GST_PAD_SINK,
++        GST_PAD_ALWAYS,
++        GST_STATIC_CAPS ("audio/x-msrta"));
++
++static GstStaticPadTemplate gst_rtp_rtaudio_pay_src_template =
++    GST_STATIC_PAD_TEMPLATE ("src",
++        GST_PAD_SRC,
++        GST_PAD_ALWAYS,
++        GST_STATIC_CAPS ("application/x-rtp, "
++            "media = (string) \"audio\", "
++            "payload = (int) " GST_RTP_PAYLOAD_DYNAMIC_STRING ", "
++            "clock-rate = (int) [ 8000, 16000 ], "
++            "encoding-name = (string) \"RTAudio\""));
++
++GST_BOILERPLATE (GstRtpRTAudioPay, gst_rtp_rtaudio_pay, GstBaseRTPPayload,
++    GST_TYPE_BASE_RTP_PAYLOAD);
++
++static gboolean gst_rtp_rtaudio_pay_setcaps (GstBaseRTPPayload * basepayload,
++                                             GstCaps * caps);
++static GstFlowReturn gst_rtp_rtaudio_pay_handle_buffer (GstBaseRTPPayload * basepayload,
++                                                        GstBuffer * buffer);
++
++static void
++gst_rtp_rtaudio_pay_base_init (gpointer klass)
++{
++  GstElementClass * element_class = GST_ELEMENT_CLASS (klass);
++
++  gst_element_class_add_pad_template (element_class,
++      gst_static_pad_template_get (&gst_rtp_rtaudio_pay_sink_template));
++  gst_element_class_add_pad_template (element_class,
++      gst_static_pad_template_get (&gst_rtp_rtaudio_pay_src_template));
++
++  gst_element_class_set_details (element_class, &gst_rtp_rtaudio_pay_details);
++}
++
++static void
++gst_rtp_rtaudio_pay_class_init (GstRtpRTAudioPayClass * klass)
++{
++  GstBaseRTPPayloadClass * basepayload_class;
++
++  basepayload_class = (GstBaseRTPPayloadClass *) klass;
++
++  parent_class = g_type_class_ref (GST_TYPE_BASE_RTP_PAYLOAD);
++
++  basepayload_class->set_caps = gst_rtp_rtaudio_pay_setcaps;
++  basepayload_class->handle_buffer = gst_rtp_rtaudio_pay_handle_buffer;
++
++  GST_DEBUG_CATEGORY_INIT (gst_rtp_rtaudio_pay_debug, "rtprtaudiopay", 0,
++      "RTAudio RTP payloader");
++}
++
++static void
++gst_rtp_rtaudio_pay_init (GstRtpRTAudioPay * self,
++                          GstRtpRTAudioPayClass * klass)
++{
++}
++
++static gboolean
++gst_rtp_rtaudio_pay_setcaps (GstBaseRTPPayload * basepayload,
++                             GstCaps * caps)
++{
++  GstStructure * structure;
++  const gchar * payload_name;
++  gint rate;
++
++  structure = gst_caps_get_structure (caps, 0);
++
++  payload_name = gst_structure_get_name (structure);
++  if (g_strcasecmp ("audio/x-msrta", payload_name) != 0)
++    goto wrong_caps;
++
++  /* FIXME: rate vs clock-rate? */
++  if (!gst_structure_get_int (structure, "rate", &rate))
++    goto missing_clock_rate;
++
++  if (rate != 8000 && rate != 16000)
++    goto invalid_clock_rate;
++
++  gst_basertppayload_set_options (basepayload, "audio", TRUE, "RTAudio",
++      rate);
++
++  return gst_basertppayload_set_outcaps (basepayload, NULL);
++
++wrong_caps:
++  {
++    GST_ERROR_OBJECT (basepayload, "expected audio/x-msrta, got %s",
++        payload_name);
++    return FALSE;
++  }
++missing_clock_rate:
++  {
++    GST_ERROR_OBJECT (basepayload, "no clock-rate specified");
++    return FALSE;
++  }
++invalid_clock_rate:
++  {
++    GST_ERROR_OBJECT (basepayload, "invalid clock-rate %d specified", rate);
++    return FALSE;
++  }
++}
++
++static GstFlowReturn
++gst_rtp_rtaudio_pay_handle_buffer (GstBaseRTPPayload * basepayload,
++                                   GstBuffer * buffer)
++{
++  guint payload_len;
++  GstBuffer * outbuf;
++  guint8 * payload;
++
++  payload_len = GST_BUFFER_SIZE (buffer);
++  outbuf = gst_rtp_buffer_new_allocate (payload_len, 0, 0);
++
++  payload = gst_rtp_buffer_get_payload (outbuf);
++  memcpy (payload, GST_BUFFER_DATA (buffer), payload_len);
++
++  gst_rtp_buffer_set_marker (outbuf, TRUE);
++
++  GST_BUFFER_TIMESTAMP (outbuf) = GST_BUFFER_TIMESTAMP (buffer);
++  GST_BUFFER_DURATION (outbuf) = GST_BUFFER_DURATION (buffer);
++
++  return gst_basertppayload_push (basepayload, outbuf);
++}
+Index: gst-plugins-farsight/ext/mscodecs/gstrtprtaudiopay.h
+===================================================================
+--- /dev/null
++++ gst-plugins-farsight/ext/mscodecs/gstrtprtaudiopay.h
+@@ -0,0 +1,58 @@
++/*
++ * Farsight Voice+Video library
++ *
++ *   @author: Ole André Vadla Ravnås <oleavr@gmail.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++#ifndef __GST_RTP_RTAUDIO_PAY_H__
++#define __GST_RTP_RTAUDIO_PAY_H__
++
++#include <gst/gst.h>
++#include <gst/rtp/gstbasertppayload.h>
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_RTP_RTAUDIO_PAY \
++  (gst_rtp_rtaudio_pay_get_type ())
++#define GST_RTP_RTAUDIO_PAY(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST ((obj), GST_TYPE_RTP_RTAUDIO_PAY, GstRtpRTAudioPay))
++#define GST_RTP_RTAUDIO_PAY_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST ((klass), GST_TYPE_RTP_RTAUDIO_PAY, GstRtpRTAudioPayClass))
++#define GST_IS_RTP_RTAUDIO_PAY(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GST_TYPE_RTP_RTAUDIO_PAY))
++#define GST_IS_RTP_RTAUDIO_PAY_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE ((klass), GST_TYPE_RTP_RTAUDIO_PAY))
++
++typedef struct _GstRtpRTAudioPayClass GstRtpRTAudioPayClass;
++typedef struct _GstRtpRTAudioPay GstRtpRTAudioPay;
++
++struct _GstRtpRTAudioPayClass
++{
++  GstBaseRTPPayloadClass parent_class;
++};
++
++struct _GstRtpRTAudioPay
++{
++  GstBaseRTPPayload parent;
++};
++
++GType gst_rtp_rtaudio_pay_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_RTP_RTAUDIO_PAY_H__ */
+Index: gst-plugins-farsight/ext/mscodecs/gstrtprtaudiodepay.c
+===================================================================
+--- /dev/null
++++ gst-plugins-farsight/ext/mscodecs/gstrtprtaudiodepay.c
+@@ -0,0 +1,133 @@
++/*
++ * Farsight Voice+Video library
++ *
++ *   @author: Ole André Vadla Ravnås <oleavr@gmail.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include "gstrtprtaudiodepay.h"
++#include <gst/rtp/gstrtpbuffer.h>
++
++static GstElementDetails gst_rtp_rtaudio_depay_details = {
++  "RTP Depayloader for RTAudio",
++  "Codec/Depayloader/Network",
++  "Extracts RTAudio streams from RTP packets",
++  "Ole André Vadla Ravnås <oleavr@gmail.com>"
++};
++
++GST_DEBUG_CATEGORY_STATIC (gst_rtp_rtaudio_depay_debug);
++#define GST_CAT_DEFAULT (gst_rtp_rtaudio_depay_debug)
++
++static GstStaticPadTemplate gst_rtp_rtaudio_depay_sink_template =
++    GST_STATIC_PAD_TEMPLATE ("sink",
++        GST_PAD_SINK,
++        GST_PAD_ALWAYS,
++        GST_STATIC_CAPS ("application/x-rtp, "
++            "media = (string) \"audio\", "
++            "payload = (int) " GST_RTP_PAYLOAD_DYNAMIC_STRING ", "
++            "clock-rate = (int) [ 8000, 16000 ], "
++            "encoding-name = (string) \"RTAudio\""));
++
++static GstStaticPadTemplate gst_rtp_rtaudio_depay_src_template =
++    GST_STATIC_PAD_TEMPLATE ("src",
++        GST_PAD_SRC,
++        GST_PAD_ALWAYS,
++        GST_STATIC_CAPS ("audio/x-msrta"));
++
++GST_BOILERPLATE (GstRtpRTAudioDepay, gst_rtp_rtaudio_depay,
++                 GstBaseRTPDepayload, GST_TYPE_BASE_RTP_DEPAYLOAD);
++
++static gboolean gst_rtp_rtaudio_depay_set_caps (
++  GstBaseRTPDepayload * depayload, GstCaps * caps);
++static GstBuffer * gst_rtp_rtaudio_depay_process (
++    GstBaseRTPDepayload * basedepayload, GstBuffer * buf);
++
++static void
++gst_rtp_rtaudio_depay_base_init (gpointer klass)
++{
++  GstElementClass * element_class = GST_ELEMENT_CLASS (klass);
++
++  gst_element_class_add_pad_template (element_class,
++      gst_static_pad_template_get (&gst_rtp_rtaudio_depay_sink_template));
++  gst_element_class_add_pad_template (element_class,
++      gst_static_pad_template_get (&gst_rtp_rtaudio_depay_src_template));
++
++  gst_element_class_set_details (element_class, &gst_rtp_rtaudio_depay_details);
++}
++
++static void
++gst_rtp_rtaudio_depay_class_init (GstRtpRTAudioDepayClass * klass)
++{
++  GstBaseRTPDepayloadClass * basedepayload_class;
++
++  basedepayload_class = (GstBaseRTPDepayloadClass *) klass;
++
++  parent_class = g_type_class_ref (GST_TYPE_BASE_RTP_DEPAYLOAD);
++
++  basedepayload_class->set_caps = gst_rtp_rtaudio_depay_set_caps;
++  basedepayload_class->process = gst_rtp_rtaudio_depay_process;
++
++  GST_DEBUG_CATEGORY_INIT (gst_rtp_rtaudio_depay_debug, "rtprtaudiodepay", 0,
++      "RTAudio RTP depayloader");
++}
++
++static void
++gst_rtp_rtaudio_depay_init (GstRtpRTAudioDepay * self,
++                            GstRtpRTAudioDepayClass * klass)
++{
++}
++
++static gboolean
++gst_rtp_rtaudio_depay_set_caps (GstBaseRTPDepayload * depayload,
++                                GstCaps * caps)
++{
++  GstStructure * structure;
++  gint rate;
++  GstCaps * src_caps;
++  gboolean ret;
++
++  structure = gst_caps_get_structure (caps, 0);
++  gst_structure_get_int (structure, "clock-rate", &rate);
++
++  src_caps = gst_caps_new_simple ("audio/x-msrta",
++      "rate", G_TYPE_INT, rate,
++      "channels", G_TYPE_INT, 1,
++      NULL);
++
++  ret = gst_pad_set_caps (GST_BASE_RTP_DEPAYLOAD_SRCPAD (depayload), src_caps);
++
++  gst_caps_unref (src_caps);
++
++  depayload->clock_rate = rate;
++
++  return ret;
++}
++
++static GstBuffer *
++gst_rtp_rtaudio_depay_process (GstBaseRTPDepayload * basedepayload,
++                               GstBuffer * buf)
++{
++  GstBuffer * outbuf;
++
++  outbuf = gst_rtp_buffer_get_payload_buffer (buf);
++
++  return outbuf;
++}
+Index: gst-plugins-farsight/ext/mscodecs/gstrtprtaudiodepay.h
+===================================================================
+--- /dev/null
++++ gst-plugins-farsight/ext/mscodecs/gstrtprtaudiodepay.h
+@@ -0,0 +1,58 @@
++/*
++ * Farsight Voice+Video library
++ *
++ *   @author: Ole André Vadla Ravnås <oleavr@gmail.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU Library General Public
++ * License along with this library; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ */
++
++#ifndef __GST_RTP_RTAUDIO_DEPAY_H__
++#define __GST_RTP_RTAUDIO_DEPAY_H__
++
++#include <gst/gst.h>
++#include <gst/rtp/gstbasertpdepayload.h>
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_RTP_RTAUDIO_DEPAY \
++  (gst_rtp_rtaudio_depay_get_type ())
++#define GST_RTP_RTAUDIO_DEPAY(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST ((obj), GST_TYPE_RTP_RTAUDIO_DEPAY, GstRtpRTAudioDepay))
++#define GST_RTP_RTAUDIO_DEPAY_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST ((klass), GST_TYPE_RTP_RTAUDIO_DEPAY, GstRtpRTAudioDepayClass))
++#define GST_IS_RTP_RTAUDIO_DEPAY(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GST_TYPE_RTP_RTAUDIO_DEPAY))
++#define GST_IS_RTP_RTAUDIO_DEPAY_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE ((klass), GST_TYPE_RTP_RTAUDIO_DEPAY))
++
++typedef struct _GstRtpRTAudioDepayClass GstRtpRTAudioDepayClass;
++typedef struct _GstRtpRTAudioDepay GstRtpRTAudioDepay;
++
++struct _GstRtpRTAudioDepayClass
++{
++  GstBaseRTPDepayloadClass parent_class;
++};
++
++struct _GstRtpRTAudioDepay
++{
++  GstBaseRTPDepayload parent;
++};
++
++GType gst_rtp_rtaudio_depay_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_RTP_RTAUDIO_DEPAY_H__ */

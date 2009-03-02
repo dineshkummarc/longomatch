@@ -1,0 +1,10 @@
+/Makefile.am////*///
+/README////*///
+/gstogg.c////*///
+/gstoggaviparse.c////*///
+/gstoggdemux.h////*///
+/gstoggmux.h////*///
+/gstoggparse.c////*///
+/gstogmparse.c////*///
+/gstoggdemux.c////*///
+/gstoggmux.c////*///

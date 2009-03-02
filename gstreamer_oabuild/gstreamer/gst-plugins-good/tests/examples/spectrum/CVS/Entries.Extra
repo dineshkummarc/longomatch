@@ -1,0 +1,5 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/spectrum-example.c////*///
+/demo-audiotest.c////*///
+/demo-osssrc.c////*///

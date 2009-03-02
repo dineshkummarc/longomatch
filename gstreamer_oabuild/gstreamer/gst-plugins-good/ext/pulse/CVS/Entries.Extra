@@ -1,0 +1,16 @@
+/Makefile.am////*///
+/plugin.c////*///
+/pulsemixer.c////*///
+/pulsemixer.h////*///
+/pulsemixerctrl.c////*///
+/pulsemixerctrl.h////*///
+/pulsemixertrack.c////*///
+/pulsemixertrack.h////*///
+/pulseprobe.c////*///
+/pulseprobe.h////*///
+/pulsesink.c////*///
+/pulsesink.h////*///
+/pulsesrc.c////*///
+/pulsesrc.h////*///
+/pulseutil.c////*///
+/pulseutil.h////*///

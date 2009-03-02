@@ -1,0 +1,20 @@
+/Makefile.am/1.1/Tue Sep  2 12:04:30 2008//
+/flumpegdemux.c/1.1/Tue Sep  2 12:04:30 2008//
+/flutspatinfo.c/1.1/Tue Sep  2 12:04:30 2008//
+/flutspatinfo.h/1.1/Tue Sep  2 12:04:30 2008//
+/flutspmtinfo.c/1.1/Tue Sep  2 12:04:30 2008//
+/flutspmtinfo.h/1.1/Tue Sep  2 12:04:30 2008//
+/flutspmtstreaminfo.c/1.1/Tue Sep  2 12:04:30 2008//
+/flutspmtstreaminfo.h/1.1/Tue Sep  2 12:04:31 2008//
+/gstmpegdefs.h/1.1/Tue Sep  2 12:04:31 2008//
+/gstmpegdemux.c/1.2/Tue Sep  2 17:43:42 2008//
+/gstmpegdemux.h/1.1/Tue Sep  2 12:04:31 2008//
+/gstmpegdesc.c/1.1/Tue Sep  2 12:04:31 2008//
+/gstmpegdesc.h/1.1/Tue Sep  2 12:04:31 2008//
+/gstmpegtsdemux.c/1.2/Tue Sep  2 17:43:42 2008//
+/gstmpegtsdemux.h/1.1/Tue Sep  2 12:04:32 2008//
+/gstpesfilter.c/1.1/Tue Sep  2 12:04:32 2008//
+/gstpesfilter.h/1.1/Tue Sep  2 12:04:32 2008//
+/gstsectionfilter.c/1.1/Tue Sep  2 12:04:32 2008//
+/gstsectionfilter.h/1.1/Tue Sep  2 12:04:32 2008//
+D

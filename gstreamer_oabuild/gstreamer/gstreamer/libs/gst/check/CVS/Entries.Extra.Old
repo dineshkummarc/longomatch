@@ -1,0 +1,6 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/gstbufferstraw.c////*///
+/gstbufferstraw.h////*///
+/gstcheck.c////*///
+/gstcheck.h////*///

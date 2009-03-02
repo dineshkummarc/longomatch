@@ -1,0 +1,73 @@
+floor0.lo: floor0.c \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/stdlib.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/_mingw.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/include/stddef.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/string.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/math.h \
+  C:/msys/1.0/include/ogg/ogg.h C:/msys/1.0/include/ogg/os_types.h \
+  ../include/vorbis/codec.h codec_internal.h envelope.h mdct.h codebook.h \
+  psy.h smallft.h backends.h bitrate.h os.h ../config.h misc.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/malloc.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/memory.h \
+  highlevel.h registry.h lpc.h lsp.h scales.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/stdio.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/include/stdarg.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/sys/types.h
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/stdlib.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/_mingw.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/include/stddef.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/string.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/math.h:
+
+C:/msys/1.0/include/ogg/ogg.h:
+
+C:/msys/1.0/include/ogg/os_types.h:
+
+../include/vorbis/codec.h:
+
+codec_internal.h:
+
+envelope.h:
+
+mdct.h:
+
+codebook.h:
+
+psy.h:
+
+smallft.h:
+
+backends.h:
+
+bitrate.h:
+
+os.h:
+
+../config.h:
+
+misc.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/malloc.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/memory.h:
+
+highlevel.h:
+
+registry.h:
+
+lpc.h:
+
+lsp.h:
+
+scales.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/stdio.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/include/stdarg.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/sys/types.h:

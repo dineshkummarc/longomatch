@@ -1,0 +1,14 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/audioconvert.c////*///
+/audioconvert.h////*///
+/audioconvert.vcproj////*///
+/channelmixtest.c////*///
+/gstaudioconvert.c////*///
+/gstaudioconvert.h////*///
+/gstaudioquantize.c////*///
+/gstaudioquantize.h////*///
+/gstchannelmix.c////*///
+/gstchannelmix.h////*///
+/plugin.c////*///
+/plugin.h////*///

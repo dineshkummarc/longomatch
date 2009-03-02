@@ -1,0 +1,7 @@
+/Makefile.am////*///
+/gstdshowaudiosrc.c////*///
+/gstdshowaudiosrc.h////*///
+/gstdshowsrcwrapper.c////*///
+/gstdshowsrcwrapper.h////*///
+/gstdshowvideosrc.c////*///
+/gstdshowvideosrc.h////*///

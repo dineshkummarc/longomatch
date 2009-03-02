@@ -1,0 +1,16 @@
+/Makefile.am/1.4/Sat May 24 14:08:23 2008//
+/gstgio.c/1.11/Sat May 24 14:08:23 2008//
+/gstgio.h/1.3/Sat May 24 14:08:23 2008//
+/gstgiobasesink.c/1.4/Sat May 24 14:08:23 2008//
+/gstgiobasesink.h/1.2/Sat May 24 14:08:23 2008//
+/gstgiobasesrc.c/1.8/Sat May 24 14:08:23 2008//
+/gstgiobasesrc.h/1.2/Sat May 24 14:08:23 2008//
+/gstgiosink.c/1.11/Sat May 24 14:08:23 2008//
+/gstgiosink.h/1.7/Sat May 24 14:08:23 2008//
+/gstgiosrc.c/1.10/Sat May 24 14:08:23 2008//
+/gstgiosrc.h/1.7/Sat May 24 14:08:23 2008//
+/gstgiostreamsink.c/1.3/Sat May 24 14:08:23 2008//
+/gstgiostreamsink.h/1.2/Sat May 24 14:08:23 2008//
+/gstgiostreamsrc.c/1.3/Sat May 24 14:08:23 2008//
+/gstgiostreamsrc.h/1.2/Sat May 24 14:08:23 2008//
+D

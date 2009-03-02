@@ -1,0 +1,8 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/design-audiosinks.txt////*///
+/version.entities.in////*///
+D/design///////
+D/libs///////
+D/plugins///////
+D/random///////

@@ -1,0 +1,4 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/mixer.c////*///
+/mixer.h////*///

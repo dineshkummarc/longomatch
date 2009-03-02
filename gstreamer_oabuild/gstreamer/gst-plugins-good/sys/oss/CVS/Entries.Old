@@ -1,0 +1,20 @@
+/.cvsignore/1.1/Sun Apr  4 02:39:29 2004//
+/Makefile.am/1.33/Sun Jun 11 13:57:19 2006//
+/common.h/1.1/Mon Apr 10 19:55:31 2006//
+/gstossaudio.c/1.22/Fri Dec  7 20:07:49 2007//
+/gstossdmabuffer.c/1.6/Sat Apr  8 21:21:45 2006//
+/gstossdmabuffer.h/1.6/Thu Jun  1 21:07:26 2006//
+/gstosshelper.c/1.12/Tue Apr  8 19:49:34 2008//
+/gstosshelper.h/1.4/Tue Aug 23 13:26:21 2005//
+/gstossmixer.c/1.24/Wed Aug 16 09:25:17 2006//
+/gstossmixer.h/1.10/Tue Dec  6 19:44:57 2005//
+/gstossmixerelement.c/1.9/Wed Aug 16 13:48:00 2006//
+/gstossmixerelement.h/1.4/Wed Aug 16 09:25:17 2006//
+/gstossmixertrack.c/1.4/Wed Sep 12 09:13:39 2007//
+/gstossmixertrack.h/1.2/Tue Dec  6 19:44:57 2005//
+/gstosssink.c/1.124/Tue Apr  8 19:49:34 2008//
+/gstosssink.h/1.27/Thu Jun  1 21:07:26 2006//
+/gstosssrc.c/1.76/Tue Apr  8 19:49:34 2008//
+/gstosssrc.h/1.20/Tue Mar 11 23:12:04 2008//
+/oss_probe.c/1.6/Sat Dec 10 14:57:48 2005//
+D

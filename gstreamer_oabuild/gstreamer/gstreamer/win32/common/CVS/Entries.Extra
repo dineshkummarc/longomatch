@@ -1,0 +1,14 @@
+/dirent.c////*///
+/dirent.h////*///
+/gtchar.h////*///
+/libgstcontroller.def////*///
+/libgstdataprotocol.def////*///
+/libgstnet.def////*///
+/config.h////*///
+/gstconfig.h////*///
+/gstenumtypes.c////*///
+/gstenumtypes.h////*///
+/gstversion.h////*///
+/libgstbase.def////*///
+/config.h.in////*///
+/libgstreamer.def////*///

@@ -1,0 +1,16 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/gstcontroller.c////*///
+/gstcontroller.h////*///
+/gstcontrollerprivate.h////*///
+/gstcontrolsource.c////*///
+/gstcontrolsource.h////*///
+/gsthelper.c////*///
+/gstinterpolation.c////*///
+/gstinterpolationcontrolsource.c////*///
+/gstinterpolationcontrolsource.h////*///
+/gstinterpolationcontrolsourceprivate.h////*///
+/gstlfocontrolsource.c////*///
+/gstlfocontrolsource.h////*///
+/gstlfocontrolsourceprivate.h////*///
+/lib.c////*///

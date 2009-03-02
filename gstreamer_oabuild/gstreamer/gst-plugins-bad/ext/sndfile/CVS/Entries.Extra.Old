@@ -1,0 +1,7 @@
+/Makefile.am////*///
+/gstsf.c////*///
+/gstsf.h////*///
+/gstsfsink.c////*///
+/gstsfsink.h////*///
+/gstsfsrc.c////*///
+/gstsfsrc.h////*///

@@ -1,0 +1,10 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/descriptions.h////*///
+/install-plugins.c////*///
+/install-plugins.h////*///
+/missing-plugins.h////*///
+/pbutils.h////*///
+/descriptions.c////*///
+/pbutils.c////*///
+/missing-plugins.c////*///

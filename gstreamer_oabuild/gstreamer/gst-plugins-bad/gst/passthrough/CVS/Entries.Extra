@@ -1,0 +1,6 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/filter.func////*///
+/gstpassthrough.c////*///
+/gstpassthrough.h////*///
+/passthrough.vcproj////*///

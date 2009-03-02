@@ -1,0 +1,6 @@
+/stress-playbin.c////*///
+/stress-xoverlay.c////*///
+/.cvsignore////*///
+/Makefile.am////*///
+/test-textoverlay.c////*///
+/test-scale.c////*///

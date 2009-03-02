@@ -1,0 +1,5 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/gst-inspect-check.in////*///
+/struct_i386.h////*///
+/struct_size.c////*///

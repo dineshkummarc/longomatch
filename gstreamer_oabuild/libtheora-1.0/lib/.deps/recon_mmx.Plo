@@ -1,0 +1,47 @@
+recon_mmx.lo: enc/x86_32/recon_mmx.c enc/x86_32/../codec_internal.h \
+  ../config.h enc/x86_32/../dsp.h ../include/theora/theora.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/include/stddef.h \
+  C:/msys/1.0/include/ogg/ogg.h C:/msys/1.0/include/ogg/os_types.h \
+  enc/x86_32/../../cpu.h enc/x86_32/../../internal.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/stdlib.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/_mingw.h \
+  ../include/theora/codec.h enc/x86_32/../../dec/ocintrin.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/math.h \
+  enc/x86_32/../../dec/huffman.h enc/x86_32/../../dec/ocintrin.h \
+  enc/x86_32/../../dec/quant.h enc/x86_32/../encoder_huffman.h
+
+enc/x86_32/../codec_internal.h:
+
+../config.h:
+
+enc/x86_32/../dsp.h:
+
+../include/theora/theora.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/include/stddef.h:
+
+C:/msys/1.0/include/ogg/ogg.h:
+
+C:/msys/1.0/include/ogg/os_types.h:
+
+enc/x86_32/../../cpu.h:
+
+enc/x86_32/../../internal.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/stdlib.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/_mingw.h:
+
+../include/theora/codec.h:
+
+enc/x86_32/../../dec/ocintrin.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/math.h:
+
+enc/x86_32/../../dec/huffman.h:
+
+enc/x86_32/../../dec/ocintrin.h:
+
+enc/x86_32/../../dec/quant.h:
+
+enc/x86_32/../encoder_huffman.h:

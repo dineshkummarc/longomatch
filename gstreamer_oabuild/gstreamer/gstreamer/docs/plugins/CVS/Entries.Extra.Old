@@ -1,0 +1,15 @@
+D/inspect///////
+D/tmpl///////
+/.cvsignore////*///
+/Makefile.am////*///
+/gstreamer-plugins-docs.sgml////*///
+/gstreamer-plugins-sections.txt////*///
+/gstreamer-plugins.args////*///
+/gstreamer-plugins.hierarchy////*///
+/gstreamer-plugins.interfaces////*///
+/gstreamer-plugins.prerequisites////*///
+/gstreamer-plugins.signals////*///
+/gstreamer-plugins.types////*///
+/inspect-build.stamp////*///
+/inspect.stamp////*///
+/scanobj-build.stamp////*///

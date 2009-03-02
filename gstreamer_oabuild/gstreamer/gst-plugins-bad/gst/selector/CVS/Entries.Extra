@@ -1,0 +1,9 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/gstinputselector.h////*///
+/gstoutputselector.h////*///
+/gstselector-marshal.list////*///
+/gstselector.c////*///
+/selector.vcproj////*///
+/gstoutputselector.c////*///
+/gstinputselector.c////*///

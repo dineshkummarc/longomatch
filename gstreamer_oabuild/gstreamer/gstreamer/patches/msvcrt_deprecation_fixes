@@ -1,0 +1,165 @@
+Index: gstreamer/gst/gstregistry.c
+===================================================================
+--- gstreamer.orig/gst/gstregistry.c
++++ gstreamer/gst/gstregistry.c
+@@ -106,6 +106,14 @@
+ #include "gstmarshal.h"
+ #include "gstfilter.h"
+ 
++#ifdef _MSC_VER
++#include "msvc-crt-compat.h"
++#define stat _stat
++#define STAT_TYPE struct _stat
++#else
++#define STAT_TYPE struct stat
++#endif
++
+ #define GST_CAT_DEFAULT GST_CAT_REGISTRY
+ 
+ /* the one instance of the default registry and the mutex protecting the
+@@ -853,7 +861,7 @@ gst_registry_scan_path_level (GstRegistr
+      * was already seen by the registry, we ignore it */
+     plugin = gst_registry_lookup (registry, filename);
+     if (plugin) {
+-      struct stat file_status;
++      STAT_TYPE file_status;
+ 
+       if (stat (filename, &file_status)) {
+         /* Plugin will be removed from cache after the scan completes if it
+Index: gstreamer/gst/gstinfo.c
+===================================================================
+--- gstreamer.orig/gst/gstinfo.c
++++ gstreamer/gst/gstinfo.c
+@@ -100,9 +100,6 @@
+ #ifdef HAVE_UNISTD_H
+ #  include <unistd.h>           /* getpid on UNIX */
+ #endif
+-#ifdef HAVE_PROCESS_H
+-#  include <process.h>          /* getpid on win32 */
+-#endif
+ #include <string.h>             /* G_VA_COPY */
+ 
+ #include "gst_private.h"
+@@ -113,6 +110,12 @@
+ #endif
+ #include <glib/gprintf.h>       /* g_sprintf */
+ 
++#ifdef G_OS_WIN32
++#  define WIN32_LEAN_AND_MEAN
++#  include <windows.h>          /* GetCurrentProcessId */
++#  undef WIN32_LEAN_AND_MEAN
++#endif
++
+ /* underscore is to prevent conflict with GST_CAT_DEBUG define */
+ GST_DEBUG_CATEGORY_STATIC (_GST_CAT_DEBUG);
+ 
+@@ -655,7 +658,11 @@ gst_debug_log_default (GstDebugCategory 
+   if (level > gst_debug_category_get_threshold (category))
+     return;
+ 
++#ifndef G_OS_WIN32
+   pid = getpid ();
++#else
++  pid = GetCurrentProcessId ();
++#endif
+ 
+   /* color info */
+   if (gst_debug_is_colored ()) {
+Index: gstreamer/gst/gstregistrybinary.c
+===================================================================
+--- gstreamer.orig/gst/gstregistrybinary.c
++++ gstreamer/gst/gstregistrybinary.c
+@@ -69,6 +69,9 @@
+ 
+ #include "glib-compat-private.h"
+ 
++#ifdef _MSC_VER
++#include "msvc-crt-compat.h"
++#endif
+ 
+ #define GST_CAT_DEFAULT GST_CAT_REGISTRY
+ 
+Index: gstreamer/gst/gsttrace.c
+===================================================================
+--- gstreamer.orig/gst/gsttrace.c
++++ gstreamer/gst/gsttrace.c
+@@ -65,6 +65,10 @@
+ 
+ #include "gsttrace.h"
+ 
++#ifdef _MSC_VER
++#include "msvc-crt-compat.h"
++#endif
++
+ static
+ #ifdef __inline__
+   __inline__
+Index: gstreamer/msvc-crt-compat.h
+===================================================================
+--- /dev/null
++++ gstreamer/msvc-crt-compat.h
+@@ -0,0 +1,19 @@
++#ifndef __MSVC_CRT_COMPAT_H__
++#define __MSVC_CRT_COMPAT_H__
++
++/* Because of annoying CRTs */
++#ifdef _MSC_VER
++#  define open _open
++#  define close _close
++#  define read _read
++#  define write _write
++#  ifndef lseek
++#    define lseek _lseek
++#  endif
++#  define fdopen _fdopen
++#  define dup _dup
++#  define strupr _strupr
++#  define unlink _unlink
++#endif
++
++#endif /* __MSVC_CRT_COMPAT_H__ */
+Index: gstreamer/libs/gst/net/gstnetclientclock.c
+===================================================================
+--- gstreamer.orig/libs/gst/net/gstnetclientclock.c
++++ gstreamer/libs/gst/net/gstnetclientclock.c
+@@ -61,6 +61,10 @@
+ #include <io.h>
+ #endif
+ 
++#ifdef _MSC_VER
++#include "msvc-crt-compat.h"
++#endif
++
+ GST_DEBUG_CATEGORY_STATIC (ncc_debug);
+ #define GST_CAT_DEFAULT (ncc_debug)
+ 
+Index: gstreamer/gst/gstpreset.c
+===================================================================
+--- gstreamer.orig/gst/gstpreset.c
++++ gstreamer/gst/gstpreset.c
+@@ -92,6 +92,10 @@
+ #endif
+ #include <glib/gstdio.h>
+ 
++#ifdef _MSC_VER
++#include "msvc-crt-compat.h"
++#endif
++
+ #define GST_CAT_DEFAULT preset_debug
+ GST_DEBUG_CATEGORY_STATIC (GST_CAT_DEFAULT);
+ 
+Index: gstreamer/plugins/elements/gstfilesrc.c
+===================================================================
+--- gstreamer.orig/plugins/elements/gstfilesrc.c
++++ gstreamer/plugins/elements/gstfilesrc.c
+@@ -48,6 +48,10 @@
+ /* Prevent stat.h from defining the stat* functions as
+  * _stat*, since we're explicitly overriding that */
+ #undef _INC_STAT_INL
++
++#ifdef _MSC_VER
++#include "msvc-crt-compat.h"
++#endif
+ #endif
+ #include <sys/stat.h>
+ #include <fcntl.h>

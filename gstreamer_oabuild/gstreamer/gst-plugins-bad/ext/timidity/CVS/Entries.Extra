@@ -1,0 +1,5 @@
+/Makefile.am////*///
+/gsttimidity.h////*///
+/gsttimidity.c////*///
+/gstwildmidi.c////*///
+/gstwildmidi.h////*///

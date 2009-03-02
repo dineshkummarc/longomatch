@@ -1,0 +1,14 @@
+/Makefile.am////*///
+/avcodec.h////*///
+/dsputil.c////*///
+/dsputil.h////*///
+/ffmpegcolorspace.vcproj////*///
+/gstffmpeg.c////*///
+/gstffmpegcodecmap.h////*///
+/gstffmpegcolorspace.h////*///
+/imgconvert.c////*///
+/imgconvert_template.h////*///
+/mem.c////*///
+/utils.c////*///
+/gstffmpegcodecmap.c////*///
+/gstffmpegcolorspace.c////*///

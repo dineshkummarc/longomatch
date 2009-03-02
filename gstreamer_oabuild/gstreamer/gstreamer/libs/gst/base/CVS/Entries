@@ -1,0 +1,20 @@
+/.cvsignore/1.3/Sat May 24 14:08:01 2008//
+/Makefile.am/1.18/Sat May 24 14:08:01 2008//
+/README/1.7/Sat May 24 14:08:01 2008//
+/gstadapter.c/1.25/Tue May 27 12:29:32 2008//
+/gstadapter.h/1.12/Sat May 24 14:08:01 2008//
+/gstcollectpads.c/1.54/Sat May 24 14:08:01 2008//
+/gstcollectpads.h/1.24/Tue May 27 12:29:32 2008//
+/gstdataqueue.c/1.6/Sat May 24 14:08:01 2008//
+/gstdataqueue.h/1.3/Sat May 24 14:08:01 2008//
+/gstpushsrc.c/1.12/Sat May 24 14:08:01 2008//
+/gstpushsrc.h/1.8/Sat May 24 14:08:01 2008//
+/gsttypefindhelper.h/1.4/Sat May 24 14:08:01 2008//
+/gstbasesink.h/1.50/Sun Aug  3 17:36:09 2008//
+/gstbasesrc.h/1.50/Sun Aug  3 17:36:09 2008//
+/gsttypefindhelper.c/1.23/Sun Aug  3 17:36:09 2008//
+/gstbasesink.c/1.214/Wed Aug 27 14:57:48 2008//
+/gstbasesrc.c/1.164/Wed Aug 27 14:57:48 2008//
+/gstbasetransform.c/1.123/Wed Aug 27 14:57:49 2008//
+/gstbasetransform.h/1.40/Wed Aug 27 14:57:49 2008//
+D

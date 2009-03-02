@@ -1,0 +1,4 @@
+/Makefile.am////*///
+/gstsdp.h////*///
+/gstsdpmessage.c////*///
+/gstsdpmessage.h////*///

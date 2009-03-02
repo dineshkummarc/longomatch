@@ -1,0 +1,11 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/README////*///
+/RTjpeg.c////*///
+/RTjpeg.h////*///
+/gstrtjpeg.c////*///
+/gstrtjpegdec.c////*///
+/gstrtjpegdec.h////*///
+/gstrtjpegenc.c////*///
+/gstrtjpegenc.h////*///
+/rtjpeg.vcproj////*///

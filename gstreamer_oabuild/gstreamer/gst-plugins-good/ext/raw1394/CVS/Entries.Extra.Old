@@ -1,0 +1,9 @@
+/.cvsignore////*///
+/gst1394probe.c////*///
+/gst1394probe.h////*///
+/gstdv1394src.h////*///
+/gstdv1394src.c////*///
+/Makefile.am////*///
+/gst1394.c////*///
+/gsthdv1394src.h////*///
+/gsthdv1394src.c////*///

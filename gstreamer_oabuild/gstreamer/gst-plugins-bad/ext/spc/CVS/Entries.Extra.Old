@@ -1,0 +1,5 @@
+/Makefile.am////*///
+/gstspc.c////*///
+/gstspc.h////*///
+/tag.c////*///
+/tag.h////*///

@@ -1,0 +1,14 @@
+D/caps///////
+D/debug///////
+D/dlopen///////
+D/elements///////
+D/indexers///////
+D/parse///////
+D/plugin///////
+D/refcounting///////
+D/states///////
+D/threads///////
+/.cvsignore////*///
+/Makefile.am////*///
+/Rules////*///
+D/bins///////

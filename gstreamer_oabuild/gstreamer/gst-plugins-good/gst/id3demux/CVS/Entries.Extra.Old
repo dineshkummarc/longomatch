@@ -1,0 +1,8 @@
+/Makefile.am////*///
+/gstid3demux.c////*///
+/gstid3demux.h////*///
+/id3tags.c////*///
+/id3tags.h////*///
+/id3v2.4.0-frames.txt////*///
+/id3v2.4.0-structure.txt////*///
+/id3v2frames.c////*///

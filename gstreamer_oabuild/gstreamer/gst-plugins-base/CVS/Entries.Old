@@ -1,0 +1,30 @@
+D/docs////
+D/ext////
+D/gst////
+D/gst-libs////
+D/m4////
+D/pkgconfig////
+D/po////
+D/sys////
+D/tests////
+D/tools////
+D/win32////
+D/common////
+/.cvsignore/1.7/Sat May 24 14:08:23 2008//
+/AUTHORS/1.8/Sat May 24 14:08:23 2008//
+/COPYING/1.1/Sat May 24 14:08:23 2008//
+/COPYING.LIB/1.1/Sat May 24 14:08:23 2008//
+/INSTALL/1.1/Sat May 24 14:08:23 2008//
+/LICENSE_readme/1.10/Sat May 24 14:08:23 2008//
+/MAINTAINERS/1.2/Sat May 24 14:08:23 2008//
+/Makefile.am/1.82/Sat May 24 14:08:23 2008//
+/README/1.14/Sat May 24 14:08:23 2008//
+/REQUIREMENTS/1.19/Sat May 24 14:08:23 2008//
+/autogen.sh/1.55/Sat May 24 14:08:23 2008//
+/gst-plugins-base.spec.in/1.41/Sat May 24 14:08:23 2008//
+/NEWS/1.39/Sun Aug  3 17:36:26 2008//
+/RELEASE/1.43/Sun Aug  3 17:36:26 2008//
+/gst-plugins-base.doap/1.13/Sun Aug  3 17:36:26 2008//
+/ChangeLog/1.4119/Mon Sep  8 16:25:42 2008//
+/configure.ac/1.745/Mon Sep  8 21:03:58 2008//
+D/check////

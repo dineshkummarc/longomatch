@@ -1,0 +1,6 @@
+/Makefile.am////*///
+/esdmon.c////*///
+/esdmon.h////*///
+/esdsink.c////*///
+/esdsink.h////*///
+/gstesd.c////*///

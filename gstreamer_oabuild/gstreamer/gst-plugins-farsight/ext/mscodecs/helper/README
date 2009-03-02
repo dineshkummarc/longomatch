@@ -1,0 +1,11 @@
+Prerequisities:
+  - libglib2.0-dev
+  - libgsf-1-dev
+  - cabextract
+
+Steps:
+$ ./waf configure
+$ ./waf build
+$ ./mscodecshelper.py
+$ sudo install -v -D -o root -g root -m 644 RTMPLTFM.dll /usr/local/lib/win32/RTMPLTFM.dll
+

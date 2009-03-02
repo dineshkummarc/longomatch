@@ -1,0 +1,534 @@
+03/15/06 22:07:35 philippe.kalaf [1430]
+
+	* ext/ice/gsticesrc.c:
+	Add an unlock function to icesrc to correctly handle state changes
+ 
+03/07/06 21:36:49 philippe.kalaf [1100]
+
+	* ext/ice/gsticesrc.c:
+	* ext/ice/jingle_c.cpp:
+	* ext/jrtp/gstrtprecv.c:
+	* ext/jrtp/jrtplib_c.cpp:
+	* gst/rtpjitterbuffer/gstrtpjitterbuffer.c:
+	Some fixes to several elements for gtalk, notably in dealing with CN packets
+	
+03/06/06 19:04:04 philippe.kalaf [1056]
+
+	* configure.ac:
+	* ext/Makefile.am:
+	* ext/ice/jingle_c.cpp:
+	Enabled building icesink/src
+
+Tue Feb 21 19:39:22 GMT 2006 philippe.kalaf@collabora.co.uk
+
+    * Fixed debug message for Outgoing
+
+Mon Feb 20 02:11:02 GMT 2006 philippe.kalaf@collabora.co.uk
+
+    * Better debugging for rtpbin
+
+Thu Feb 16 05:27:03 GMT 2006 philippe.kalaf@collabora.co.uk
+
+    * Fixed global rtpsrc/rtcpsrc pads when using multiple rtpbins from a same process, this requires todays patches to jrtplib
+
+Thu Feb 16 05:21:32 GMT 2006 philippe.kalaf@collabora.co.uk
+
+    * Fixed icesrc (removed get_caps function)
+
+Wed Feb 15 10:25:01 GMT 2006 rob.taylor@collabora.co.uk
+
+    * comment out unused veriable in ./gst/rtpjitterbuffer/gstrtpjitterbuffer.c
+
+Wed Feb 15 10:24:38 GMT 2006 rob.taylor@collabora.co.uk
+
+    * fix malformed ./ext/Makefile.am
+
+Wed Feb 15 18:12:01 GMT 2006 philippe.kalaf@collabora.co.uk
+
+    * Cleanup of rtpbin and added bypass_udp
+
+Wed Feb 15 18:10:48 GMT 2006 philippe.kalaf@collabora.co.uk
+
+    * Added icesrc/sink elements
+
+Tue Feb 14 20:34:06 GMT 2006 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Refactored add_to_queue mechanism, fixed problem of late calls to queue_release causing pauses in output.
+
+Tue Feb 14 16:13:39 GMT 2006 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Added queue_delay to rtpbin.
+
+Tue Feb 14 21:01:57 GMT 2006 philippe.kalaf@collabora.co.uk
+
+    * Added a bypass_udp property that dosen't use udpsink/src but instead creates ghostpads for other sink/srcs
+
+Tue Feb 14 21:00:27 GMT 2006 philippe.kalaf@collabora.co.uk
+
+    * Separated ERROR_CFLAGS from GST_CFLAGS 
+
+Thu Jan 19 14:42:20 GMT 2006 philippe.kalaf@collabora.co.uk
+
+    * Making rtpbin work with jrtplib.3.4.0
+
+Wed Feb 1 18:12:34 GMT 2006 philippe.kalaf@collabora.co.uk
+
+    * Zeeshan's code of moving the jitterbuffer to rtpbin
+
+Thu Feb 2 02:11:38 GMT 2006 philippe.kalaf@collabora.co.uk
+
+    * Fixed some indents and temporarly removed the clock provider (erroring alot)
+
+Wed Jan 18 13:56:05 GMT 2006 philippe.kalaf@collabora.co.uk
+
+    * Tests need to work with change in property in rtpbin
+
+Sun Jan 15 20:13:01 GMT 2006 rob.taylor@collabora.co.uk
+
+    * removed add-destination signal, changed add-destination property to 'destinations' and allow setting a list
+
+Wed Dec 21 13:17:36 GMT 2005 rob.taylor@collabora.co.uk
+
+    * added _boring files so darcs whatsnew is more useful ;)
+
+Mon Dec 12 17:34:54 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Fixed encoding name for the MSGSM template.
+
+Fri Oct 28 12:48:31 BST 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Add sink template when initializing the element.
+
+Mon Dec 12 17:31:38 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Fixed sdpbin to compile against latest gstreamer CVS-head.
+
+Mon Dec 12 17:28:17 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Use a playout buffer of 100msec.
+
+Fri Dec 9 16:44:35 GMT 2005 rob.taylor@collabora.co.uk
+
+    * fix memleak in jrtpsession_setport
+
+Fri Dec 2 21:24:41 GMT 2005 andre.magalhaes@indt.org.br
+
+    * fix_tests_compilation_gst_0_10_pre
+
+    Fixed tests compilation with gstreamer 0.10 pre-release.
+
+Fri Dec 2 16:40:17 GMT 2005 andre.magalhaes@indt.org.br
+
+    * fix_compilation_gst_0_10_pre
+
+    Fixed compilation with gstreamer 0.10 pre-release.
+
+Fri Dec 2 12:03:47 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Fixed test app to use the new new_payload_type interface.
+
+Thu Dec 1 18:02:44 GMT 2005 andre.magalhaes@indt.org.br
+
+    * rtpdemux
+
+    Added pt param to new-payload-type signal.
+    Implemented some items on TODO list.
+    Replaced some code with GST_BOILERPLATE macro.
+
+Wed Nov 30 18:00:00 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Test symmetric RTP (externally created sockfd given to rtpbin).
+
+Wed Nov 30 17:59:10 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Dirty hack to make sdpbin compile against gst-CVS of 2005-11-30 and newer.
+
+Wed Nov 30 17:57:42 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Always accept own packets (required by the test apps).
+
+Wed Nov 30 17:55:47 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Added a sockfd property for RTP and RTCP.
+
+Thu Nov 10 23:31:34 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Add getenv() hack to enable accepting own packets.
+
+Fri Nov 18 23:33:58 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    tagged gstsdpbin_v0_3
+
+Fri Nov 18 23:33:22 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Change version to 0.3.
+
+Fri Nov 18 23:00:37 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Modified the test app not to pause the pipeline. sdpbin does not currently survive the pausing.
+
+Fri Nov 18 23:00:07 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Rewrote the reconfiguration code.
+
+Fri Nov 18 22:59:19 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Updated the todo-list.
+
+Fri Nov 18 23:37:45 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Added hack to output sine on the sdpbin src pad. Verified to send and receive RTP packets, and output the sine wave. The rtpdemux are not yet handled properly."
+
+Fri Nov 18 16:54:13 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Add sdpbin specific version to plugin info.
+
+Fri Nov 18 16:53:02 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Major rework of the code, version to 0.2.
+
+Fri Nov 18 16:52:47 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Added port range start and version defines.
+
+Fri Nov 18 16:52:19 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Updated the pad templates.
+
+Fri Nov 18 16:48:09 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Update the description and the todo-list.
+
+Fri Nov 18 16:47:14 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Added reconfig-request callback. Updated the test code.
+
+Wed Nov 16 02:21:42 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Fixed errors in rtpdemux signals.
+
+Wed Nov 16 02:20:57 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Added rtpdemux to sdpbin.
+
+Tue Nov 15 23:28:48 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Fixed the sdpbin test.
+
+Tue Nov 15 23:28:20 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Added gstrtpcodecinfo header and implementation.
+
+Tue Nov 15 23:25:34 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Updated the todo-list, added code from sofsip-cli-gst and added code to property handling.
+
+Tue Nov 15 23:24:55 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Added sdpbin_codecinfo to the tree.
+
+Mon Nov 14 19:02:31 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Fixed build error that occured when GSM_WAV49 was not available.
+
+Mon Nov 14 18:52:05 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Added check for sofia-sip, and linking sdpbin against the library if available.
+
+Mon Nov 14 15:49:34 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Updated todo-list. Added reconfig-request signal.
+
+Thu Nov 10 23:54:03 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Remove obsolete comments.
+
+Thu Nov 10 23:50:05 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Added items to todo.
+
+Thu Nov 10 23:27:27 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Update test app to use the new signal.
+
+Thu Nov 10 23:26:43 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Add todo-list, new event for pt-change, general cleaning up.
+
+Tue Nov 8 21:46:31 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Clean up unnecessary code taken from gstdecodebin, add an update TODO-entries.
+
+Tue Nov 8 21:46:16 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Added test program for sdpbin.
+
+Mon Nov 7 21:17:37 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Remove LOCAL/REMOTE SDP args.
+
+Mon Nov 7 21:15:27 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Add rtpdemux to the tree.
+
+Fri Oct 28 12:47:38 BST 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Add gstsdpbin to the build-tree.
+
+Tue Nov 1 20:39:40 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Added gsmsendrecv test case for testing rtpbin in sendrecv mode.
+
+Tue Nov 1 20:21:43 GMT 2005 Kai Vehmanen <kai.vehmanen@nokia.com>
+
+    * Remove TESTS target.
+
+Tue Nov 1 16:57:34 GMT 2005 Philippe Khalaf <burger at speedy dot org>
+
+    * Add_destination as a property as well for easier testing and less whining
+
+Mon Oct 31 20:55:00 GMT 2005 zeenix@gmail.com
+
+    * fixes a problme that enalbes it to be built using gcc4
+
+Mon Oct 31 20:45:47 GMT 2005 Philippe Khalaf <burger at speedy dot org>
+
+    * Small fix
+
+Mon Oct 31 15:21:37 GMT 2005 zeenix@gmail.com
+
+    * gsm test apps
+
+Mon Oct 31 12:11:45 GMT 2005 zeenix@gmail.com
+
+    * adding g711 examples
+
+Fri Oct 28 13:13:17 BST 2005 zeenix@gmail.com
+
+    * The last patch from burger for the rtpbin/send clockrate update doesn't really work. With these changes it works, hence pushing it..
+
+Fri Oct 28 00:21:20 BST 2005 Philippe Khalaf <burger at speedy dot org>
+
+    * Set the timestampunit for RTCP correctly based on peer pad caps
+
+Thu Oct 27 17:34:00 BST 2005 Philippe Khalaf <burger at speedy dot org>
+
+    * Workaround for rtcp sending while disabled bug
+
+Thu Oct 27 17:32:52 BST 2005 Philippe Khalaf <burger at speedy dot org>
+
+    * Addings yahoo webcam header encoder
+
+Thu Oct 27 13:03:35 BST 2005 zeenix@gmail.com
+
+    * 1. Removing the gsm elements from the build (only) since they have been moved to the Gstremeamer repository.
+
+   1. Adding examples for gsm
+
+Tue Oct 25 12:11:49 BST 2005 zeenix@gmail.com
+
+    * The gsmdec element should be able to create timestamp on the outgoing buffers if needed.
+
+Mon Oct 24 21:46:03 BST 2005 zeenix@gmail.com
+
+    * zeenix_patch1
+
+Mon Oct 24 16:37:48 BST 2005 Philippe Khalaf <burger at speedy dot org>
+
+    * Should not be done in dispose, moving to finalize
+
+Mon Oct 24 16:36:49 BST 2005 Philippe Khalaf <burger at speedy dot org>
+
+    * Removing stale references to old RTPGSTv4Transmitter
+
+Sun Oct 23 12:58:45 EDT 2005  Philippe Khalaf <burger at speedy dot org>
+	* Making jrtplib gstreamer independant
+
+Thu Oct 20 14:18:24 EDT 2005  Philippe Khalaf <burger at speedy dot org>
+	* Added jpeeg2000 encoder and moeved yahoo parsing to separate aelement
+
+Thu Oct 20 10:52:44 EDT 2005  robtaylor@floopily.org
+	* add more debug (sync from cvs)
+
+Thu Oct 20 10:52:14 EDT 2005  robtaylor@floopily.org
+	* add missing buffer unreffing (sync from cvs)
+
+Thu Oct 20 10:51:44 EDT 2005  robtaylor@floopily.org
+	* rename gsm msgsm (sync from cvs)
+
+Thu Oct 20 10:51:09 EDT 2005  robtaylor@floopily.org
+	* clarify comments (sync from cvs)
+
+Thu Oct 20 10:50:07 EDT 2005  robtaylor@floopily.org
+	* remove  broken timstamping (sync from cvs)
+
+Thu Oct 20 10:49:34 EDT 2005  robtaylor@floopily.org
+	* respect GSM_HEADER_IN_SUBDIR
+
+Thu Oct 20 08:37:22 EDT 2005  robtaylor@floopily.org
+	* add prereq for autoconf 2.59
+
+Thu Oct 20 08:37:04 EDT 2005  robtaylor@floopily.org
+	* make aclocal look in m4
+
+Thu Oct 20 08:21:19 EDT 2005  robtaylor@floopily.org
+	* tried to fix this for modern autoconf
+
+Thu Oct 20 07:34:13 EDT 2005  robtaylor@floopily.org
+	* add correct  autoconf to pull in te m4 directory
+
+Thu Oct 20 07:06:57 EDT 2005  robtaylor@floopily.org
+	* changed autogen.sh to use autoreconf, like a good autotools citizen
+
+Sat Oct  1 19:40:45 EDT 2005  robtaylor
+	* added checking for WAV49 support in libgsm, and builidng msgsm if
+	  present.
+
+Sat Oct  1 18:10:57 EDT 2005  burgerman
+	* Added ext/gsm , bring gsmenc/gsmdec/msgsmenc/msgsmdec To be added to
+	  gst cvs in the future
+
+Sat Oct  1 10:42:59 EDT 2005  robtaylor
+	* fixed check for jibj2k to be automatic
+
+Mon Sep 26 14:30:52 EDT 2005  burgerman
+	* added test files for msgsm
+
+Mon Sep 26 14:29:08 EDT 2005  burgerman
+	* addded new dir called rtppayloads, contains all the 
+	  payloaders/depayloaders. 
+	* added msgsmpayloader/depayloader, this one still dosen't
+	  do anything interesting! it just works with the test app
+	* working on msgsmenc/dec now
+
+Fri Sep 23 15:44:40 EDT 2005  burgerman
+	* memory leak fixe and some test apps
+
+Mon Sep 19 16:38:52 EDT 2005  burgerman
+	* Minor cleanup
+
+Mon Sep 19 16:29:23 EDT 2005  burgerman
+	* more fixes to rtpbin
+
+Mon Sep 19 11:28:54 EDT 2005  robtaylor
+	* fixed compile warnings on gcc 4.0
+
+Mon Sep 19 11:16:38 EDT 2005  robtaylor
+	* fixed jrtplib_c to use glib types consistently. fixed compile warnings
+	  on gcc 4.0
+
+Mon Sep 19 02:09:46 EDT 2005  burgerman
+	* Fixed tons of issues with rtpbin, r263enc and r263depayloader.
+
+Fri Sep 16 12:49:21 EDT 2005  burgerman
+	* Some compile issues
+
+Fri Sep 16 12:40:10 EDT 2005  burgerman
+	* a few compile fixes for now
+
+Fri Sep 16 12:30:31 EDT 2005  robtaylor
+	* ah, no, *now* it compiles with -Werror -Wall on supported platforms
+	  when built from cvs ..I'll leave it to someone else to fix the fact
+	  that it no longer compiles...
+
+Fri Sep 16 12:20:38 EDT 2005  robtaylor
+	* fixed -Wall -Werror usage, i think
+
+Fri Sep  9 15:52:47 EDT 2005  andrunko
+	* Fixed pad templates and compilation for gst-0.9.2. (tnx to Robert
+	  Huitl). 
+	* Fixed some indentation issues, and commented set/get_property
+	  on gstmimenc (needs fix).
+
+Wed Sep  7 17:36:49 EDT 2005  martynez
+	* Adaptation of jrtp module to new gstreamer's API, rtpbin's mode is now
+	  request-pad driven.
+
+Fri Aug 26 17:56:31 EDT 2005  burgerman
+	* Updated r263
+
+Fri Aug 26 15:16:55 EDT 2005  burgerman
+	* making rtp work again
+
+Wed Aug 24 19:49:02 EDT 2005  burgerman
+	* Adapting to wtays changes (no more GstRTPBuffer).
+
+Wed Aug 10 17:04:23 EDT 2005  burgerman
+	* some work on the h263depayloader still trying to get the pipeline
+	  working properly
+
+Mon Aug  8 08:01:28 EDT 2005  burgerman
+	* fixed nasty bug
+
+Fri Aug  5 16:51:02 EDT 2005  andrunko
+	* Modified mimicenc and mimicdec to mimenc and mimdec respectively.
+
+Fri Aug  5 16:42:25 EDT 2005  andrunko
+	* Fixed compilation. Removed missing datastream.sample from Makefile.am.
+
+Tue Aug  2 21:14:29 EDT 2005  burgerman
+	* blag blah
+
+Tue Aug  2 21:11:33 EDT 2005  burgerman
+	* fixed up yahoo webcam reception (j2kdec) added dispose to msn webcam
+	  (mimdec)
+
+Tue Aug  2 16:23:03 EDT 2005  burgerman
+	* Fixed ugly bug in rtpsend_chain
+
+Mon Aug  1 19:32:39 EDT 2005  fherrera
+	* Declared calculate_loss/shift on top of the file to fix gcc 4.x errors
+
+Mon Aug  1 10:44:32 EDT 2005  burgerman
+	* Oki doki
+
+Mon Aug  1 10:38:37 EDT 2005  burgerman
+	* Forgotten files
+
+Sat Jul 30 19:38:08 EDT 2005  burgerman
+	* jpeg2000 dec plugin (untested)
+
+Wed Jul 20 19:12:43 EDT 2005  burgerman
+	* RTPBin has 3 new modes now (disables RTCP).
+
+Tue Jul 19 15:07:24 EDT 2005  burgerman
+	* Redesigned RTP system, now we have rtpsend, rtprecv and rtpbin.
+	* RTPSession object is now in rtpbin, given as a param to rtpsend and
+	  rtprecv. 
+	* Doc to come soon.
+
+Sat Jul 16 15:50:21 EDT 2005  burgerman
+	* stupid cvs
+
+Sat Jul 16 15:45:30 EDT 2005  burgerman
+	* Mostly mimic work, encoder decoder now working
+
+Sat Jul  9 19:32:56 EDT 2005  burgerman
+	* Alot of fixes all over the place Added rtp depayloader base class
+	  r26enc not using transform base class anymore probably other stuff i 
+	  forgot
+
+Sat Jul  2 07:50:22 EDT 2005  burgerman
+	* using jrtplib's new pkgconfig, yay
+
+Mon Jun 27 10:30:23 EDT 2005  burgerman
+	* some cleaning up
+
+Fri Jun 24 16:57:25 EDT 2005  burgerman
+	* a bit cleanup
+
+Fri Jun 24 16:55:21 EDT 2005  burgerman
+	* added r263 plugin, also some fixes to jrtp plugin
+
+Tue Jun 21 10:39:34 EDT 2005  burgerman
+	* Trying to make it work
+
+Mon Jun 20 13:46:29 EDT 2005  burgerman
+	* Created GstRTPBin that contains the RTPSession + UDP sinks/sources. It
+	  also does some smart state control.
+
+Sat Jun 18 14:03:36 EDT 2005  burgerman
+	* importing
+
+Fri Jun 17 22:18:37 EDT 2005  burgerman
+	* GStreamer plugins for 0.9

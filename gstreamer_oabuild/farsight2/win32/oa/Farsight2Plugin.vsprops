@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="Farsight2Plugin"
+	InheritedPropertySheets=".\Farsight2Version.vsprops"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="$(GLibIncludes);$(GStreamerIncludes)"
+		PreprocessorDefinitions="HAVE_CONFIG_H"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		OutputFile="$(OutDir)\lib\farsight2-$(Farsight2ApiVersion)\$(ProjectName).dll"
+		GenerateDebugInformation="true"
+		ProgramDatabaseFile="$(TargetDir)\$(TargetName).pdb"
+		AdditionalDependencies="$(GLibImpLib) $(GObjectImpLib)"
+	/>
+</VisualStudioPropertySheet>

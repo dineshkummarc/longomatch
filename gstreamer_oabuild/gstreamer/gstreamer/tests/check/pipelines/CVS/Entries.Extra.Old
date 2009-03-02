@@ -1,0 +1,6 @@
+/.cvsignore////*///
+/cleanup.c////*///
+/parse-disabled.c////*///
+/parse-launch.c////*///
+/simple-launch-lines.c////*///
+/stress.c////*///

@@ -1,0 +1,26 @@
+Index: gst-plugins-bad/sys/dshowdecwrapper/gstdshowaudiodec.h
+===================================================================
+--- gst-plugins-bad.orig/sys/dshowdecwrapper/gstdshowaudiodec.h
++++ gst-plugins-bad/sys/dshowdecwrapper/gstdshowaudiodec.h
+@@ -131,7 +131,7 @@ class AudioFakeSink :  public CBaseRende
+ public:
+   AudioFakeSink(GstDshowAudioDec *dec) : 
+       m_hres(S_OK),
+-      CBaseRenderer(CLSID_AudioFakeSink, L"AudioFakeSink", NULL, &m_hres),
++      CBaseRenderer(CLSID_AudioFakeSink, _T("AudioFakeSink"), NULL, &m_hres),
+       mDec(dec) 
+   {};
+   virtual ~AudioFakeSink() {};
+Index: gst-plugins-bad/sys/dshowdecwrapper/gstdshowvideodec.h
+===================================================================
+--- gst-plugins-bad.orig/sys/dshowdecwrapper/gstdshowvideodec.h
++++ gst-plugins-bad/sys/dshowdecwrapper/gstdshowvideodec.h
+@@ -131,7 +131,7 @@ class VideoFakeSink :  public CBaseRende
+ public:
+   VideoFakeSink(GstDshowVideoDec *dec) : 
+       m_hres(S_OK),
+-      CBaseRenderer(CLSID_VideoFakeSink, L"VideoFakeSink", NULL, &m_hres),
++      CBaseRenderer(CLSID_VideoFakeSink, _T("VideoFakeSink"), NULL, &m_hres),
+       mDec(dec) 
+   {};
+   virtual ~VideoFakeSink() {};

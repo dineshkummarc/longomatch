@@ -1,0 +1,11 @@
+/Makefile.am////*///
+/gstksclock.h////*///
+/gstksvideodevice.h////*///
+/gstksvideosrc.h////*///
+/kshelpers.h////*///
+/ksvideohelpers.h////*///
+/gstksclock.c////*///
+/gstksvideodevice.c////*///
+/gstksvideosrc.c////*///
+/kshelpers.c////*///
+/ksvideohelpers.c////*///

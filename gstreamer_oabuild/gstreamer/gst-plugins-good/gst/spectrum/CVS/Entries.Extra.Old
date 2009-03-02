@@ -1,0 +1,6 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/README////*///
+/gstspectrum.c////*///
+/gstspectrum.h////*///
+/spectrum.vcproj////*///

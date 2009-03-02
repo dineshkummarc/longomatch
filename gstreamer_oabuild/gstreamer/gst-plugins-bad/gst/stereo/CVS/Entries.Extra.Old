@@ -1,0 +1,5 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/gststereo.c////*///
+/gststereo.h////*///
+/stereo.vcproj////*///

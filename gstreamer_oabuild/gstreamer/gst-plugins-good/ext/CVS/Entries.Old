@@ -1,0 +1,24 @@
+D/aalib////
+D/annodex////
+D/cairo////
+D/dv////
+D/esd////
+D/flac////
+D/gconf////
+D/gdk_pixbuf////
+D/hal////
+D/jpeg////
+D/ladspa////
+D/libcaca////
+D/libmng////
+D/libpng////
+D/mikmod////
+D/raw1394////
+D/shout2////
+D/soup////
+D/speex////
+D/taglib////
+D/wavpack////
+/Makefile.am/1.165/Wed Aug 27 14:59:22 2008//
+D/pulse////
+D/cdio////

@@ -1,0 +1,8 @@
+D/tmpl///////
+/.cvsignore////*///
+/Makefile.am////*///
+/gstreamer-overrides.txt////*///
+/running.xml////*///
+/gstreamer-docs.sgml////*///
+/gstreamer.types.in////*///
+/gstreamer-sections.txt////*///

@@ -1,0 +1,13 @@
+/.cvsignore////*///
+/README////*///
+/gstjackaudioclient.h////*///
+/gstjackbin.c////*///
+/Makefile.am////*///
+/gstjack.c////*///
+/gstjack.h////*///
+/gstjackaudioclient.c////*///
+/gstjackaudiosink.c////*///
+/gstjackaudiosink.h////*///
+/gstjackaudiosrc.c////*///
+/gstjackaudiosrc.h////*///
+/gstjackringbuffer.h////*///

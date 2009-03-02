@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="GstPluginsGoodVersion"
+	>
+	<UserMacro
+		Name="GstPluginsGoodMajorVersion"
+		Value="0"
+	/>
+	<UserMacro
+		Name="GstPluginsGoodMinorVersion"
+		Value="10"
+	/>
+	<UserMacro
+		Name="GstPluginsGoodMicroVersion"
+		Value="14"
+	/>
+	<UserMacro
+		Name="GstPluginsGoodNanoVersion"
+		Value="0"
+	/>
+	<UserMacro
+		Name="GstPluginsGoodApiVersion"
+		Value="0.10"
+	/>
+	<UserMacro
+		Name="GstPluginsGoodVersion"
+		Value="0.10.14.1"
+	/>
+</VisualStudioPropertySheet>

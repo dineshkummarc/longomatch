@@ -1,0 +1,10 @@
+/Makefile.am////*///
+/gst_loader.c////*///
+/gstgdkanimation.c////*///
+/gstgdkanimation.h////*///
+/gstgdkpixbuf.h////*///
+/gstgdkpixbufsink.c////*///
+/gstgdkpixbufsink.h////*///
+/pixbufscale.c////*///
+/pixbufscale.h////*///
+/gstgdkpixbuf.c////*///

@@ -1,0 +1,48 @@
+Index: gst-plugins-base/gst-libs/gst/pbutils/missing-plugins.c
+===================================================================
+--- gst-plugins-base.orig/gst-libs/gst/pbutils/missing-plugins.c
++++ gst-plugins-base/gst-libs/gst/pbutils/missing-plugins.c
+@@ -60,8 +60,11 @@
+ #ifdef HAVE_UNISTD_H
+ # include <unistd.h>            /* getpid on UNIX */
+ #endif
+-#ifdef HAVE_PROCESS_H
+-# include <process.h>           /* getpid on win32 */
++#include <glib.h>               /* for G_OS_WIN32 */
++#ifdef G_OS_WIN32
++# define WIN32_LEAN_AND_MEAN
++# include <windows.h>           /* GetCurrentProcessId */
++# undef WIN32_LEAN_AND_MEAN
+ #endif
+ 
+ #include "gst/gst-i18n-plugin.h"
+@@ -427,7 +430,13 @@ gst_missing_plugin_message_get_installer
+   if (progname) {
+     g_string_append_printf (str, "%s|", progname);
+   } else {
+-    g_string_append_printf (str, "pid/%lu|", (gulong) getpid ());
++    g_string_append_printf (str, "pid/%lu|",
++#ifndef G_OS_WIN32
++        (gulong) getpid ()
++#else
++        GetCurrentProcessId ()
++#endif
++        );
+   }
+ 
+   desc = gst_missing_plugin_message_get_description (msg);
+@@ -614,7 +623,13 @@ gst_installer_detail_new (gchar * descri
+   if (progname) {
+     g_string_append_printf (s, "%s|", progname);
+   } else {
+-    g_string_append_printf (s, "pid/%lu|", (gulong) getpid ());
++    g_string_append_printf (s, "pid/%lu|",
++#ifndef G_OS_WIN32
++        (gulong) getpid ()
++#else
++        GetCurrentProcessId ()
++#endif
++        );
+   }
+ 
+   if (description) {

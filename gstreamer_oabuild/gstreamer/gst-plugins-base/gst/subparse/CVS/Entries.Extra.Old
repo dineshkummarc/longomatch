@@ -1,0 +1,11 @@
+/Makefile.am////*///
+/gstssaparse.c////*///
+/gstssaparse.h////*///
+/gstsubparse.c////*///
+/gstsubparse.h////*///
+/mpl2parse.c////*///
+/mpl2parse.h////*///
+/samiparse.c////*///
+/samiparse.h////*///
+/tmplayerparse.c////*///
+/tmplayerparse.h////*///

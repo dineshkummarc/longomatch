@@ -1,0 +1,10 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/caps.c////*///
+/complexity.c////*///
+/complexity.gnuplot////*///
+/complexity.scm////*///
+/gstpollstress.c////*///
+/mass-elements.c////*///
+/mass-elements.gnuplot////*///
+/mass-elements.scm////*///

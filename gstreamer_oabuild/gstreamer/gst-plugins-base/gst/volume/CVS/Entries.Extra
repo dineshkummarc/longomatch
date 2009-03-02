@@ -1,0 +1,5 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/gstvolume.h////*///
+/volume.vcproj////*///
+/gstvolume.c////*///

@@ -1,0 +1,6 @@
+/Makefile.am////*///
+/gstsdl.c////*///
+/sdlaudiosink.c////*///
+/sdlaudiosink.h////*///
+/sdlvideosink.h////*///
+/sdlvideosink.c////*///

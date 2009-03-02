@@ -1,0 +1,11 @@
+SUBDIRS = libr263
+
+plugin_LTLIBRARIES = libgstr263.la
+
+libgstr263_la_SOURCES = gstr263.c gstr263enc.c
+
+libgstr263_la_CFLAGS = $(GST_CFLAGS) $(GST_PLUGINS_BASE_CFLAGS) $(ERROR_CFLAGS) -DEXTERN_BUF -DRTP_SUPPORT
+libgstr263_la_LIBADD = $(GST_LIBS_LIBS) libr263/libr263.a libr263/rlib.a
+libgstr263_la_LDFLAGS = $(GST_PLUGIN_LDFLAGS) $(GST_BASE_LIBS) $(GST_PLUGINS_BASE_LIBS) -lgstrtp-@GST_MAJORMINOR@
+
+noinst_HEADERS = gstr263enc.h

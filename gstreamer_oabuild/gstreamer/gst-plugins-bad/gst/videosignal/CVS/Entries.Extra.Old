@@ -1,0 +1,9 @@
+/Makefile.am////*///
+/gstvideoanalyse.c////*///
+/gstvideoanalyse.h////*///
+/gstvideodetect.c////*///
+/gstvideodetect.h////*///
+/gstvideomark.c////*///
+/gstvideomark.h////*///
+/gstvideosignal.c////*///
+/gstvideosignal.h////*///

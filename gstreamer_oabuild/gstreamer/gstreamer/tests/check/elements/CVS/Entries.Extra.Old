@@ -1,0 +1,10 @@
+/.cvsignore////*///
+/fakesrc.c////*///
+/fdsrc.c////*///
+/filesink.c////*///
+/filesrc.c////*///
+/identity.c////*///
+/multiqueue.c////*///
+/queue.c////*///
+/fakesink.c////*///
+/tee.c////*///

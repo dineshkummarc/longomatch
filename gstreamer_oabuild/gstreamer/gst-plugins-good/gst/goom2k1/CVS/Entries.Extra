@@ -1,0 +1,16 @@
+/Makefile.am////*///
+/README////*///
+/filters.c////*///
+/filters.h////*///
+/filters_mmx.s////*///
+/goom.vcproj////*///
+/goom_core.c////*///
+/goom_core.h////*///
+/goom_tools.h////*///
+/graphic.c////*///
+/graphic.h////*///
+/gstgoom.c////*///
+/gstgoom.h////*///
+/lines.c////*///
+/lines.h////*///
+/.cvsignore////*///

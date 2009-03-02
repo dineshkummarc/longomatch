@@ -1,0 +1,10 @@
+D/directdraw///////
+D/directsound///////
+D/oss///////
+D/osxaudio///////
+D/osxvideo///////
+D/sunaudio///////
+D/v4l2///////
+D/waveform///////
+D/ximage///////
+/Makefile.am////*///

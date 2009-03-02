@@ -1,0 +1,14 @@
+D/inspect///////
+/gst-plugins-good-plugins.signals////*///
+/gst-plugins-good-plugins.types////*///
+/inspect-build.stamp////*///
+/inspect.stamp////*///
+/scanobj-build.stamp////*///
+/.cvsignore////*///
+/Makefile.am////*///
+/gst-plugins-good-plugins-docs.sgml////*///
+/gst-plugins-good-plugins-sections.txt////*///
+/gst-plugins-good-plugins.args////*///
+/gst-plugins-good-plugins.hierarchy////*///
+/gst-plugins-good-plugins.interfaces////*///
+/gst-plugins-good-plugins.prerequisites////*///

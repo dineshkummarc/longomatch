@@ -1,0 +1,14 @@
+/Makefile.am////*///
+/buffer.c////*///
+/buffer.h////*///
+/debug.c////*///
+/debug.h////*///
+/functable.c////*///
+/functable.h////*///
+/gstaudioresample.h////*///
+/resample.c////*///
+/resample.h////*///
+/resample_chunk.c////*///
+/resample_functable.c////*///
+/resample_ref.c////*///
+/gstaudioresample.c////*///

@@ -1,0 +1,6 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/upload.mak////*///
+/version.entities.in////*///
+D/plugins///////
+D/random///////

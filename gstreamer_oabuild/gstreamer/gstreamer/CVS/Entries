@@ -1,0 +1,28 @@
+D/docs////
+D/gst////
+D/libs////
+D/pkgconfig////
+D/plugins////
+D/po////
+D/scripts////
+D/tests////
+D/tools////
+D/win32////
+D/common////
+/.cvsignore/1.15/Sat May 24 14:07:58 2008//
+/AUTHORS/1.16/Sat May 24 14:07:58 2008//
+/COPYING/1.2/Sat May 24 14:07:58 2008//
+/INSTALL/1.1/Sat May 24 14:07:58 2008//
+/MAINTAINERS/1.7/Sat May 24 14:07:58 2008//
+/Makefile.am/1.115/Sat May 24 14:07:58 2008//
+/README/1.41/Sat May 24 14:07:58 2008//
+/TODO/1.15/Sat May 24 14:07:58 2008//
+/autogen.sh/1.113/Sat May 24 14:07:58 2008//
+/gst-element-check.m4.in/1.5/Sat May 24 14:07:58 2008//
+/gstreamer.spec.in/1.179/Sat May 24 14:07:58 2008//
+/stamp.h.in/1.1/Sat May 24 14:07:58 2008//
+/NEWS/1.44/Sun Aug  3 17:35:53 2008//
+/RELEASE/1.46/Sun Aug  3 17:35:53 2008//
+/gstreamer.doap/1.11/Sun Aug  3 17:35:53 2008//
+/configure.ac/1.558/Mon Sep  8 21:03:44 2008//
+/ChangeLog/1.4060/Fri Sep 12 06:20:40 2008//

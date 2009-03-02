@@ -1,0 +1,15 @@
+/Makefile.am/1.1/Sat May 24 14:08:53 2008//
+/client-H263p-AMR.sh/1.1/Sat May 24 14:08:53 2008//
+/client-H263p-PCMA.sdp/1.2/Tue May 27 12:33:52 2008//
+/client-H263p-PCMA.sh/1.2/Tue May 27 12:33:52 2008//
+/client-H264-PCMA.sdp/1.2/Tue May 27 12:33:52 2008//
+/client-H264-PCMA.sh/1.2/Tue May 27 12:33:52 2008//
+/client-H264.sdp/1.1/Fri Apr 25 07:56:10 2008//
+/client-H264.sh/1.1/Fri Apr 25 07:56:11 2008//
+/client-PCMA.sdp/1.1/Fri Apr 25 07:56:11 2008//
+/client-PCMA.sh/1.2/Tue May 27 12:33:52 2008//
+/server-VTS-H263p-ATS-PCMA.sh/1.1/Sat May 24 14:08:53 2008//
+/server-alsasrc-PCMA.sh/1.2/Tue May 27 12:33:52 2008//
+/server-v4l2-H263p-alsasrc-AMR.sh/1.2/Tue May 27 12:33:52 2008//
+/server-v4l2-H264-alsasrc-PCMA.sh/1.4/Sun Aug  3 17:36:59 2008//
+D

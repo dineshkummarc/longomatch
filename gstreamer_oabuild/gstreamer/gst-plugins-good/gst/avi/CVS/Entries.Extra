@@ -1,0 +1,12 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/README////*///
+/avi.vcproj////*///
+/gstavi.c////*///
+/gstavisubtitle.c////*///
+/gstavisubtitle.h////*///
+/avi-ids.h////*///
+/gstavidemux.h////*///
+/gstavimux.h////*///
+/gstavimux.c////*///
+/gstavidemux.c////*///

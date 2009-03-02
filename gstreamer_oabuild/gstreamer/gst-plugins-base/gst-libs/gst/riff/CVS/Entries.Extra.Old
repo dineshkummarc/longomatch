@@ -1,0 +1,9 @@
+/Makefile.am////*///
+/riff-media.h////*///
+/riff-read.h////*///
+/riff.def////*///
+/riff.vcproj////*///
+/riff-ids.h////*///
+/riff-read.c////*///
+/riff-media.c////*///
+/riff.c////*///

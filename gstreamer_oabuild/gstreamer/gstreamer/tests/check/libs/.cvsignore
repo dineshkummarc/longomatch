@@ -1,0 +1,11 @@
+.dirstamp
+adapter
+basesrc
+gdp
+collectpads
+controller
+gstnetclientclock
+gstnettimeprovider
+libsabi
+typefindhelper
+*.check.xml

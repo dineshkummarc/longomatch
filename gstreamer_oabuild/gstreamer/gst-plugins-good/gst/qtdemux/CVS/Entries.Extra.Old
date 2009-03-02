@@ -1,0 +1,14 @@
+/LEGAL////*///
+/Makefile.am////*///
+/gstrtpxqtdepay.c////*///
+/gstrtpxqtdepay.h////*///
+/qtdemux.h////*///
+/qtdemux.vcproj////*///
+/qtdemux_dump.c////*///
+/qtdemux_dump.h////*///
+/qtdemux_types.c////*///
+/qtdemux_types.h////*///
+/qtpalette.h////*///
+/quicktime.c////*///
+/qtdemux.c////*///
+/qtdemux_fourcc.h////*///

@@ -1,0 +1,7 @@
+/Makefile.am////*///
+/gstmultifile.c////*///
+/gstmultifilesink.c////*///
+/gstmultifilesink.h////*///
+/gstmultifilesrc.c////*///
+/gstmultifilesrc.h////*///
+/multifile.vproj////*///

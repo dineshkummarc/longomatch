@@ -1,0 +1,17 @@
+/.cvsignore////*///
+/adapter.c////*///
+/basesrc.c////*///
+/collectpads.c////*///
+/gstnetclientclock.c////*///
+/gstnettimeprovider.c////*///
+/libsabi.c////*///
+/struct_hppa.h////*///
+/struct_i386.h////*///
+/struct_ppc32.h////*///
+/struct_ppc64.h////*///
+/struct_x86_64.h////*///
+/typefindhelper.c////*///
+/controller.c////*///
+/gdp.c////*///
+/test_transform.c////*///
+/transform1.c////*///

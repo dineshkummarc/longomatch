@@ -1,0 +1,11 @@
+/Makefile.am////*///
+/audiodecoders.c////*///
+/codecmapping.c////*///
+/codecmapping.h////*///
+/imagedescription.c////*///
+/imagedescription.h////*///
+/qtutils.c////*///
+/qtutils.h////*///
+/qtwrapper.c////*///
+/qtwrapper.h////*///
+/videodecoders.c////*///

@@ -1,0 +1,4 @@
+/Makefile.am////*///
+/gstscaletempo.c////*///
+/gstscaletempo.h////*///
+/gstscaletempoplugin.c////*///

@@ -1,0 +1,6 @@
+/Makefile.am////*///
+/colorspace.vcproj////*///
+/gstcolorspace.c////*///
+/gstcolorspace.h////*///
+/yuv2rgb.c////*///
+/yuv2rgb.h////*///

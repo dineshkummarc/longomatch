@@ -1,0 +1,7 @@
+/Makefile.am////*///
+/gstdshowdecwrapper.c////*///
+/gstdshowdecwrapper.h////*///
+/gstdshowaudiodec.c////*///
+/gstdshowaudiodec.h////*///
+/gstdshowvideodec.c////*///
+/gstdshowvideodec.h////*///

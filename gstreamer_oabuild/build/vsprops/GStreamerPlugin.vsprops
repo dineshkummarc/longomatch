@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="GStreamerPlugin"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="$(GLibIncludes);$(GStreamerIncludes);$(ProjectDir)"
+		PreprocessorDefinitions="HAVE_CONFIG_H;GST_PLUGIN_EXPORTS;GST_DISABLE_DEPRECATED"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		OutputFile="$(OutDir)\lib\gstreamer-0.10\$(ProjectName).dll"
+		GenerateDebugInformation="true"
+		ProgramDatabaseFile="$(TargetDir)\$(TargetName).pdb"
+		AdditionalLibraryDirectories="$(SolutionDir)..\gstreamer\builddeps\lib"
+		AdditionalDependencies="$(GLibImpLib) $(GObjectImpLib)"
+	/>
+</VisualStudioPropertySheet>

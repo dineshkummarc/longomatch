@@ -1,0 +1,23 @@
+D/code-reviews////
+D/design////
+D/faq////
+D/gst////
+D/images////
+D/libs////
+D/manual////
+D/plugins////
+D/pwg////
+D/random////
+D/slides////
+D/xsl////
+/.cvsignore/1.2/Sat May 24 14:07:58 2008//
+/Makefile.am/1.44/Tue May 27 12:29:31 2008//
+/htmlinstall.mak/1.8/Sat May 24 14:07:58 2008//
+/image-eps/1.1/Sat May 24 14:07:58 2008/-ko/
+/image-pdf/1.1/Sat May 24 14:07:58 2008/-ko/
+/image-png/1.1/Sat May 24 14:07:58 2008/-ko/
+/url.entities/1.1/Sat May 24 14:07:58 2008//
+/version.entities.in/1.4/Sat May 24 14:07:58 2008//
+/README/1.29/Sun Aug  3 17:35:54 2008//
+/manuals.mak/1.44/Sun Aug  3 17:35:54 2008//
+D/devhelp////

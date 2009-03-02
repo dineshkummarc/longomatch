@@ -1,0 +1,15 @@
+/.cvsignore/1.1/Thu Sep 11 19:17:01 2003//
+/Makefile.am/1.26/Fri Jul 20 07:41:58 2007//
+/gamma.vcproj/1.4/Tue Jul 27 21:41:28 2004//
+/gstgamma.c/1.15/Wed Feb 28 10:17:14 2007//
+/gstgamma.h/1.1/Wed Feb 28 10:29:08 2007//
+/gstvideobalance.c/1.33/Tue Apr 25 21:39:44 2006//
+/gstvideobalance.h/1.10/Thu Jun  1 21:07:26 2006//
+/gstvideoflip.c/1.28/Wed Jul 11 22:31:06 2007//
+/gstvideoflip.h/1.12/Thu Jun  1 21:07:26 2006//
+/gstvideotemplate.c/1.21/Sat Sep 16 21:57:28 2006//
+/make_filter/1.8/Mon Apr 19 22:51:57 2004//
+/videobalance.vcproj/1.4/Tue Jul 27 21:41:28 2004//
+/videofilter.vcproj/1.4/Tue Jul 27 21:41:28 2004//
+/videoflip.vcproj/1.4/Tue Jul 27 21:41:28 2004//
+D

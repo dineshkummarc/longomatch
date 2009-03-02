@@ -1,0 +1,51 @@
+apiwrapper.lo: dec/apiwrapper.c \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/stdlib.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/_mingw.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/include/stddef.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/string.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/limits.h \
+  dec/apiwrapper.h C:/msys/1.0/include/ogg/ogg.h \
+  C:/msys/1.0/include/ogg/os_types.h ../include/theora/theora.h \
+  ../include/theora/theoradec.h ../include/theora/codec.h \
+  dec/../internal.h ../config.h ../include/theora/codec.h \
+  dec/../dec/ocintrin.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/math.h \
+  dec/../dec/huffman.h dec/../dec/ocintrin.h dec/../dec/quant.h
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/stdlib.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/_mingw.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/include/stddef.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/string.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/limits.h:
+
+dec/apiwrapper.h:
+
+C:/msys/1.0/include/ogg/ogg.h:
+
+C:/msys/1.0/include/ogg/os_types.h:
+
+../include/theora/theora.h:
+
+../include/theora/theoradec.h:
+
+../include/theora/codec.h:
+
+dec/../internal.h:
+
+../config.h:
+
+../include/theora/codec.h:
+
+dec/../dec/ocintrin.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/math.h:
+
+dec/../dec/huffman.h:
+
+dec/../dec/ocintrin.h:
+
+dec/../dec/quant.h:

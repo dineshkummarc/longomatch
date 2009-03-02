@@ -1,0 +1,8 @@
+/Makefile.am////*///
+/gstnet.h////*///
+/gstnetclientclock.h////*///
+/gstnettimepacket.c////*///
+/gstnettimepacket.h////*///
+/gstnettimeprovider.c////*///
+/gstnettimeprovider.h////*///
+/gstnetclientclock.c////*///

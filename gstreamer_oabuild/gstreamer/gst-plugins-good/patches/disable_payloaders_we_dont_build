@@ -1,0 +1,20 @@
+Index: gst-plugins-good/gst/rtp/gstrtp.c
+===================================================================
+--- gst-plugins-good.orig/gst/rtp/gstrtp.c
++++ gst-plugins-good/gst/rtp/gstrtp.c
+@@ -199,6 +199,7 @@ plugin_init (GstPlugin * plugin)
+   if (!gst_rtp_sv3v_depay_plugin_init (plugin))
+     return FALSE;
+ 
++#if 0
+   if (!gst_rtp_theora_depay_plugin_init (plugin))
+     return FALSE;
+ 
+@@ -210,6 +211,7 @@ plugin_init (GstPlugin * plugin)
+ 
+   if (!gst_rtp_vorbis_pay_plugin_init (plugin))
+     return FALSE;
++#endif
+ 
+   if (!gst_rtp_vraw_depay_plugin_init (plugin))
+     return FALSE;

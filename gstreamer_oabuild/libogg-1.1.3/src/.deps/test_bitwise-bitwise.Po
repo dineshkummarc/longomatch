@@ -1,0 +1,27 @@
+test_bitwise-bitwise.o: bitwise.c \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/string.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/_mingw.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/include/stddef.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/stdlib.h \
+  ../include/ogg/ogg.h ../include/ogg/os_types.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/stdio.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/include/stdarg.h \
+  c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/sys/types.h
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/string.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/_mingw.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/include/stddef.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/stdlib.h:
+
+../include/ogg/ogg.h:
+
+../include/ogg/os_types.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/stdio.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/include/stdarg.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.3.2/../../../../include/sys/types.h:

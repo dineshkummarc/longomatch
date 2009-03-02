@@ -1,0 +1,3 @@
+/.cvsignore////*///
+/Makefile.am////*///
+/adapter_test.c////*///

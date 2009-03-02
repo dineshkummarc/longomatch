@@ -1,0 +1,7 @@
+/gstautoaudiosink.c////*///
+/gstautoaudiosink.h////*///
+/gstautodetect.c////*///
+/gstautodetect.h////*///
+/gstautovideosink.c////*///
+/gstautovideosink.h////*///
+/Makefile.am////*///

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="gstreamer-base-@GSTREAMER_API_VERSION@"
+	InheritedPropertySheets="gstreamer-@GSTREAMER_API_VERSION@.vsprops"
+	>
+	<Tool
+		Name="VCLibrarianTool"
+		AdditionalDependencies="libgstbase-@GSTREAMER_API_VERSION@.lib"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalDependencies="libgstbase-@GSTREAMER_API_VERSION@.lib"
+	/>
+</VisualStudioPropertySheet>
