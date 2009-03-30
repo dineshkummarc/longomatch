@@ -7,7 +7,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{473D1B4B-6BE6-4AAF-BDD0-F7C472A27FBD}
 AppName=LongoMatch
-AppVerName=LongoMatch 0.14~pre
+AppVerName=LongoMatch 0.14
 AppPublisher=ylatuya
 AppPublisherURL=http://www.ylatuya.es
 AppSupportURL=http://www.ylatuya.es
@@ -16,7 +16,7 @@ DefaultDirName={pf}\LongoMatch
 DefaultGroupName=LongoMatch
 LicenseFile=C:\Documents and Settings\borrar\Mis documentos\Andoni\csl-longomatch\LongoMatch\Win32\COPYING.TXT
 OutputDir=C:\Documents and Settings\borrar\Escritorio
-OutputBaseFilename=LongoMatch-0.14~pre_x86
+OutputBaseFilename=LongoMatch-0.14
 Compression=lzma
 SolidCompression=yes
 
