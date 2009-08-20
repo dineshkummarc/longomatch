@@ -5,18 +5,19 @@
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{473D1B4B-6BE6-4AAF-BDD0-F7C472A27FBD}
+AppId={{473D1B4B-6BE6-4AAF-BDD0-F7C422A27FBD}
 AppName=LongoMatch
-AppVerName=LongoMatch 0.14.1
-AppPublisher=ylatuya
-AppPublisherURL=http://www.ylatuya.es
-AppSupportURL=http://www.ylatuya.es
-AppUpdatesURL=http://www.ylatuya.es
-DefaultDirName={pf}\LongoMatch
+AppVerName=LongoMatch 0.15.0
+AppPublisher=Ylatuya
+AppPublisherURL=http://www.longomatch.ylatuya.es
+AppSupportURL=http://www.longomatch.ylatuya.es
+AppUpdatesURL=http://www.longomatch.ylatuya.es
+DefaultDirName={pf}\LongoMatch-0.15
 DefaultGroupName=LongoMatch
-LicenseFile=C:\Documents and Settings\borrar\Mis documentos\Andoni\csl-longomatch\LongoMatch\Win32\COPYING.TXT
-OutputDir=C:\Documents and Settings\borrar\Escritorio
-OutputBaseFilename=LongoMatch-0.14.1
+LicenseFile=.\COPYING.TXT
+SetupIconFile=..\images\minilogo.ico
+OutputDir=.
+OutputBaseFilename=.\LongoMatch-0.15.0
 Compression=lzma
 SolidCompression=yes
 
@@ -36,10 +37,10 @@ Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Documents and Settings\borrar\Mis documentos\Andoni\csl-longomatch\LongoMatch\Win32\bin\*"; DestDir: "{app}\bin"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Documents and Settings\borrar\Mis documentos\Andoni\csl-longomatch\LongoMatch\Win32\etc\*"; DestDir: "{app}\etc"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Documents and Settings\borrar\Mis documentos\Andoni\csl-longomatch\LongoMatch\Win32\lib\*"; DestDir: "{app}\lib"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Documents and Settings\borrar\Mis documentos\Andoni\csl-longomatch\LongoMatch\Win32\share\*"; DestDir: "{app}\share"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ".\bin\*"; DestDir: "{app}\bin"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ".\etc\*"; DestDir: "{app}\etc"; Flags: ignoreversion recursesubdirs createallsubdirs  ; Excludes: *conf
+Source: ".\lib\*"; DestDir: "{app}\lib"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ".\share\*"; DestDir: "{app}\share"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
