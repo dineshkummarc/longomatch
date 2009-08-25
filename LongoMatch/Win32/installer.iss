@@ -44,7 +44,7 @@ Source: ".\share\*"; DestDir: "{app}\share"; Flags: ignoreversion recursesubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\LongoMatch"; Filename: "{app}\bin\LongoMatch.exe" ;WorkingDir: "{app}\bin"
+Name: "{group}\LongoMatch-0.15"; Filename: "{app}\bin\LongoMatch.exe" ;WorkingDir: "{app}\bin"
 Name: "{commondesktop}\LongoMatch"; Filename: "{app}\bin\LongoMatch.exe"; WorkingDir: "{app}\bin"; Tasks: desktopicon
 
 [Run]
