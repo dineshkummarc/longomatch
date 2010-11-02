@@ -25,6 +25,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#include <gst/app/gstappsink.h>
+#include <gst/app/gstappsrc.h>
 #include <gst/interfaces/xoverlay.h>
 #include <gst/interfaces/propertyprobe.h>
 #include <gst/gst.h>
@@ -93,6 +95,8 @@ enum
 
 struct GstCameraCapturerPrivate
 {
+  /* State */
+  gboolean recording;
 
   /*Encoding properties */
   gchar *output_file;
@@ -132,6 +136,7 @@ struct GstCameraCapturerPrivate
   GstElement *videoenc;
   GstElement *audioenc;
   GstElement *videomux;
+  GstAppSink *appsink;
 
   /*Overlay */
   GstXOverlay *xoverlay;        /* protect with lock */
@@ -919,35 +924,82 @@ gst_camera_capture_videosrc_buffer_probe (GstPad * pad, GstBuffer * buf,
   return TRUE;
 }
 
+static void
+cb_new_buffer (GstElement *element, gpointer *user_data)
+{
+  GstCameraCapturer *gcc = GST_CAMERA_CAPTURER (user_data);
+  GstBuffer *buf;
+  GstFlowReturn ret;
+
+  buf = gst_app_sink_pull_buffer(gcc->priv->appsink);
+  if (buf) {
+    if (gcc->priv->recording)
+      ret = gst_app_src_push_buffer (GST_APP_SRC(gcc->priv->audiosrc), buf);
+    else
+      gst_buffer_unref (buf);
+  }
+}
+
+static gboolean 
+gst_camera_capturer_create_audio_source (GstCameraCapturer *gcc)
+{
+  GstElement *appsrc;
+
+  /* Camerabin doesn't allow a single source element for audio and video, thus
+   * we create an appsrc for the audio, feeded with the buffers pulled from the
+   * appsink, which is connected to the audio pad of the source */
+  appsrc = gst_element_factory_make ("appsrc", "audio_appsrc");
+
+  /* Set the audio caps on the appsrc */
+  g_object_set (G_OBJECT(appsrc), "caps",
+      gst_caps_from_string("audio/x-raw-int, endianness=(int)1234,"
+      "signed=(boolean)true, width=(int)16, depth=(int)16, rate=(int)44100, "
+      "channels=(int)2"),
+      "is-live", TRUE,
+      "stream-type", 0,
+      NULL);
+
+  gcc->priv->audiosrc = appsrc;
+
+  return TRUE;
+}
+
 static gboolean
-add_audio_pad (GstBin * source_bin, GstPad * audio_src_pad)
+gst_camera_capturer_add_audio_pad (GstCameraCapturer * gcc, GstPad * audio_src_pad)
 {
   /* audio */
   GstElement *audio_queue;
   GstElement * audioconvert;
+  GstElement * audioresample;
   GstPad * queue_sink_pad;
-  GstPad * audioconvert_src_pad;
-  GstPad * ghost_pad;
 
   audio_queue = gst_element_factory_make ("queue", "audio_queue");
   audioconvert = gst_element_factory_make ("audioconvert", NULL);
+  audioresample = gst_element_factory_make ("audioresample", NULL);
+  gcc->priv->appsink = GST_APP_SINK(gst_element_factory_make ("appsink",
+      "audio_appsink"));
 
-  gst_bin_add_many (source_bin, audio_queue, audioconvert, NULL);
+  g_object_set (G_OBJECT(gcc->priv->appsink), "caps",
+      gst_caps_from_string("audio/x-raw-int, endianness=(int)1234,"
+      "signed=(boolean)true, width=(int)16, depth=(int)16, rate=(int)44100, "
+      "channels=(int)2"), NULL);
+
+  gst_bin_add_many (GST_BIN(gcc->priv->videosrc), audio_queue,
+      audioconvert, audioresample, gcc->priv->appsink, NULL);
 
   gst_element_set_state (audio_queue, GST_STATE_PLAYING);
   gst_element_set_state (audioconvert, GST_STATE_PLAYING);
+  gst_element_set_state (audioresample, GST_STATE_PLAYING);
+  gst_element_set_state (GST_ELEMENT (gcc->priv->appsink), GST_STATE_PLAYING);
 
   queue_sink_pad = gst_element_get_static_pad (audio_queue, "sink");
   gst_pad_link (audio_src_pad, queue_sink_pad);
-  gst_element_link (audio_queue, audioconvert);
+  gst_element_link_many (audio_queue, audioconvert, audioresample, gcc->priv->appsink, NULL);
   gst_object_unref (GST_OBJECT (queue_sink_pad));
 
-  /* add ghostpad */
-  audioconvert_src_pad = gst_element_get_static_pad (audioconvert, "src");
-  ghost_pad = gst_ghost_pad_new ("audio", audioconvert_src_pad);
-  gst_pad_set_active(ghost_pad,TRUE);
-  gst_element_add_pad (GST_ELEMENT (source_bin), ghost_pad);
-  gst_object_unref (GST_OBJECT (audioconvert_src_pad));
+  /* Add a callback to the "new-buffer" signal in the appsink */
+  g_object_set (G_OBJECT(gcc->priv->appsink), "emit-signals", TRUE, NULL);
+  g_signal_connect (gcc->priv->appsink, "new-buffer", G_CALLBACK (cb_new_buffer), gcc);
 
   return TRUE;
 }
@@ -966,8 +1018,8 @@ cb_new_pad (GstElement * element, GstPad * pad, gpointer data)
     sink = gst_bin_get_by_name (GST_BIN(gcc->priv->videosrc), "source_video_sink");
     gst_pad_link (pad, gst_element_get_pad (sink, "sink"));
   } else if (g_strrstr (mime, "audio")) {
-    add_audio_pad (GST_BIN(gcc->priv->videosrc), pad);
-    gcc->priv->audiosrc = gcc->priv->videosrc;
+    gst_camera_capturer_create_audio_source (gcc);
+    gst_camera_capturer_add_audio_pad (gcc, pad);
     g_object_set (gcc->priv->camerabin, "audio-source", gcc->priv->audiosrc,
         NULL);
   }
@@ -1125,7 +1177,10 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
         NULL);
 
   /* Install pad probe to store the last buffer */
-  videosrcpad = gst_element_get_pad (gcc->priv->videosrc, "video");
+  if (gcc->priv->source_type == GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW)
+    videosrcpad = gst_element_get_pad (gcc->priv->videosrc, "src");
+  else
+    videosrcpad = gst_element_get_pad (gcc->priv->videosrc, "video");
   gst_pad_add_buffer_probe (videosrcpad,
       G_CALLBACK (gst_camera_capture_videosrc_buffer_probe), gcc);
   return TRUE;
@@ -1228,6 +1283,7 @@ gst_camera_capturer_start (GstCameraCapturer * gcc)
   g_return_if_fail (gcc != NULL);
   g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
 
+  gcc->priv->recording = TRUE;
   g_signal_emit_by_name (G_OBJECT (gcc->priv->camerabin), "capture-start", 0,
       0);
 }
@@ -1238,6 +1294,7 @@ gst_camera_capturer_toggle_pause (GstCameraCapturer * gcc)
   g_return_if_fail (gcc != NULL);
   g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
 
+  gcc->priv->recording = !gcc->priv->recording;
   g_signal_emit_by_name (G_OBJECT (gcc->priv->camerabin), "capture-pause", 0,
       0);
 }
@@ -1255,6 +1312,7 @@ gst_camera_capturer_stop (GstCameraCapturer * gcc)
   //state to null, this way camerabin doesn't block in ::do_stop().
   gst_element_set_state(gcc->priv->device_source, GST_STATE_NULL);
 #endif
+  gcc->priv->recording = FALSE;
   g_signal_emit_by_name (G_OBJECT (gcc->priv->camerabin), "capture-stop", 0, 0);
 }
 
@@ -1609,7 +1667,10 @@ gcc_get_video_stream_info (GstCameraCapturer * gcc)
   GstCaps *caps;
   GstStructure *s;
 
-  sourcepad = gst_element_get_pad (gcc->priv->videosrc, "video");
+  if (gcc->priv->source_type == GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW)
+    sourcepad = gst_element_get_pad (gcc->priv->videosrc, "src");
+  else
+    sourcepad= gst_element_get_pad (gcc->priv->videosrc, "video");
   caps = gst_pad_get_negotiated_caps (sourcepad);
 
   if (!(caps)) {
