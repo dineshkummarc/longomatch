@@ -115,18 +115,17 @@ dnl package checks, per config
 
 AC_CONFIG_FILES([env], [chmod +x env])
 AC_CONFIG_FILES([
-LongoMatch/Makefile
-CesarPlayer/Makefile
 po/Makefile.in
 libcesarplayer/Makefile
-libcesarplayer/src/Makefile
-Makefile
 CesarPlayer/cesarplayer.pc
 CesarPlayer/CesarPlayer.dll.config
+CesarPlayer/AssemblyInfo.cs
+CesarPlayer/Makefile
 LongoMatch/longomatch
 LongoMatch/longomatch.desktop.in
 LongoMatch/AssemblyInfo.cs
-CesarPlayer/AssemblyInfo.cs
+LongoMatch/Makefile
+Makefile
 ])
 
 AC_OUTPUT
