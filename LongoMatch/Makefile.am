@@ -79,28 +79,7 @@ FILES = \
 	Common/Enums.cs \
 	Common/Cairo.cs \
 	Common/Constants.cs \
-	Compat/0.0/DatabaseMigrator.cs \
-	Compat/0.0/DB/DataBase.cs \
-	Compat/0.0/DB/MediaFile.cs \
-	Compat/0.0/DB/Project.cs \
-	Compat/0.0/DB/Sections.cs \
-	Compat/0.0/IO/SectionsReader.cs \
-	Compat/0.0/Playlist/IPlayList.cs \
-	Compat/0.0/PlayListMigrator.cs \
-	Compat/0.0/Playlist/PlayList.cs \
-	Compat/0.0/TemplatesMigrator.cs \
-	Compat/0.0/Time/MediaTimeNode.cs \
-	Compat/0.0/Time/PixbufTimeNode.cs \
-	Compat/0.0/Time/PlayListTimeNode.cs \
-	Compat/0.0/Time/SectionsTimeNode.cs \
-	Compat/0.0/Time/Time.cs \
-	Compat/0.0/Time/TimeNode.cs \
 	DB/DataBase.cs \
-	DB/Project.cs \
-	DB/ProjectDescription.cs\
-	DB/Sections.cs \
-	DB/TagsTemplate.cs \
-	DB/TeamTemplate.cs \
 	gtk-gui/generated.cs \
 	gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs \
@@ -127,7 +106,6 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs \
@@ -172,7 +150,6 @@ FILES = \
 	Gui/Dialog/EntryDialog.cs \
 	Gui/Dialog/FramesCaptureProgressDialog.cs \
 	Gui/Dialog/HotKeySelectorDialog.cs \
-	Gui/Dialog/Migrator.cs \
 	Gui/Dialog/NewProjectDialog.cs \
 	Gui/Dialog/OpenProjectDialog.cs \
 	Gui/Dialog/PlayersSelectionDialog.cs \
@@ -209,16 +186,23 @@ FILES = \
 	Main.cs \
 	Playlist/IPlayList.cs \
 	Playlist/PlayList.cs \
-	Time/Tag.cs \
-	Time/Drawing.cs\
-	Time/HotKey.cs \
-	Time/MediaTimeNode.cs \
-	Time/PixbufTimeNode.cs \
-	Time/Player.cs \
-	Time/PlayListTimeNode.cs \
-	Time/SectionsTimeNode.cs \
-	Time/Time.cs \
-	Time/TimeNode.cs \
+	Store/Category.cs \
+	Store/Drawing.cs \
+	Store/DrawingsList.cs \
+	Store/HotKey.cs \
+	Store/PixbufTimeNode.cs \
+	Store/Play.cs \
+	Store/PlayListPlay.cs \
+	Store/Player.cs \
+	Store/Project.cs \
+	Store/ProjectDescription.cs \
+	Store/Tag.cs \
+	Store/Time.cs \
+	Store/TimeNode.cs \
+	Store/Templates/CategoriesTemplate.cs \
+	Store/Templates/TagsTemplate.cs \
+	Store/Templates/TeamTemplate.cs \
+	Store/Templates/Template.cs \
 	Updates/Updater.cs \
 	Updates/XmlUpdateParser.cs \
 	Utils/ProjectUtils.cs
@@ -226,7 +210,6 @@ FILES = \
 DATA_FILES = 
 
 RESOURCES = \
-	gtk-gui/objects.xml \
 	gtk-gui/gui.stetic\
 	images/longomatch.png,longomatch.png\
 	images/stock_draw-line-45.png\
@@ -245,13 +228,14 @@ EXTRAS = \
 	AssemblyInfo.cs.in
 
 REFERENCES =  \
-	Mono.Posix \
-	System.Xml \
-	$(GTK_SHARP_20_LIBS) \
-	$(GLIB_SHARP_20_LIBS) \
 	Mono.Cairo \
+	Mono.Posix \
 	System \
-	$(DB4O_74_LIBS)
+	System.Core \
+	System.Xml \
+	$(DB4O_74_LIBS) \
+	$(GTK_SHARP_20_LIBS) \
+	$(GLIB_SHARP_20_LIBS)
 
 DLL_REFERENCES = 
 
