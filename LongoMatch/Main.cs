@@ -131,7 +131,8 @@ namespace LongoMatch
 			string fConfig;
 			fConfig = System.IO.Path.Combine(TemplatesDir(),"default.sct");
 			if (!System.IO.File.Exists(fConfig)) {
-				CategoriesWriter.CreateNewTemplate("default.sct");
+				Categories cat = Categories.DefaultTemplate();
+				cat.Save("default.sct");
 			}
 
 			fConfig = System.IO.Path.Combine(TemplatesDir(),"default.tem");

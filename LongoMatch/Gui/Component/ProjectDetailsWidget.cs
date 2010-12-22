@@ -414,8 +414,7 @@ namespace LongoMatch.Gui.Component
 				i++;
 			}
 			tagscombobox.Active = index;
-			var reader = new CategoriesReader(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));
-			Categories = reader.GetCategories();
+			Categories = Categories.Load(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));
 		}
 
 		private void FillTeamsTemplate() {
@@ -537,8 +536,7 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnCombobox1Changed(object sender, System.EventArgs e)
 		{
-			var reader = new CategoriesReader(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));
-			Categories = reader.GetCategories();
+			Categories = Categories.Load(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));
 		}
 
 		protected virtual void OnVisitorcomboboxChanged(object sender, System.EventArgs e)

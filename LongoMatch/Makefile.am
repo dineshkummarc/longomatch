@@ -79,6 +79,7 @@ FILES = \
 	Common/Enums.cs \
 	Common/Cairo.cs \
 	Common/Constants.cs \
+	Common/SerializableObject.cs \
 	DB/DataBase.cs \
 	gtk-gui/generated.cs \
 	gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs \
@@ -180,8 +181,6 @@ FILES = \
 	Handlers/HotKeysManager.cs \
 	Handlers/VideoDrawingsManager.cs\
 	IO/CSVExport.cs \
-	IO/SectionsReader.cs \
-	IO/SectionsWriter.cs \
 	IO/XMLReader.cs \
 	Main.cs \
 	Playlist/IPlayList.cs \
@@ -202,7 +201,6 @@ FILES = \
 	Store/Templates/CategoriesTemplate.cs \
 	Store/Templates/TagsTemplate.cs \
 	Store/Templates/TeamTemplate.cs \
-	Store/Templates/Template.cs \
 	Updates/Updater.cs \
 	Updates/XmlUpdateParser.cs \
 	Utils/ProjectUtils.cs
