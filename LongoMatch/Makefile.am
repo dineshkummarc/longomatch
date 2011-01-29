@@ -79,6 +79,8 @@ FILES = \
 	Common/Enums.cs \
 	Common/Cairo.cs \
 	Common/Constants.cs \
+	Common/ConsoleCrayon.cs \
+	Common/Log.cs \
 	Common/SerializableObject.cs \
 	DB/DataBase.cs \
 	gtk-gui/generated.cs \
