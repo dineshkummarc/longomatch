@@ -160,10 +160,7 @@
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/ListTreeViewBase.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/CategoriesScale.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Cairo.cs" />
-    <File subtype="Directory" buildaction="Compile" name="Compat" />
     <File subtype="Code" buildaction="Compile" name="IO/XMLReader.cs" />
-    <File subtype="Code" buildaction="Compile" name="IO/SectionsReader.cs" />
-    <File subtype="Code" buildaction="Compile" name="IO/SectionsWriter.cs" />
     <File subtype="Directory" buildaction="Compile" name="Store" />
     <File subtype="Directory" buildaction="Compile" name="DB" />
     <File subtype="Directory" buildaction="Compile" name="DB" />
@@ -196,7 +193,6 @@
     <File subtype="Code" buildaction="Compile" name="Store/TimeNode.cs" />
     <File subtype="Directory" buildaction="Compile" name="Time" />
     <File subtype="Code" buildaction="Compile" name="Store/Templates/TeamTemplate.cs" />
-    <File subtype="Code" buildaction="Compile" name="IO/XMLReader.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/SerializableObject.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/SubCategory.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Templates/SubCategoriesTemplate.cs" />
@@ -217,7 +213,6 @@
     <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="../../../../../usr/lib/mono/gac/Db4objects.Db4o/7.4.121.14026__6199cd4f203aa8eb/Db4objects.Db4o.dll" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
->>>>>>> Update Monodevelop project file with the new changes
   </References>
   <LanguageParameters StartupObject="LongoMatch.MainClass" ApplicationIcon="." CodePage="65001" ctype="CSharpProjectParameters" />
 </Project>
