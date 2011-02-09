@@ -58,7 +58,6 @@ namespace LongoMatch.Gui
 			this.Build();
 
 			/*Updater updater = new Updater();
-			A
 			updater.NewVersion += new LongoMatch.Handlers.NewVersionHandler(OnUpdate);
 			updater.Run();*/
 			

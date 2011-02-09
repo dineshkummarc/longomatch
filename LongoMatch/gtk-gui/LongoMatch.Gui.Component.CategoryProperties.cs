@@ -60,7 +60,7 @@ namespace LongoMatch.Gui.Component
 			this.nameentry.CanFocus = true;
 			this.nameentry.Name = "nameentry";
 			this.nameentry.IsEditable = true;
-			this.nameentry.InvisibleChar = '‚óè';
+			this.nameentry.InvisibleChar = '.˘≈';
 			this.hbox4.Add (this.nameentry);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox4[this.nameentry]));
 			w2.Position = 1;

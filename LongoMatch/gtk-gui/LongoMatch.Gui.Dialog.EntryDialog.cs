@@ -64,7 +64,7 @@ namespace LongoMatch.Gui.Dialog
 			this.entry1.CanFocus = true;
 			this.entry1.Name = "entry1";
 			this.entry1.IsEditable = true;
-			this.entry1.InvisibleChar = '‚óè';
+			this.entry1.InvisibleChar = '.˘≈';
 			this.table1.Add (this.entry1);
 			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.table1[this.entry1]));
 			w3.LeftAttach = ((uint)(1));

@@ -120,7 +120,7 @@ namespace LongoMatch.Gui.Component
 			this.competitionentry.CanFocus = true;
 			this.competitionentry.Name = "competitionentry";
 			this.competitionentry.IsEditable = true;
-			this.competitionentry.InvisibleChar = '‚óè';
+			this.competitionentry.InvisibleChar = '.˘≈';
 			this.table1.Add (this.competitionentry);
 			global::Gtk.Table.TableChild w1 = ((global::Gtk.Table.TableChild)(this.table1[this.competitionentry]));
 			w1.TopAttach = ((uint)(4));
@@ -148,7 +148,7 @@ namespace LongoMatch.Gui.Component
 			this.fileEntry.CanFocus = true;
 			this.fileEntry.Name = "fileEntry";
 			this.fileEntry.IsEditable = false;
-			this.fileEntry.InvisibleChar = '‚óè';
+			this.fileEntry.InvisibleChar = '.˘≈';
 			this.filehbox.Add (this.fileEntry);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.filehbox[this.fileEntry]));
 			w3.Position = 0;
@@ -325,7 +325,7 @@ namespace LongoMatch.Gui.Component
 			this.dateEntry.CanFocus = true;
 			this.dateEntry.Name = "dateEntry";
 			this.dateEntry.IsEditable = false;
-			this.dateEntry.InvisibleChar = '‚óè';
+			this.dateEntry.InvisibleChar = '.˘≈';
 			this.hbox5.Add (this.dateEntry);
 			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.hbox5[this.dateEntry]));
 			w20.Position = 0;
@@ -415,7 +415,7 @@ namespace LongoMatch.Gui.Component
 			this.localTeamEntry.CanFocus = true;
 			this.localTeamEntry.Name = "localTeamEntry";
 			this.localTeamEntry.IsEditable = true;
-			this.localTeamEntry.InvisibleChar = '‚óè';
+			this.localTeamEntry.InvisibleChar = '.˘≈';
 			this.table1.Add (this.localTeamEntry);
 			global::Gtk.Table.TableChild w36 = ((global::Gtk.Table.TableChild)(this.table1[this.localTeamEntry]));
 			w36.LeftAttach = ((uint)(1));
@@ -435,7 +435,7 @@ namespace LongoMatch.Gui.Component
 			this.seasonentry.CanFocus = true;
 			this.seasonentry.Name = "seasonentry";
 			this.seasonentry.IsEditable = true;
-			this.seasonentry.InvisibleChar = '‚óè';
+			this.seasonentry.InvisibleChar = '.˘≈';
 			this.table1.Add (this.seasonentry);
 			global::Gtk.Table.TableChild w38 = ((global::Gtk.Table.TableChild)(this.table1[this.seasonentry]));
 			w38.TopAttach = ((uint)(3));
@@ -459,7 +459,7 @@ namespace LongoMatch.Gui.Component
 			this.visitorTeamEntry.CanFocus = true;
 			this.visitorTeamEntry.Name = "visitorTeamEntry";
 			this.visitorTeamEntry.IsEditable = true;
-			this.visitorTeamEntry.InvisibleChar = '‚óè';
+			this.visitorTeamEntry.InvisibleChar = '.˘≈';
 			this.table1.Add (this.visitorTeamEntry);
 			global::Gtk.Table.TableChild w40 = ((global::Gtk.Table.TableChild)(this.table1[this.visitorTeamEntry]));
 			w40.TopAttach = ((uint)(1));

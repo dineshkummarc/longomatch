@@ -75,7 +75,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		//Recorrer el directorio en busca de los archivos de configuración validos
+		//Recorrer el directorio en busca de los archivos de configuraci..n validos
 		private void Fill() {
 			string[] allFiles = System.IO.Directory.GetFiles(MainClass.TemplatesDir(),"*"+fileExtension);
 

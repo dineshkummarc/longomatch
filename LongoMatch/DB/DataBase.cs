@@ -128,7 +128,7 @@ namespace LongoMatch.DB
 							ProjectDescription desc = p.Description;
 							db.Activate(desc,3);
 							try{
-								//FIXME: It happens that the project's File object is set to null?¿?¿
+								//FIXME: It happens that the project's File object is set to null?..?..
 								// In that case, reset the value to let the user change it with the
 								// projects manager.
 								if (desc.File.FilePath == null){}							

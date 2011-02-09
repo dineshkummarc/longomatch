@@ -37,7 +37,7 @@ namespace LongoMatch.Gui.Component
 		private const int SECTION_HEIGHT = 30;
 		double scroll;
 		uint frames;
-		uint pixelRatio=10;//Número de frames por pixel
+		uint pixelRatio=10;//N..mero de frames por pixel
 		Pango.Layout layout;
 
 		public TimeReferenceWidget()

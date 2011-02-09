@@ -199,7 +199,7 @@ namespace LongoMatch.Gui.Dialog
 			this.fileentry.CanFocus = true;
 			this.fileentry.Name = "fileentry";
 			this.fileentry.IsEditable = false;
-			this.fileentry.InvisibleChar = '‚óè';
+			this.fileentry.InvisibleChar = '.˘≈';
 			this.hbox3.Add (this.fileentry);
 			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.fileentry]));
 			w15.Position = 0;

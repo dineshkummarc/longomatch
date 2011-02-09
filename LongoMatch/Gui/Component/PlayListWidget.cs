@@ -129,7 +129,7 @@ namespace LongoMatch.Gui.Component
 
 		public void Prev() {
 			if ((player.AccurateCurrentTime - plNode.Start.MSeconds) < 500) {
-				//Seleccionando el elemento anterior si no han pasado mÃ¡s 500ms
+				//Seleccionando el elemento anterior si no han pasado m.ís 500ms
 				if (playList.HasPrev()) {
 					plNode = playList.Prev();
 					playlisttreeview1.Selection.SelectPath(new TreePath(playList.GetCurrentIndex().ToString()));

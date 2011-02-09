@@ -37,7 +37,7 @@ namespace LongoMatch.Gui.Component
 {
 
 
-	//TODO añadir eventos de cambios para realizar el cambio directamente sobre el file data abierto
+	//TODO a..adir eventos de cambios para realizar el cambio directamente sobre el file data abierto
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class ProjectDetailsWidget : Gtk.Bin

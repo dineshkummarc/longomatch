@@ -28,7 +28,7 @@ namespace LongoMatch.Common
 		
 		public const string DB_FILE = "longomatch.1.db";
 		
-		public const string COPYRIGHT =  "Copyright ¬©2007-2010 Andoni Morales Alastruey";
+		public const string COPYRIGHT =  "Copyright ..2007-2010 Andoni Morales Alastruey";
 		
 		public const string FAKE_PROJECT = "@Fake Project@";
 		
@@ -53,18 +53,18 @@ Bruno Brouard (fr)
 Daniel Nylander (sv)
 G. Baylard (fr)
 Joan Charmant (fr)
-Jo√£o Paulo Azevedo (pt)
+Jo.˙o Paulo Azevedo (pt)
 Joe Hansen (da)
-Jorge Gonz√°lez (es)
+Jorge Gonz.Ìlez (es)
 Kenneth Nielsen (da)
 Kjartan Maraas (nb)
 Peter Strikwerda (nl)
 Laurent Coudeur (fr)
 Marek Cernocky (cs)
-Mario Bl√§ttermann (de)
-Matej Urbanƒçiƒç (sl)
+Mario Bl.Òttermann (de)
+Matej Urban.Ïi.Ï (sl)
 Maurizio Napolitano (it)
-Pavel B√°rta (cs)
+Pavel B.Ìrta (cs)
 Petr Kovar (cs)
 Xavier Queralt Mateu (ca)";
 		
