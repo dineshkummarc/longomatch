@@ -51,7 +51,7 @@ namespace LongoMatch.Gui.Component
 			this.filterEntry.CanFocus = true;
 			this.filterEntry.Name = "filterEntry";
 			this.filterEntry.IsEditable = true;
-			this.filterEntry.InvisibleChar = '.˘≈';
+			this.filterEntry.InvisibleChar = '‚óè';
 			this.hbox1.Add (this.filterEntry);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.filterEntry]));
 			w3.Position = 1;

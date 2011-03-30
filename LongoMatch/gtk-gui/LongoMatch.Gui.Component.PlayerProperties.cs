@@ -230,7 +230,7 @@ namespace LongoMatch.Gui.Component
 			this.nameentry.CanFocus = true;
 			this.nameentry.Name = "nameentry";
 			this.nameentry.IsEditable = true;
-			this.nameentry.InvisibleChar = '.˘≈';
+			this.nameentry.InvisibleChar = '‚óè';
 			this.table1.Add (this.nameentry);
 			global::Gtk.Table.TableChild w17 = ((global::Gtk.Table.TableChild)(this.table1[this.nameentry]));
 			w17.LeftAttach = ((uint)(1));
@@ -242,7 +242,7 @@ namespace LongoMatch.Gui.Component
 			this.nationalityentry.CanFocus = true;
 			this.nationalityentry.Name = "nationalityentry";
 			this.nationalityentry.IsEditable = true;
-			this.nationalityentry.InvisibleChar = '.˘≈';
+			this.nationalityentry.InvisibleChar = '‚óè';
 			this.table1.Add (this.nationalityentry);
 			global::Gtk.Table.TableChild w18 = ((global::Gtk.Table.TableChild)(this.table1[this.nationalityentry]));
 			w18.TopAttach = ((uint)(6));
@@ -284,7 +284,7 @@ namespace LongoMatch.Gui.Component
 			this.positionentry.CanFocus = true;
 			this.positionentry.Name = "positionentry";
 			this.positionentry.IsEditable = true;
-			this.positionentry.InvisibleChar = '.˘≈';
+			this.positionentry.InvisibleChar = '‚óè';
 			this.table1.Add (this.positionentry);
 			global::Gtk.Table.TableChild w21 = ((global::Gtk.Table.TableChild)(this.table1[this.positionentry]));
 			w21.TopAttach = ((uint)(2));
