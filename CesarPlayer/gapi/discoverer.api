@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<api>
+  <!--
+
+        This file was automatically generated.
+        Please DO NOT MODIFY THIS FILE, modify .metadata files instead.
+
+-->
+  <namespace name="LongoMatch.Video" library="libcesarplayer.dll" >
+    <enum name="Result" cname="GstDiscovererResult" type="enum">
+      <member cname="GST_DISCOVERER_OK" name="Ok"/>
+      <member cname="GST_DISCOVERER_URI_INVALID" name="Invalid"/>
+      <member cname="GST_DISCOVERER_URI_ERROR" name="Error"/>
+      <member cname="GST_DISCOVERER_URI_TIMEOUT" name="Timeout"/>
+      <member cname="GST_DISCOVERER_URI_BUSY" name="Busy"/>
+      <member cname="GST_DISCOVERER_URI_MISSING_PLUGIN" name="MissingPlugin"/>
+    </enum>
+    <struct name="GstDiscovererInfo" cname="GstDiscovererInfo" opaque="true">
+      <method name="GetResult" cname="gst_discoverer_info_get_result">
+        <return-type type="GstDiscovererResult"/>
+      </method>
+      <method name="GetDuration" cname="gst_discoverer_get_duration" shared="true">
+        <return-type type="guint64"/>
+      </method>
+      <method name="GetAudioStreams" cname="gst_discoverer_get_audio_streams" shared="true">
+        <return-type type="GList*"/>
+      </method>
+      <method name="GetVideoStreams" cname="gst_discoverer_get_video_streams" shared="true">
+        <return-type type="GList*"/>
+      </method>
+      <method name="GetContainerStreams" cname="gst_discoverer_get_container_streams" shared="true">
+        <return-type type="GList*"/>
+      </method>
+    </struct>
+    <struct name="GstDiscovererAudioInfo" cname="GstDiscoverer" opaque="true">
+      <method name="GetChannels" cname="gst_discoverer_audio_info_get_channels">
+        <return-type type="guint"/>
+      </method>
+      <method name="GetSampleRate" cname="gst_discoverer_audio_info_get_sample_rate">
+        <return-type type="guint"/>
+      </method>
+    </struct>
+    <struct name="GstDiscovererVideoInfo" cname="GstDiscoverer" opaque="true">
+      <method name="GetHeight" cname="gst_discoverer_video_get_height">
+        <return-type type="guint"/>
+      </method>
+      <method name="GetWidth" cname="gst_discoverer_video_get_width">
+        <return-type type="guint"/>
+      </method>
+      <method name="GetFrameRateDenom" cname="gst_discoverer_video_get_framerate_denom">
+        <return-type type="guint"/>
+      </method>
+      <method name="GetFrameRateNum" cname="gst_discoverer_video_get_framerate_num">
+        <return-type type="guint"/>
+      </method>
+    </struct>
+    <struct name="GstDiscovererStreamInfo" cname="GstContainerInfo" opaque="true">
+      <method name="GetCaps" cname="gst_discoverer_stream_get_caps">
+        <return-type type="gchar"/>
+      </method>
+    </struct>
+    <struct name="GstDiscovererContainerInfo" cname="GstContainerInfo" opaque="true">
+    </struct>
+    <struct name="GstDiscoverer" cname="GstDiscoverer" opaque="true">
+      <constructor cname="gst_discoverer_new">
+        <parameters>
+          <parameter type="guint64" name="timeout"/>
+          <parameter type="GError**" name="error"/>
+        </parameters>
+      </constructor>
+      <method name="DiscoverUri" cname="gst_discoverer_discover_uri" shared="true">
+        <return-type type="GstDiscovererInfo*"/>
+        <parameters>
+          <parameter type="const-gchar*" name="uri"/>
+          <parameter type="GError**" name="error"/>
+        </parameters>
+      </method>
+    </struct>
+  </namespace>
+</api>
