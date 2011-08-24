@@ -7,6 +7,7 @@ DEFAULT_INSTALL_DIR = $(pkglibdir)
 
 # External libraries to link against, generated from configure
 LINK_SYSTEM = -r:System
+LINK_SYSTEM_SERVICEMODEL_WEB = -r:System.ServiceModel.Web
 LINK_CAIRO = -r:Mono.Cairo
 LINK_MONO_POSIX = -r:Mono.Posix
 LINK_MONO_ZEROCONF = $(MONO_ZEROCONF_LIBS)
@@ -22,6 +23,7 @@ REF_DEP_CESARPLAYER = $(LINK_GLIB) \
 
 REF_DEP_LONGOMATCH = \
                      $(LINK_MONO_POSIX) \
+                     $(LINK_SYSTEM_SERVICEMODEL_WEB) \
                      $(LINK_DB40) \
                      $(LINK_GLIB) \
                      $(LINK_GTK) \

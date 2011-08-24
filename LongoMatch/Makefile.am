@@ -9,6 +9,7 @@ SOURCES = \
 	Common/ConsoleCrayon.cs \
 	Common/Constants.cs \
 	Common/Enums.cs \
+	Common/JSONSerializer.cs \
 	Common/GStreamer.cs \
 	Common/Log.cs \
 	Common/ProjectUtils.cs \

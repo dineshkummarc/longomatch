@@ -34,11 +34,11 @@ namespace LongoMatch.Store.Templates
 		public SubCategoryTemplate(IEnumerable<string> tags): base (tags) {}
 
 		public void Save(string filePath) {
-			SerializableObject.Save(this, filePath);
+			JSONSerializer.Save(this, filePath);
 		}
 
 		public static SubCategoryTemplate Load(string filePath) {
-			return SerializableObject.Load<SubCategoryTemplate>(filePath);
+			return JSONSerializer.Load<SubCategoryTemplate>(filePath);
 		}
 		
 		public static SubCategoryTemplate DefaultTemplate (int not_used) {

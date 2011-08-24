@@ -27,7 +27,6 @@ using LongoMatch.Interfaces;
 namespace LongoMatch.Store.Templates
 {
 	[Serializable]
-
 	public class TeamTemplate: List<Player>, ITemplate<Player>
 	{
 		public TeamTemplate() {
@@ -51,11 +50,11 @@ namespace LongoMatch.Store.Templates
 		}
 
 		public void Save(string filePath) {
-			SerializableObject.Save(this, filePath);
+			JSONSerializer.Save(this, filePath);
 		}
 
 		public static TeamTemplate Load(string filePath) {
-			return SerializableObject.Load<TeamTemplate>(filePath);
+			return JSONSerializer.Load<TeamTemplate>(filePath);
 		}
 
 		public static TeamTemplate DefaultTemplate(int playersCount) {

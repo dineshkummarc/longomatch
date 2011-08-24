@@ -50,11 +50,11 @@ namespace LongoMatch.Store.Templates
 			set;
 		}
 		public void Save(string filePath) {
-			SerializableObject.Save(this, filePath);
+			JSONSerializer.Save(this, filePath);
 		}
 
 		public static Categories Load(string filePath) {
-			return SerializableObject.Load<Categories>(filePath);
+			return JSONSerializer.Load<Categories>(filePath);
 		}
 
 		public static Categories DefaultTemplate(int count) {
@@ -81,13 +81,13 @@ namespace LongoMatch.Store.Templates
 				team.Add(Team.VISITOR);
 				
 				localplayers = new PlayerSubCategory {
-					Name = Catalog.GetString("Local Team Players"),
+					Name = Catalog.GetString("Local"),
 					AllowMultiple = true,
 					FastTag = true};
 			    localplayers.Add(Team.LOCAL);
 			    
 				visitorplayers = new PlayerSubCategory {
-					Name = Catalog.GetString("Visitor Team Players"),
+					Name = Catalog.GetString("Visitor"),
 					AllowMultiple = true,
 					FastTag = true};
 				visitorplayers.Add(Team.VISITOR);	

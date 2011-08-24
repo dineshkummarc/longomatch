@@ -190,6 +190,7 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.TeamTaggerWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/TeamTaggerWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/ITag.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/JSONSerializer.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
@@ -204,6 +205,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="Db4objects.Db4o, Version=7.4.121.14026, Culture=neutral, PublicKeyToken=6199cd4f203aa8eb" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.ServiceModel.Web, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
   </References>
   <LanguageParameters StartupObject="LongoMatch.MainClass" ApplicationIcon="." CodePage="65001" ctype="CSharpProjectParameters" />
 </Project>

@@ -5,7 +5,7 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../../bin/CesarPlayer.dll" />
+    <widget-library name="../../CesarPlayer/a.dll" />
     <widget-library name="../../bin/LongoMatch.exe" internal="true" />
   </import>
   <icon-factory>
