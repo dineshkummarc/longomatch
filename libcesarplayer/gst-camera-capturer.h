@@ -33,6 +33,7 @@
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
+#include <clutter-gtk/clutter-gtk.h>
 #include "common.h"
 
 G_BEGIN_DECLS
@@ -50,7 +51,7 @@ typedef struct GstCameraCapturerPrivate GstCameraCapturerPrivate;
 
 struct _GstCameraCapturerClass
 {
-  GtkHBoxClass parent_class;
+  GtkClutterEmbedClass parent_class;
 
   void (*eos) (GstCameraCapturer * gcc);
   void (*error) (GstCameraCapturer * gcc, const char *message);
@@ -60,7 +61,7 @@ struct _GstCameraCapturerClass
 
 struct _GstCameraCapturer
 {
-  GtkEventBox parent;
+  GtkClutterEmbed parent;
   GstCameraCapturerPrivate *priv;
 };
 

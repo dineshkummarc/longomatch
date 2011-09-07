@@ -39,57 +39,20 @@ namespace LongoMatch.Video
 			oS = Environment.OSVersion;
 		}
 
-		public IPlayer getPlayer(int width, int height) {
-			switch(oS.Platform) {
-			case PlatformID.Unix:
-				return new GstPlayer(width,height,PlayerUseType.Video);
-
-			case PlatformID.Win32NT:
-				return new GstPlayer(width,height,PlayerUseType.Video);
-
-			default:
-				return new GstPlayer(width,height,PlayerUseType.Video);
-			}
+		public IPlayer getPlayer() {
+			return new GstPlayer(PlayerUseType.Player);
 		}
 
 		public IMetadataReader getMetadataReader() {
-
-			switch(oS.Platform) {
-			case PlatformID.Unix:
-				return new GstPlayer(1,1,PlayerUseType.Metadata);
-
-			case PlatformID.Win32NT:
-				return new GstPlayer(1,1,PlayerUseType.Metadata);
-
-			default:
-				return new GstPlayer(1,1,PlayerUseType.Metadata);
-			}
+			return new GstPlayer(PlayerUseType.Metadata);
 		}
 
 		public IFramesCapturer getFramesCapturer() {
-			switch(oS.Platform) {
-			case PlatformID.Unix:
-				return new GstPlayer(1,1,PlayerUseType.Capture);
-
-			case PlatformID.Win32NT:
-				return new GstPlayer(1,1,PlayerUseType.Capture);
-
-			default:
-				return new GstPlayer(1,1,PlayerUseType.Capture);
-			}
+			return new GstPlayer(PlayerUseType.Capture);
 		}
 
 		public IVideoEditor getVideoEditor() {
-			switch(oS.Platform) {
-			case PlatformID.Unix:
-				return new GstVideoSplitter();
-
-			case PlatformID.Win32NT:
-				return new GstVideoSplitter();
-
-			default:
-				return new GstVideoSplitter();
-			}
+			return new GstVideoSplitter();
 		}
 
 		public ICapturer getCapturer(CapturerType type) {

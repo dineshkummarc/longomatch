@@ -93,8 +93,7 @@ namespace LongoMatch.Video.Common
 	}
 
 	public enum PlayerUseType {
-		Video,
-		Audio,
+		Player,
 		Capture,
 		Metadata,
 	}
@@ -104,23 +103,6 @@ namespace LongoMatch.Video.Common
 		Contrast,
 		Saturation,
 		Hue,
-	}
-
-	public enum AspectRatio {
-		Auto,
-		Square,
-		Fourbythree,
-		Anamorphic,
-		Dvb,
-	}
-
-	public enum AudioOutType {
-		Stereo,
-		Channel4,
-		Channel41,
-		Channel5,
-		Channel51,
-		Ac3passthru,
 	}
 
 	public enum MetadataType {

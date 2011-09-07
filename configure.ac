@@ -79,7 +79,10 @@ PKG_CHECK_MODULES([DB4O], [db4o])
 AC_SUBST(DB4O_LIBS)
 
 dnl package checks for libcesarplayer
-PKG_CHECK_MODULES(CESARPLAYER, [gtk+-2.0 >= 2.8 gdk-2.0 gio-2.0 glib-2.0 gstreamer-0.10 gstreamer-audio-0.10 gstreamer-video-0.10 gstreamer-pbutils-0.10 gobject-2.0 gstreamer-interfaces-0.10])
+PKG_CHECK_MODULES(CESARPLAYER, [gtk+-2.0 >= 2.8 gdk-2.0 gio-2.0 glib-2.0
+gstreamer-0.10 gstreamer-audio-0.10 gstreamer-video-0.10 gstreamer-pbutils-0.10
+gobject-2.0 gstreamer-interfaces-0.10, clutter-gtk-0.10, clutter-1.0
+clutter-gst-1.0, mx-1.0])
 AC_SUBST(CESARPLAYER_CFLAGS)
 AC_SUBST(CESARPLAYER_LIBS)
 

@@ -25,13 +25,19 @@
 #include <string.h>
 #include <stdio.h>
 
-#include <gst/interfaces/xoverlay.h>
-#include <gst/interfaces/propertyprobe.h>
 #include <gst/gst.h>
 #include <gst/video/video.h>
+#include <gst/interfaces/xoverlay.h>
+#include <gst/interfaces/propertyprobe.h>
+#include <gst/interfaces/colorbalance.h>
 
 #include "gst-camera-capturer.h"
-#include "gstscreenshot.h"
+#include "gst-helpers.h"
+
+/* clutter */
+#include <clutter-gst/clutter-gst.h>
+#include <mx/mx.h>
+#include "longomatch-aspect-frame.h"
 
 /*Default video source*/
 #ifdef WIN32
@@ -58,6 +64,9 @@
 #else
 #define DEFAULT_SOURCE_TYPE  GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW
 #endif
+
+#define LOGO_SIZE_H 166
+#define LOGO_SIZE_W 540
 
 typedef enum
 {
@@ -95,7 +104,6 @@ enum
 
 struct GstCameraCapturerPrivate
 {
-
   /*Encoding properties */
   gchar *output_file;
   gchar *device_id;
@@ -112,7 +120,8 @@ struct GstCameraCapturerPrivate
   /*Video input info */
   gint video_width;             /* Movie width */
   gint video_height;            /* Movie height */
-  const GValue *movie_par;      /* Movie pixel aspect ratio */
+  gint movie_par_n;             /* Movie pixel aspect ratio numerator */
+  gint movie_par_d;             /* Movie pixel aspect ratio denominator */
   gint video_width_pixels;      /* Scaled movie width */
   gint video_height_pixels;     /* Scaled movie height */
   gint video_fps_n;
@@ -134,17 +143,18 @@ struct GstCameraCapturerPrivate
   GstElement *videoenc;
   GstElement *audioenc;
   GstElement *videomux;
+  GstColorBalance *balance;
 
-  /*Overlay */
-  GstXOverlay *xoverlay;        /* protect with lock */
-  guint interface_update_id;    /* protect with lock */
-  GMutex *lock;
-
-  /*Videobox */
-  GdkWindow *video_window;
   gboolean logo_mode;
   GdkPixbuf *logo_pixbuf;
-  float zoom;
+
+  /* Clutter */
+  ClutterActor *stage;
+  ClutterActor *texture;
+  ClutterActor *frame;
+
+  ClutterActor *logo_frame;
+  ClutterActor *logo;
 
   /*GStreamer bus */
   GstBus *bus;
@@ -165,12 +175,9 @@ static void gst_camera_capturer_get_property (GObject * object,
     guint property_id, GValue * value, GParamSpec * pspec);
 static void gst_camera_capturer_set_property (GObject * object,
     guint property_id, const GValue * value, GParamSpec * pspec);
-static void gcc_element_msg_sync (GstBus * bus, GstMessage * msg,
-    gpointer data);
-static void gcc_update_interface_implementations (GstCameraCapturer * gcc);
 static int gcc_get_video_stream_info (GstCameraCapturer * gcc);
 
-G_DEFINE_TYPE (GstCameraCapturer, gst_camera_capturer, GTK_TYPE_EVENT_BOX);
+G_DEFINE_TYPE (GstCameraCapturer, gst_camera_capturer, GTK_CLUTTER_TYPE_EMBED);
 
 static void
 gst_camera_capturer_init (GstCameraCapturer * object)
@@ -180,10 +187,6 @@ gst_camera_capturer_init (GstCameraCapturer * object)
       G_TYPE_INSTANCE_GET_PRIVATE (object, GST_TYPE_CAMERA_CAPTURER,
       GstCameraCapturerPrivate);
 
-  GTK_WIDGET_SET_FLAGS (GTK_WIDGET (object), GTK_CAN_FOCUS);
-  GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (object), GTK_DOUBLE_BUFFERED);
-
-  priv->zoom = 1.0;
   priv->output_height = 576;
   priv->output_width = 720;
   priv->output_fps_n = 25;
@@ -192,8 +195,6 @@ gst_camera_capturer_init (GstCameraCapturer * object)
   priv->video_bitrate = 5000;
   priv->last_buffer = NULL;
   priv->source_type = GST_CAMERA_CAPTURE_SOURCE_TYPE_NONE;
-
-  priv->lock = g_mutex_new ();
 }
 
 void
@@ -232,11 +233,6 @@ gst_camera_capturer_finalize (GObject * object)
     gcc->priv->logo_pixbuf = NULL;
   }
 
-  if (gcc->priv->interface_update_id) {
-    g_source_remove (gcc->priv->interface_update_id);
-    gcc->priv->interface_update_id = 0;
-  }
-
   if (gcc->priv->last_buffer != NULL)
     gst_buffer_unref (gcc->priv->last_buffer);
 
@@ -246,8 +242,6 @@ gst_camera_capturer_finalize (GObject * object)
     gst_object_unref (gcc->priv->main_pipeline);
     gcc->priv->main_pipeline = NULL;
   }
-
-  g_mutex_free (gcc->priv->lock);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -328,418 +322,20 @@ gst_camera_capturer_set_device_id (GstCameraCapturer * gcc,
   GST_INFO_OBJECT (gcc, "Changed device id/name to :\n%s", device_id);
 }
 
-/***********************************
-*           
-*           GTK Widget
-*
-************************************/
-
-static void
-gst_camera_capturer_size_request (GtkWidget * widget,
-    GtkRequisition * requisition)
-{
-  requisition->width = 320;
-  requisition->height = 240;
-}
-
-static void
-get_media_size (GstCameraCapturer * gcc, gint * width, gint * height)
-{
-  if (gcc->priv->logo_mode) {
-    if (gcc->priv->logo_pixbuf) {
-      *width = gdk_pixbuf_get_width (gcc->priv->logo_pixbuf);
-      *height = gdk_pixbuf_get_height (gcc->priv->logo_pixbuf);
-    } else {
-      *width = 0;
-      *height = 0;
-    }
-  } else {
-
-    GValue *disp_par = NULL;
-    guint movie_par_n, movie_par_d, disp_par_n, disp_par_d, num, den;
-
-    /* Create and init the fraction value */
-    disp_par = g_new0 (GValue, 1);
-    g_value_init (disp_par, GST_TYPE_FRACTION);
-
-    /* Square pixel is our default */
-    gst_value_set_fraction (disp_par, 1, 1);
-
-    /* Now try getting display's pixel aspect ratio */
-    if (gcc->priv->xoverlay) {
-      GObjectClass *klass;
-      GParamSpec *pspec;
-
-      klass = G_OBJECT_GET_CLASS (gcc->priv->xoverlay);
-      pspec = g_object_class_find_property (klass, "pixel-aspect-ratio");
-
-      if (pspec != NULL) {
-        GValue disp_par_prop = { 0, };
-
-        g_value_init (&disp_par_prop, pspec->value_type);
-        g_object_get_property (G_OBJECT (gcc->priv->xoverlay),
-            "pixel-aspect-ratio", &disp_par_prop);
-
-        if (!g_value_transform (&disp_par_prop, disp_par)) {
-          GST_WARNING ("Transform failed, assuming pixel-aspect-ratio = 1/1");
-          gst_value_set_fraction (disp_par, 1, 1);
-        }
-
-        g_value_unset (&disp_par_prop);
-      }
-    }
-
-    disp_par_n = gst_value_get_fraction_numerator (disp_par);
-    disp_par_d = gst_value_get_fraction_denominator (disp_par);
-
-    GST_DEBUG_OBJECT (gcc, "display PAR is %d/%d", disp_par_n, disp_par_d);
-
-    /* Use the movie pixel aspect ratio if any */
-    if (gcc->priv->movie_par) {
-      movie_par_n = gst_value_get_fraction_numerator (gcc->priv->movie_par);
-      movie_par_d = gst_value_get_fraction_denominator (gcc->priv->movie_par);
-    } else {
-      /* Square pixels */
-      movie_par_n = 1;
-      movie_par_d = 1;
-    }
-
-    GST_DEBUG_OBJECT (gcc, "movie PAR is %d/%d", movie_par_n, movie_par_d);
-
-    if (gcc->priv->video_width == 0 || gcc->priv->video_height == 0) {
-      GST_DEBUG_OBJECT (gcc, "width and/or height 0, assuming 1/1 ratio");
-      num = 1;
-      den = 1;
-    } else if (!gst_video_calculate_display_ratio (&num, &den,
-            gcc->priv->video_width,
-            gcc->priv->video_height,
-            movie_par_n, movie_par_d, disp_par_n, disp_par_d)) {
-      GST_WARNING ("overflow calculating display aspect ratio!");
-      num = 1;                  /* FIXME: what values to use here? */
-      den = 1;
-    }
-
-    GST_DEBUG_OBJECT (gcc, "calculated scaling ratio %d/%d for video %dx%d",
-        num, den, gcc->priv->video_width, gcc->priv->video_height);
-
-    /* now find a width x height that respects this display ratio.
-     * prefer those that have one of w/h the same as the incoming video
-     * using wd / hd = num / den */
-
-    /* start with same height, because of interlaced video */
-    /* check hd / den is an integer scale factor, and scale wd with the PAR */
-    if (gcc->priv->video_height % den == 0) {
-      GST_DEBUG_OBJECT (gcc, "keeping video height");
-      gcc->priv->video_width_pixels =
-          (guint) gst_util_uint64_scale (gcc->priv->video_height, num, den);
-      gcc->priv->video_height_pixels = gcc->priv->video_height;
-    } else if (gcc->priv->video_width % num == 0) {
-      GST_DEBUG_OBJECT (gcc, "keeping video width");
-      gcc->priv->video_width_pixels = gcc->priv->video_width;
-      gcc->priv->video_height_pixels =
-          (guint) gst_util_uint64_scale (gcc->priv->video_width, den, num);
-    } else {
-      GST_DEBUG_OBJECT (gcc, "approximating while keeping video height");
-      gcc->priv->video_width_pixels =
-          (guint) gst_util_uint64_scale (gcc->priv->video_height, num, den);
-      gcc->priv->video_height_pixels = gcc->priv->video_height;
-    }
-    GST_DEBUG_OBJECT (gcc, "scaling to %dx%d", gcc->priv->video_width_pixels,
-        gcc->priv->video_height_pixels);
-
-    *width = gcc->priv->video_width_pixels;
-    *height = gcc->priv->video_height_pixels;
-
-    /* Free the PAR fraction */
-    g_value_unset (disp_par);
-    g_free (disp_par);
-
-  }
-}
-
-static void
-resize_video_window (GstCameraCapturer * gcc)
-{
-  const GtkAllocation *allocation;
-  gfloat width, height, ratio, x, y;
-  int w, h;
-
-  g_return_if_fail (gcc != NULL);
-  g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
-
-  allocation = &GTK_WIDGET (gcc)->allocation;
-
-  get_media_size (gcc, &w, &h);
-
-  if (!w || !h) {
-    w = allocation->width;
-    h = allocation->height;
-  }
-  width = w;
-  height = h;
-
-  /* calculate ratio for fitting video into the available space */
-  if ((gfloat) allocation->width / width > (gfloat) allocation->height / height) {
-    ratio = (gfloat) allocation->height / height;
-  } else {
-    ratio = (gfloat) allocation->width / width;
-  }
-
-  /* apply zoom factor */
-  ratio = ratio * gcc->priv->zoom;
-
-  width *= ratio;
-  height *= ratio;
-  x = (allocation->width - width) / 2;
-  y = (allocation->height - height) / 2;
-
-  gdk_window_move_resize (gcc->priv->video_window, x, y, width, height);
-  gtk_widget_queue_draw (GTK_WIDGET (gcc));
-}
-
-static void
-gst_camera_capturer_size_allocate (GtkWidget * widget,
-    GtkAllocation * allocation)
-{
-  GstCameraCapturer *gcc = GST_CAMERA_CAPTURER (widget);
-
-  g_return_if_fail (widget != NULL);
-  g_return_if_fail (GST_IS_CAMERA_CAPTURER (widget));
-
-  widget->allocation = *allocation;
-
-  if (GTK_WIDGET_REALIZED (widget)) {
-    gdk_window_move_resize (gtk_widget_get_window (widget),
-        allocation->x, allocation->y, allocation->width, allocation->height);
-    resize_video_window (gcc);
-  }
-}
-
-static gboolean
-gst_camera_capturer_configure_event (GtkWidget * widget,
-    GdkEventConfigure * event, GstCameraCapturer * gcc)
-{
-  GstXOverlay *xoverlay = NULL;
-
-  g_return_val_if_fail (gcc != NULL, FALSE);
-  g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), FALSE);
-
-  xoverlay = gcc->priv->xoverlay;
-
-  if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)) {
-    gst_x_overlay_expose (xoverlay);
-  }
-
-  return FALSE;
-}
-
 static void
 gst_camera_capturer_realize (GtkWidget * widget)
 {
-  GstCameraCapturer *gcc = GST_CAMERA_CAPTURER (widget);
-  GdkWindowAttr attributes;
-  gint attributes_mask, w, h;
-  GdkColor colour;
-  GdkWindow *window;
-  GdkEventMask event_mask;
-
-  event_mask = gtk_widget_get_events (widget)
-      | GDK_POINTER_MOTION_MASK | GDK_KEY_PRESS_MASK;
-  gtk_widget_set_events (widget, event_mask);
+  GtkWidget *toplevel;
 
   GTK_WIDGET_CLASS (parent_class)->realize (widget);
 
-  window = gtk_widget_get_window (widget);
+  gtk_widget_set_realized (widget, TRUE);
 
-  /* Creating our video window */
-  attributes.window_type = GDK_WINDOW_CHILD;
-  attributes.x = 0;
-  attributes.y = 0;
-  attributes.width = widget->allocation.width;
-  attributes.height = widget->allocation.height;
-  attributes.wclass = GDK_INPUT_OUTPUT;
-  attributes.event_mask = gtk_widget_get_events (widget);
-  attributes.event_mask |= GDK_EXPOSURE_MASK |
-      GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_KEY_PRESS_MASK;
-  attributes_mask = GDK_WA_X | GDK_WA_Y;
-
-  gcc->priv->video_window = gdk_window_new (window,
-      &attributes, attributes_mask);
-  gdk_window_set_user_data (gcc->priv->video_window, widget);
-
-  gdk_color_parse ("black", &colour);
-  gdk_colormap_alloc_color (gtk_widget_get_colormap (widget),
-      &colour, TRUE, TRUE);
-  gdk_window_set_background (window, &colour);
-  gtk_widget_set_style (widget,
-      gtk_style_attach (gtk_widget_get_style (widget), window));
-
-  GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
-
-  /* Connect to configure event on the top level window */
-  g_signal_connect (G_OBJECT (widget), "configure-event",
-      G_CALLBACK (gst_camera_capturer_configure_event), gcc);
-
-  /* nice hack to show the logo fullsize, while still being resizable */
-  get_media_size (GST_CAMERA_CAPTURER (widget), &w, &h);
-}
-
-static void
-gst_camera_capturer_unrealize (GtkWidget * widget)
-{
-  GstCameraCapturer *gcc = GST_CAMERA_CAPTURER (widget);
-
-  gdk_window_set_user_data (gcc->priv->video_window, NULL);
-  gdk_window_destroy (gcc->priv->video_window);
-  gcc->priv->video_window = NULL;
-
-  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
-}
-
-static void
-gst_camera_capturer_show (GtkWidget * widget)
-{
-  GstCameraCapturer *gcc = GST_CAMERA_CAPTURER (widget);
-  GdkWindow *window;
-
-  window = gtk_widget_get_window (widget);
-  if (window)
-    gdk_window_show (window);
-  if (gcc->priv->video_window)
-    gdk_window_show (gcc->priv->video_window);
-
-  if (GTK_WIDGET_CLASS (parent_class)->show)
-    GTK_WIDGET_CLASS (parent_class)->show (widget);
-}
-
-static void
-gst_camera_capturer_hide (GtkWidget * widget)
-{
-  GstCameraCapturer *gcc = GST_CAMERA_CAPTURER (widget);
-  GdkWindow *window;
-
-  window = gtk_widget_get_window (widget);
-  if (window)
-    gdk_window_hide (window);
-  if (gcc->priv->video_window)
-    gdk_window_hide (gcc->priv->video_window);
-
-  if (GTK_WIDGET_CLASS (parent_class)->hide)
-    GTK_WIDGET_CLASS (parent_class)->hide (widget);
-}
-
-static gboolean
-gst_camera_capturer_expose_event (GtkWidget * widget, GdkEventExpose * event)
-{
-  GstCameraCapturer *gcc = GST_CAMERA_CAPTURER (widget);
-  GstXOverlay *xoverlay;
-  gboolean draw_logo;
-  GdkWindow *win;
-
-  if (event && event->count > 0)
-    return TRUE;
-
-  g_mutex_lock (gcc->priv->lock);
-  xoverlay = gcc->priv->xoverlay;
-  if (xoverlay == NULL) {
-    gcc_update_interface_implementations (gcc);
-    resize_video_window (gcc);
-    xoverlay = gcc->priv->xoverlay;
-  }
-  if (xoverlay != NULL)
-    gst_object_ref (xoverlay);
-
-  g_mutex_unlock (gcc->priv->lock);
-
-  if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)) {
-    gdk_window_show (gcc->priv->video_window);
-#ifdef WIN32
-    gst_x_overlay_set_xwindow_id (gcc->priv->xoverlay,
-        GDK_WINDOW_HWND (gcc->priv->video_window));
-#else
-    gst_x_overlay_set_xwindow_id (gcc->priv->xoverlay,
-        GDK_WINDOW_XID (gcc->priv->video_window));
-#endif
-  }
-
-  /* Start with a nice black canvas */
-  win = gtk_widget_get_window (widget);
-  gdk_draw_rectangle (win, gtk_widget_get_style (widget)->black_gc, TRUE, 0,
-      0, widget->allocation.width, widget->allocation.height);
-
-  /* if there's only audio and no visualisation, draw the logo as well */
-  draw_logo = gcc->priv->media_has_audio && !gcc->priv->media_has_video;
-
-  if (gcc->priv->logo_mode || draw_logo) {
-    if (gcc->priv->logo_pixbuf != NULL) {
-      GdkPixbuf *frame;
-      guchar *pixels;
-      int rowstride;
-      gint width, height, alloc_width, alloc_height, logo_x, logo_y;
-      gfloat ratio;
-
-      /* Checking if allocated space is smaller than our logo */
-      width = gdk_pixbuf_get_width (gcc->priv->logo_pixbuf);
-      height = gdk_pixbuf_get_height (gcc->priv->logo_pixbuf);
-      alloc_width = widget->allocation.width;
-      alloc_height = widget->allocation.height;
-
-      if ((gfloat) alloc_width / width > (gfloat) alloc_height / height) {
-        ratio = (gfloat) alloc_height / height;
-      } else {
-        ratio = (gfloat) alloc_width / width;
-      }
-
-      width *= ratio;
-      height *= ratio;
-
-      logo_x = (alloc_width / 2) - (width / 2);
-      logo_y = (alloc_height / 2) - (height / 2);
-
-      /* Drawing our frame */
-      /* Scaling to available space */
-      frame = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-          FALSE, 8, widget->allocation.width, widget->allocation.height);
-
-      gdk_pixbuf_composite (gcc->priv->logo_pixbuf,
-          frame,
-          0, 0,
-          alloc_width, alloc_height,
-          logo_x, logo_y, ratio, ratio, GDK_INTERP_BILINEAR, 255);
-
-      rowstride = gdk_pixbuf_get_rowstride (frame);
-
-      pixels = gdk_pixbuf_get_pixels (frame) +
-          rowstride * event->area.y + event->area.x * 3;
-
-      gdk_draw_rgb_image_dithalign (widget->window,
-          widget->style->black_gc,
-          event->area.x, event->area.y,
-          event->area.width,
-          event->area.height,
-          GDK_RGB_DITHER_NORMAL, pixels,
-          rowstride, event->area.x, event->area.y);
-
-      g_object_unref (frame);
-    } else if (win) {
-      /* No pixbuf, just draw a black background then */
-      gdk_window_clear_area (win,
-          0, 0, widget->allocation.width, widget->allocation.height);
-    }
-  } else {
-    /* no logo, pass the expose to gst */
-    if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)) {
-      gst_x_overlay_expose (xoverlay);
-    } else {
-      /* No xoverlay to expose yet */
-      gdk_window_clear_area (win,
-          0, 0, widget->allocation.width, widget->allocation.height);
-    }
-  }
-  if (xoverlay != NULL)
-    gst_object_unref (xoverlay);
-
-  return TRUE;
+  /* setup the toplevel, ready to be resized */
+  toplevel = gtk_widget_get_toplevel (widget);
+  if (gtk_widget_is_toplevel (toplevel) &&
+      gtk_widget_get_parent (widget) != toplevel)
+    gtk_window_set_geometry_hints (GTK_WINDOW (toplevel), widget, NULL, 0);
 }
 
 static void
@@ -828,14 +424,7 @@ gst_camera_capturer_class_init (GstCameraCapturerClass * klass)
 
   g_type_class_add_private (object_class, sizeof (GstCameraCapturerPrivate));
 
-  /* GtkWidget */
-  widget_class->size_request = gst_camera_capturer_size_request;
-  widget_class->size_allocate = gst_camera_capturer_size_allocate;
   widget_class->realize = gst_camera_capturer_realize;
-  widget_class->unrealize = gst_camera_capturer_unrealize;
-  widget_class->show = gst_camera_capturer_show;
-  widget_class->hide = gst_camera_capturer_hide;
-  widget_class->expose_event = gst_camera_capturer_expose_event;
 
   /* GObject */
   object_class->set_property = gst_camera_capturer_set_property;
@@ -1068,7 +657,7 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
       gchar *videosrc = RAWVIDEOSRC;
 
 #ifndef WIN32
-      GstElementFactory *fact = gst_element_factory_find(RAWVIDEOSRC);
+      GstElementFactory *fact = gst_element_factory_find (RAWVIDEOSRC);
       if (fact == NULL)
         videosrc = RAWVIDEOSRC_GCONF;
       else
@@ -1104,6 +693,11 @@ GstCameraCapturer *
 gst_camera_capturer_new (gchar * filename, GError ** err)
 {
   GstCameraCapturer *gcc = NULL;
+  GstElement *video_sink = NULL;
+  GstElement *balance, *sink, *bin;
+  GstPad *pad, *ghostpad;
+  ClutterColor black = { 0x00, 0x00, 0x00, 0xff };
+  ClutterConstraint *constraint;
   gchar *plugin;
   gint flags = 0;
 
@@ -1146,13 +740,64 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
       g_signal_connect (gcc->priv->bus, "message",
       G_CALLBACK (gcc_bus_message_cb), gcc);
 
-  /* we want to catch "prepare-xwindow-id" element messages synchronously */
-  gst_bus_set_sync_handler (gcc->priv->bus, gst_bus_sync_signal_handler, gcc);
+  gcc->priv->stage = gtk_clutter_embed_get_stage (GTK_CLUTTER_EMBED (gcc));
+  clutter_stage_set_color (CLUTTER_STAGE (gcc->priv->stage), &black);
 
-  gcc->priv->sig_bus_sync =
-      g_signal_connect (gcc->priv->bus, "sync-message::element",
-      G_CALLBACK (gcc_element_msg_sync), gcc);
+  /* Bin */
+  bin = gst_bin_new ("video_sink_bin");
 
+  /* Video sink, with aspect frame */
+  gcc->priv->texture = g_object_new (CLUTTER_TYPE_TEXTURE,
+      "disable-slicing", TRUE, NULL);
+  sink = clutter_gst_video_sink_new (CLUTTER_TEXTURE (gcc->priv->texture));
+  if (sink == NULL)
+    g_critical ("Could not create Clutter video sink");
+
+  /* The logo */
+  gcc->priv->logo_frame = longomatch_aspect_frame_new ();
+  clutter_actor_set_name (gcc->priv->logo_frame, "logo-frame");
+  gcc->priv->logo = clutter_texture_new ();
+  mx_bin_set_child (MX_BIN (gcc->priv->logo_frame), gcc->priv->logo);
+  clutter_container_add_actor (CLUTTER_CONTAINER (gcc->priv->stage),
+      gcc->priv->logo_frame);
+  mx_bin_set_fill (MX_BIN (gcc->priv->logo_frame), FALSE, FALSE);
+  mx_bin_set_alignment (MX_BIN (gcc->priv->logo_frame), MX_ALIGN_MIDDLE,
+      MX_ALIGN_MIDDLE);
+  clutter_actor_set_size (gcc->priv->logo, LOGO_SIZE_W, LOGO_SIZE_H);
+  constraint =
+      clutter_bind_constraint_new (gcc->priv->stage, CLUTTER_BIND_SIZE, 0.0);
+  clutter_actor_add_constraint_with_name (gcc->priv->logo_frame, "size",
+      constraint);
+  clutter_actor_hide (CLUTTER_ACTOR (gcc->priv->logo_frame));
+
+  /* The video */
+  gcc->priv->frame = longomatch_aspect_frame_new ();
+  clutter_actor_set_name (gcc->priv->frame, "frame");
+  mx_bin_set_child (MX_BIN (gcc->priv->frame), gcc->priv->texture);
+
+  clutter_container_add_actor (CLUTTER_CONTAINER (gcc->priv->stage),
+      gcc->priv->frame);
+  constraint =
+      clutter_bind_constraint_new (gcc->priv->stage, CLUTTER_BIND_SIZE, 0.0);
+  clutter_actor_add_constraint_with_name (gcc->priv->frame, "size", constraint);
+
+  clutter_actor_raise (CLUTTER_ACTOR (gcc->priv->frame),
+      CLUTTER_ACTOR (gcc->priv->logo_frame));
+
+  gst_bin_add (GST_BIN (bin), sink);
+
+  /* Add video balance */
+  balance = gst_element_factory_make ("videobalance", "video_balance");
+  gst_bin_add (GST_BIN (bin), balance);
+  gcc->priv->balance = GST_COLOR_BALANCE (balance);
+  pad = gst_element_get_static_pad (balance, "sink");
+  ghostpad = gst_ghost_pad_new ("sink", pad);
+  gst_element_add_pad (bin, ghostpad);
+
+  gst_element_link (balance, sink);
+
+  video_sink = bin;
+  gst_element_set_state (video_sink, GST_STATE_READY);
   return gcc;
 
 /* Missing plugin */
@@ -1224,7 +869,7 @@ gst_camera_capturer_stop (GstCameraCapturer * gcc)
   //supports it. When a device is disconnected, the source is locked
   //in ::create(), blocking the streaming thread. We need to change its
   //state to null, this way camerabin doesn't block in ::do_stop().
-  gst_element_set_state(gcc->priv->device_source, GST_STATE_NULL);
+  gst_element_set_state (gcc->priv->device_source, GST_STATE_NULL);
 #endif
   g_signal_emit_by_name (G_OBJECT (gcc->priv->camerabin), "capture-stop", 0, 0);
 }
@@ -1439,8 +1084,6 @@ gcc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
       if (old_state == GST_STATE_PAUSED && new_state == GST_STATE_PLAYING) {
         gcc_get_video_stream_info (gcc);
-        resize_video_window (gcc);
-        gtk_widget_queue_draw (GTK_WIDGET (gcc));
       }
     }
 
@@ -1501,79 +1144,6 @@ gcc_error_msg (GstCameraCapturer * gcc, GstMessage * msg)
   g_free (dbg);
 }
 
-static gboolean
-gcc_update_interfaces_delayed (GstCameraCapturer * gcc)
-{
-  GST_DEBUG_OBJECT (gcc, "Delayed updating interface implementations");
-  g_mutex_lock (gcc->priv->lock);
-  gcc_update_interface_implementations (gcc);
-  gcc->priv->interface_update_id = 0;
-  g_mutex_unlock (gcc->priv->lock);
-
-  return FALSE;
-}
-
-static void
-gcc_update_interface_implementations (GstCameraCapturer * gcc)
-{
-
-  GstElement *element = NULL;
-
-  if (g_thread_self () != gui_thread) {
-    if (gcc->priv->interface_update_id)
-      g_source_remove (gcc->priv->interface_update_id);
-    gcc->priv->interface_update_id =
-        g_idle_add ((GSourceFunc) gcc_update_interfaces_delayed, gcc);
-    return;
-  }
-
-  GST_INFO_OBJECT (gcc, "Retrieving xoverlay from bin ...");
-  element = gst_bin_get_by_interface (GST_BIN (gcc->priv->camerabin),
-      GST_TYPE_X_OVERLAY);
-
-  if (GST_IS_X_OVERLAY (element)) {
-    gcc->priv->xoverlay = GST_X_OVERLAY (element);
-  } else {
-    gcc->priv->xoverlay = NULL;
-  }
-}
-
-static void
-gcc_element_msg_sync (GstBus * bus, GstMessage * msg, gpointer data)
-{
-  GstCameraCapturer *gcc = GST_CAMERA_CAPTURER (data);
-
-  g_assert (msg->type == GST_MESSAGE_ELEMENT);
-
-  if (msg->structure == NULL)
-    return;
-
-  /* This only gets sent if we haven't set an ID yet. This is our last
-   * chance to set it before the video sink will create its own window */
-  if (gst_structure_has_name (msg->structure, "prepare-xwindow-id")) {
-    g_mutex_lock (gcc->priv->lock);
-    gcc_update_interface_implementations (gcc);
-    g_mutex_unlock (gcc->priv->lock);
-
-    if (gcc->priv->xoverlay == NULL) {
-      GstObject *sender = GST_MESSAGE_SRC (msg);
-      if (sender && GST_IS_X_OVERLAY (sender))
-        gcc->priv->xoverlay = GST_X_OVERLAY (gst_object_ref (sender));
-    }
-
-    g_return_if_fail (gcc->priv->xoverlay != NULL);
-    g_return_if_fail (gcc->priv->video_window != NULL);
-
-#ifdef WIN32
-    gst_x_overlay_set_xwindow_id (gcc->priv->xoverlay,
-        GDK_WINDOW_HWND (gcc->priv->video_window));
-#else
-    gst_x_overlay_set_xwindow_id (gcc->priv->xoverlay,
-        GDK_WINDOW_XID (gcc->priv->video_window));
-#endif
-  }
-}
-
 static int
 gcc_get_video_stream_info (GstCameraCapturer * gcc)
 {
@@ -1592,6 +1162,7 @@ gcc_get_video_stream_info (GstCameraCapturer * gcc)
   /* Get the source caps */
   s = gst_caps_get_structure (caps, 0);
   if (s) {
+    const GValue *movie_par;
     /* We need at least width/height and framerate */
     if (!
         (gst_structure_get_fraction
@@ -1599,8 +1170,17 @@ gcc_get_video_stream_info (GstCameraCapturer * gcc)
             && gst_structure_get_int (s, "width", &gcc->priv->video_width)
             && gst_structure_get_int (s, "height", &gcc->priv->video_height)))
       return -1;
-    /* Get the source PAR if available */
-    gcc->priv->movie_par = gst_structure_get_value (s, "pixel-aspect-ratio");
+
+    /* Get the movie PAR if available */
+    movie_par = gst_structure_get_value (s, "pixel-aspect-ratio");
+    if (movie_par) {
+      gcc->priv->movie_par_n = gst_value_get_fraction_numerator (movie_par);
+      gcc->priv->movie_par_d = gst_value_get_fraction_denominator (movie_par);
+    } else {
+      /* Square pixels */
+      gcc->priv->movie_par_n = 1;
+      gcc->priv->movie_par_d = 1;
+    }
   }
   return 1;
 }
@@ -1681,117 +1261,8 @@ gst_camera_capturer_can_get_frames (GstCameraCapturer * gcc, GError ** error)
   return TRUE;
 }
 
-static void
-destroy_pixbuf (guchar * pix, gpointer data)
-{
-  gst_buffer_unref (GST_BUFFER (data));
-}
-
 void
 gst_camera_capturer_unref_pixbuf (GdkPixbuf * pixbuf)
 {
   gdk_pixbuf_unref (pixbuf);
-}
-
-GdkPixbuf *
-gst_camera_capturer_get_current_frame (GstCameraCapturer * gcc)
-{
-  GstStructure *s;
-  GdkPixbuf *pixbuf;
-  GstBuffer *last_buffer;
-  GstBuffer *buf;
-  GstCaps *to_caps;
-  gint outwidth = 0;
-  gint outheight = 0;
-
-  g_return_val_if_fail (gcc != NULL, NULL);
-  g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), NULL);
-  g_return_val_if_fail (GST_IS_ELEMENT (gcc->priv->camerabin), NULL);
-
-  gst_element_get_state (gcc->priv->camerabin, NULL, NULL, -1);
-
-  /* no video info */
-  if (!gcc->priv->video_width || !gcc->priv->video_height) {
-    GST_DEBUG_OBJECT (gcc, "Could not take screenshot: %s", "no video info");
-    g_warning ("Could not take screenshot: %s", "no video info");
-    return NULL;
-  }
-
-  /* get frame */
-  last_buffer = gcc->priv->last_buffer;
-  gst_buffer_ref (last_buffer);
-
-  if (!last_buffer) {
-    GST_DEBUG_OBJECT (gcc, "Could not take screenshot: %s",
-        "no last video frame");
-    g_warning ("Could not take screenshot: %s", "no last video frame");
-    return NULL;
-  }
-
-  if (GST_BUFFER_CAPS (last_buffer) == NULL) {
-    GST_DEBUG_OBJECT (gcc, "Could not take screenshot: %s",
-        "no caps on buffer");
-    g_warning ("Could not take screenshot: %s", "no caps on buffer");
-    return NULL;
-  }
-
-  /* convert to our desired format (RGB24) */
-  to_caps = gst_caps_new_simple ("video/x-raw-rgb",
-      "bpp", G_TYPE_INT, 24, "depth", G_TYPE_INT, 24,
-      /* Note: we don't ask for a specific width/height here, so that
-       * videoscale can adjust dimensions from a non-1/1 pixel aspect
-       * ratio to a 1/1 pixel-aspect-ratio */
-      "pixel-aspect-ratio", GST_TYPE_FRACTION, 1,
-      1, "endianness", G_TYPE_INT, G_BIG_ENDIAN,
-      "red_mask", G_TYPE_INT, 0xff0000,
-      "green_mask", G_TYPE_INT, 0x00ff00,
-      "blue_mask", G_TYPE_INT, 0x0000ff, NULL);
-
-  if (gcc->priv->video_fps_n > 0 && gcc->priv->video_fps_d > 0) {
-    gst_caps_set_simple (to_caps, "framerate", GST_TYPE_FRACTION,
-        gcc->priv->video_fps_n, gcc->priv->video_fps_d, NULL);
-  }
-
-  GST_DEBUG_OBJECT (gcc, "frame caps: %" GST_PTR_FORMAT,
-      GST_BUFFER_CAPS (gcc->priv->last_buffer));
-  GST_DEBUG_OBJECT (gcc, "pixbuf caps: %" GST_PTR_FORMAT, to_caps);
-
-  /* bvw_frame_conv_convert () takes ownership of the buffer passed */
-  buf = bvw_frame_conv_convert (last_buffer, to_caps);
-
-  gst_caps_unref (to_caps);
-  gst_buffer_unref (last_buffer);
-
-  if (!buf) {
-    GST_DEBUG_OBJECT (gcc, "Could not take screenshot: %s",
-        "conversion failed");
-    g_warning ("Could not take screenshot: %s", "conversion failed");
-    return NULL;
-  }
-
-  if (!GST_BUFFER_CAPS (buf)) {
-    GST_DEBUG_OBJECT (gcc, "Could not take screenshot: %s",
-        "no caps on output buffer");
-    g_warning ("Could not take screenshot: %s", "no caps on output buffer");
-    return NULL;
-  }
-
-  s = gst_caps_get_structure (GST_BUFFER_CAPS (buf), 0);
-  gst_structure_get_int (s, "width", &outwidth);
-  gst_structure_get_int (s, "height", &outheight);
-  g_return_val_if_fail (outwidth > 0 && outheight > 0, NULL);
-
-  /* create pixbuf from that - we don't want to use the gstreamer's buffer
-   * because the GTK# bindings won't call the destroy funtion */
-  pixbuf = gdk_pixbuf_new_from_data (GST_BUFFER_DATA (buf),
-      GDK_COLORSPACE_RGB, FALSE, 8, outwidth,
-      outheight, GST_ROUND_UP_4 (outwidth * 3), destroy_pixbuf, buf);
-
-  if (!pixbuf) {
-    GST_DEBUG_OBJECT (gcc, "Could not take screenshot: %s",
-        "could not create pixbuf");
-    g_warning ("Could not take screenshot: %s", "could not create pixbuf");
-  }
-
-  return pixbuf;
 }

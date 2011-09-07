@@ -151,12 +151,6 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public bool DrawingMode {
-			set {
-				player.DrawingMode= value;
-			}
-		}
-
 		public Pixbuf DrawingPixbuf {
 			set {
 				player.DrawingPixbuf=value;
@@ -384,7 +378,7 @@ namespace LongoMatch.Gui
 			Widget playerWidget;
 
 			factory= new MultimediaFactory();
-			player = factory.getPlayer(320,280);
+			player = factory.getPlayer();
 
 			tickHandler = new TickHandler(OnTick);
 			player.Tick += tickHandler;

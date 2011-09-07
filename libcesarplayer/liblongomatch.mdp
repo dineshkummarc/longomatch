@@ -24,26 +24,19 @@
   </Configurations>
   <Contents>
     <File subtype="Directory" buildaction="Nothing" name="." />
-    <File subtype="Code" buildaction="Compile" name="bacon-resize.c" />
-    <File subtype="Code" buildaction="Nothing" name="bacon-resize.h" />
     <File subtype="Code" buildaction="Nothing" name="bacon-video-widget.h" />
     <File subtype="Code" buildaction="Compile" name="bacon-video-widget-gst-0.10.c" />
-    <File subtype="Code" buildaction="Nothing" name="common.h" />
-    <File subtype="Code" buildaction="Compile" name="gst-camera-capturer.c" />
-    <File subtype="Code" buildaction="Nothing" name="gst-camera-capturer.h" />
-    <File subtype="Code" buildaction="Compile" name="gstscreenshot.c" />
-    <File subtype="Code" buildaction="Nothing" name="gstscreenshot.h" />
-    <File subtype="Code" buildaction="Compile" name="gst-smart-video-scaler.c" />
-    <File subtype="Code" buildaction="Nothing" name="gst-smart-video-scaler.h" />
     <File subtype="Code" buildaction="Compile" name="gst-video-editor.c" />
     <File subtype="Code" buildaction="Nothing" name="gst-video-editor.h" />
-    <File subtype="Code" buildaction="Compile" name="gstvideowidget.c" />
-    <File subtype="Code" buildaction="Nothing" name="gstvideowidget.h" />
-    <File subtype="Code" buildaction="Nothing" name="macros.h" />
     <File subtype="Code" buildaction="Compile" name="video-utils.c" />
     <File subtype="Code" buildaction="Nothing" name="video-utils.h" />
     <File subtype="Code" buildaction="Compile" name="baconvideowidget-marshal.c" />
     <File subtype="Code" buildaction="Nothing" name="baconvideowidget-marshal.h" />
+    <File subtype="Code" buildaction="Compile" name="totem-gst-helpers.c" />
+    <File subtype="Code" buildaction="Nothing" name="totem-gst-helpers.h" />
+    <File subtype="Code" buildaction="Nothing" name="common.h" />
+    <File subtype="Code" buildaction="Compile" name="longomatch-aspect-frame.c" />
+    <File subtype="Code" buildaction="Nothing" name="longomatch-aspect-frame.h" />
   </Contents>
   <Packages>
     <Package file="/usr/lib/pkgconfig/gdk-2.0.pc" name="GDK" IsProject="False" />
@@ -54,6 +47,9 @@
     <Package file="/usr/lib/pkgconfig/gstreamer-interfaces-0.10.pc" name="GStreamer Interfaces Library" IsProject="False" />
     <Package file="/usr/lib/pkgconfig/glib-2.0.pc" name="GLib" IsProject="False" />
     <Package file="/usr/lib/pkgconfig/gstreamer-pbutils-0.10.pc" name="GStreamer Base Utils Library" IsProject="False" />
+    <Package file="/usr/lib/pkgconfig/clutter-gst-1.0.pc" name="clutter-gst" IsProject="False" />
+    <Package file="/usr/lib/pkgconfig/mx-1.0.pc" name="Mx" IsProject="False" />
+    <Package file="/usr/lib/pkgconfig/clutter-gtk-0.10.pc" name="clutter-gtk" IsProject="False" />
   </Packages>
   <compiler ctype="GccCompiler" />
 </Project>

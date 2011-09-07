@@ -34,11 +34,8 @@
 #define EXPORT
 #endif
 
-
-#include <gtk/gtkbox.h>
+#include <clutter-gtk/clutter-gtk.h>
 #include <gst/gst.h>
-/* for optical disc enumeration type */
-//#include "totem-disc.h"
 
 G_BEGIN_DECLS
 #define BACON_TYPE_VIDEO_WIDGET		     (bacon_video_widget_get_type ())
@@ -52,13 +49,13 @@ typedef struct BaconVideoWidgetPrivate BaconVideoWidgetPrivate;
 
 typedef struct
 {
-  GtkEventBox parent;
+  GtkClutterEmbed parent;
   BaconVideoWidgetPrivate *priv;
 } BaconVideoWidget;
 
 typedef struct
 {
-  GtkEventBoxClass parent_class;
+  GtkClutterEmbedClass parent_class;
 
   void (*error) (BaconVideoWidget * bvw, const char *message);
   void (*eos) (BaconVideoWidget * bvw);
@@ -75,6 +72,70 @@ typedef struct
   void (*ready_to_seek) (BaconVideoWidget * bvw);
 } BaconVideoWidgetClass;
 
+/**
+ * BvwError:
+ * @BVW_ERROR_AUDIO_PLUGIN: Error loading audio output plugin or device.
+ * @BVW_ERROR_NO_PLUGIN_FOR_FILE: A required GStreamer plugin or xine feature is missing.
+ * @BVW_ERROR_VIDEO_PLUGIN: Error loading video output plugin or device.
+ * @BVW_ERROR_AUDIO_BUSY: Audio output device is busy.
+ * @BVW_ERROR_BROKEN_FILE: The movie file is broken and cannot be decoded.
+ * @BVW_ERROR_FILE_GENERIC: A generic error for problems with movie files.
+ * @BVW_ERROR_FILE_PERMISSION: Permission was refused to access the stream, or authentication was required.
+ * @BVW_ERROR_FILE_ENCRYPTED: The stream is encrypted and cannot be played.
+ * @BVW_ERROR_FILE_NOT_FOUND: The stream cannot be found.
+ * @BVW_ERROR_DVD_ENCRYPTED: The DVD is encrypted and libdvdcss is not installed.
+ * @BVW_ERROR_INVALID_DEVICE: The device given in an MRL (e.g. DVD drive or DVB tuner) did not exist.
+ * @BVW_ERROR_DEVICE_BUSY: The device was busy.
+ * @BVW_ERROR_UNKNOWN_HOST: The host for a given stream could not be resolved.
+ * @BVW_ERROR_NETWORK_UNREACHABLE: The host for a given stream could not be reached.
+ * @BVW_ERROR_CONNECTION_REFUSED: The server for a given stream refused the connection.
+ * @BVW_ERROR_INVALID_LOCATION: An MRL was malformed, or CDDB playback was attempted (which is now unsupported).
+ * @BVW_ERROR_GENERIC: A generic error occurred.
+ * @BVW_ERROR_CODEC_NOT_HANDLED: The audio or video codec required by the stream is not supported.
+ * @BVW_ERROR_AUDIO_ONLY: An audio-only stream could not be played due to missing audio output support.
+ * @BVW_ERROR_CANNOT_CAPTURE: Error determining frame capture support for a video with bacon_video_widget_can_get_frames().
+ * @BVW_ERROR_READ_ERROR: A generic error for problems reading streams.
+ * @BVW_ERROR_PLUGIN_LOAD: A library or plugin could not be loaded.
+ * @BVW_ERROR_EMPTY_FILE: A movie file was empty.
+ *
+ * Error codes for #BaconVideoWidget operations.
+ **/
+typedef enum {
+	/* Plugins */
+	BVW_ERROR_AUDIO_PLUGIN,
+	BVW_ERROR_NO_PLUGIN_FOR_FILE,
+	BVW_ERROR_VIDEO_PLUGIN,
+	BVW_ERROR_AUDIO_BUSY,
+	/* File */
+	BVW_ERROR_BROKEN_FILE,
+	BVW_ERROR_FILE_GENERIC,
+	BVW_ERROR_FILE_PERMISSION,
+	BVW_ERROR_FILE_ENCRYPTED,
+	BVW_ERROR_FILE_NOT_FOUND,
+	/* Devices */
+	BVW_ERROR_DVD_ENCRYPTED,
+	BVW_ERROR_INVALID_DEVICE,
+	BVW_ERROR_DEVICE_BUSY,
+	/* Network */
+	BVW_ERROR_UNKNOWN_HOST,
+	BVW_ERROR_NETWORK_UNREACHABLE,
+	BVW_ERROR_CONNECTION_REFUSED,
+	/* Generic */
+	BVW_ERROR_INVALID_LOCATION,
+	BVW_ERROR_GENERIC,
+	BVW_ERROR_CODEC_NOT_HANDLED,
+	BVW_ERROR_AUDIO_ONLY,
+	BVW_ERROR_CANNOT_CAPTURE,
+	BVW_ERROR_READ_ERROR,
+	BVW_ERROR_PLUGIN_LOAD,
+	BVW_ERROR_EMPTY_FILE
+} BvwError;
+
+typedef enum {
+	BVW_USE_TYPE_PLAYER,
+	BVW_USE_TYPE_METADATA,
+	BVW_USE_TYPE_CAPTURE
+} BvwUseType;
 
 EXPORT GQuark
 bacon_video_widget_error_quark (void)
@@ -84,33 +145,14 @@ bacon_video_widget_error_quark (void)
 /* This can be used if the app does not use popt */
      EXPORT void bacon_video_widget_init_backend (int *argc, char ***argv);
 
-/**
- * BvwUseType:
- * @BVW_USE_TYPE_VIDEO: fully-featured with video, audio, capture and metadata support
- * @BVW_USE_TYPE_AUDIO: audio and metadata support
- * @BVW_USE_TYPE_CAPTURE: capture support only
- * @BVW_USE_TYPE_METADATA: metadata support only
- *
- * The purpose for which a #BaconVideoWidget will be used, as specified to
- * bacon_video_widget_new(). This determines which features will be enabled
- * in the created widget.
- **/
-     typedef enum
-     {
-       BVW_USE_TYPE_VIDEO,
-       BVW_USE_TYPE_AUDIO,
-       BVW_USE_TYPE_CAPTURE,
-       BVW_USE_TYPE_METADATA
-     } BvwUseType;
-
-     EXPORT GtkWidget *bacon_video_widget_new (int width, int height,
-    BvwUseType type, GError ** error);
+     EXPORT GtkWidget *bacon_video_widget_new (BvwUseType use_type, GError ** error);
 
      EXPORT char *bacon_video_widget_get_backend_name (BaconVideoWidget * bvw);
 
 /* Actions */
      EXPORT gboolean bacon_video_widget_open (BaconVideoWidget * bvw,
-    const char *mrl, const char *subtitle_uri, GError ** error);
+						                      const char *mrl,
+						                      GError **error);
      EXPORT gboolean bacon_video_widget_play (BaconVideoWidget * bvw);
      EXPORT void bacon_video_widget_pause (BaconVideoWidget * bvw);
      EXPORT gboolean bacon_video_widget_is_playing (BaconVideoWidget * bvw);
@@ -161,15 +203,10 @@ bacon_video_widget_error_quark (void)
      EXPORT double bacon_video_widget_get_volume (BaconVideoWidget * bvw);
 
 /*Drawings Overlay*/
-     EXPORT void bacon_video_widget_set_drawing_pixbuf (BaconVideoWidget *
-    bvw, GdkPixbuf * drawing);
-     EXPORT void bacon_video_widget_set_drawing_mode (BaconVideoWidget * bvw,
-    gboolean drawing_mode);
-
+     EXPORT void bacon_video_widget_set_drawing_pixbuf (BaconVideoWidget * bvw, const GdkPixbuf * drawings);
 
 /* Properties */
-     EXPORT void bacon_video_widget_set_logo (BaconVideoWidget * bvw,
-    char *filename);
+     EXPORT void bacon_video_widget_set_logo (BaconVideoWidget * bvw, const char *filename);
      EXPORT void bacon_video_widget_set_logo_pixbuf (BaconVideoWidget * bvw,
     GdkPixbuf * logo);
      EXPORT void bacon_video_widget_set_logo_mode (BaconVideoWidget * bvw,
@@ -179,25 +216,6 @@ bacon_video_widget_error_quark (void)
      EXPORT void bacon_video_widget_set_fullscreen (BaconVideoWidget * bvw,
     gboolean fullscreen);
 
-     EXPORT void bacon_video_widget_set_show_cursor (BaconVideoWidget * bvw,
-    gboolean show_cursor);
-     EXPORT gboolean bacon_video_widget_get_show_cursor (BaconVideoWidget *
-    bvw);
-
-     EXPORT gboolean bacon_video_widget_get_auto_resize (BaconVideoWidget *
-    bvw);
-     EXPORT void bacon_video_widget_set_auto_resize (BaconVideoWidget * bvw,
-    gboolean auto_resize);
-
-     EXPORT void bacon_video_widget_set_connection_speed (BaconVideoWidget *
-    bvw, int speed);
-     EXPORT int bacon_video_widget_get_connection_speed (BaconVideoWidget *
-    bvw);
-
-     EXPORT void bacon_video_widget_set_subtitle_font (BaconVideoWidget * bvw,
-    const char *font);
-     EXPORT void bacon_video_widget_set_subtitle_encoding (BaconVideoWidget *
-    bvw, const char *encoding);
 
 /* Metadata */
 /**
@@ -273,110 +291,11 @@ bacon_video_widget_error_quark (void)
        BVW_VIDEO_HUE
      } BvwVideoProperty;
 
-/**
- * BvwAspectRatio:
- * @BVW_RATIO_AUTO: automatic
- * @BVW_RATIO_SQUARE: square (1:1)
- * @BVW_RATIO_FOURBYTHREE: four-by-three (4:3)
- * @BVW_RATIO_ANAMORPHIC: anamorphic (16:9)
- * @BVW_RATIO_DVB: DVB (20:9)
- *
- * The pixel aspect ratios available in which to display videos using
- * @bacon_video_widget_set_aspect_ratio().
- **/
-     typedef enum
-     {
-       BVW_RATIO_AUTO = 0,
-       BVW_RATIO_SQUARE = 1,
-       BVW_RATIO_FOURBYTHREE = 2,
-       BVW_RATIO_ANAMORPHIC = 3,
-       BVW_RATIO_DVB = 4
-     } BvwAspectRatio;
-
-     EXPORT gboolean bacon_video_widget_can_deinterlace (BaconVideoWidget *
-    bvw);
-     EXPORT void bacon_video_widget_set_deinterlacing (BaconVideoWidget * bvw,
-    gboolean deinterlace);
-     EXPORT gboolean bacon_video_widget_get_deinterlacing (BaconVideoWidget *
-    bvw);
-
-     EXPORT void bacon_video_widget_set_aspect_ratio (BaconVideoWidget * bvw,
-    BvwAspectRatio ratio);
-     EXPORT BvwAspectRatio bacon_video_widget_get_aspect_ratio
-         (BaconVideoWidget * bvw);
-
-     EXPORT void bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw,
-    float ratio);
-
-     EXPORT void bacon_video_widget_set_zoom (BaconVideoWidget * bvw,
-    double zoom);
-     EXPORT double bacon_video_widget_get_zoom (BaconVideoWidget * bvw);
-
      EXPORT int bacon_video_widget_get_video_property (BaconVideoWidget * bvw,
     BvwVideoProperty type);
      EXPORT void bacon_video_widget_set_video_property (BaconVideoWidget *
     bvw, BvwVideoProperty type, int value);
 
-/* DVD functions */
-/**
- * BvwDVDEvent:
- * @BVW_DVD_ROOT_MENU: root menu
- * @BVW_DVD_TITLE_MENU: title menu
- * @BVW_DVD_SUBPICTURE_MENU: subpicture menu (if available)
- * @BVW_DVD_AUDIO_MENU: audio menu (if available)
- * @BVW_DVD_ANGLE_MENU: angle menu (if available)
- * @BVW_DVD_CHAPTER_MENU: chapter menu
- * @BVW_DVD_NEXT_CHAPTER: the next chapter
- * @BVW_DVD_PREV_CHAPTER: the previous chapter
- * @BVW_DVD_NEXT_TITLE: the next title in the current chapter
- * @BVW_DVD_PREV_TITLE: the previous title in the current chapter
- * @BVW_DVD_NEXT_ANGLE: the next angle
- * @BVW_DVD_PREV_ANGLE: the previous angle
- * @BVW_DVD_ROOT_MENU_UP: go up in the menu
- * @BVW_DVD_ROOT_MENU_DOWN: go down in the menu
- * @BVW_DVD_ROOT_MENU_LEFT: go left in the menu
- * @BVW_DVD_ROOT_MENU_RIGHT: go right in the menu
- * @BVW_DVD_ROOT_MENU_SELECT: select the current menu entry
- *
- * The DVD navigation actions available to fire as DVD events to
- * the #BaconVideoWidget.
- **/
-     typedef enum
-     {
-       BVW_DVD_ROOT_MENU,
-       BVW_DVD_TITLE_MENU,
-       BVW_DVD_SUBPICTURE_MENU,
-       BVW_DVD_AUDIO_MENU,
-       BVW_DVD_ANGLE_MENU,
-       BVW_DVD_CHAPTER_MENU,
-       BVW_DVD_NEXT_CHAPTER,
-       BVW_DVD_PREV_CHAPTER,
-       BVW_DVD_NEXT_TITLE,
-       BVW_DVD_PREV_TITLE,
-       BVW_DVD_NEXT_ANGLE,
-       BVW_DVD_PREV_ANGLE,
-       BVW_DVD_ROOT_MENU_UP,
-       BVW_DVD_ROOT_MENU_DOWN,
-       BVW_DVD_ROOT_MENU_LEFT,
-       BVW_DVD_ROOT_MENU_RIGHT,
-       BVW_DVD_ROOT_MENU_SELECT
-     } BvwDVDEvent;
-
-     EXPORT void bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
-    BvwDVDEvent type);
-     EXPORT GList *bacon_video_widget_get_languages (BaconVideoWidget * bvw);
-     EXPORT int bacon_video_widget_get_language (BaconVideoWidget * bvw);
-     EXPORT void bacon_video_widget_set_language (BaconVideoWidget * bvw,
-    int language);
-
-     EXPORT GList *bacon_video_widget_get_subtitles (BaconVideoWidget * bvw);
-     EXPORT int bacon_video_widget_get_subtitle (BaconVideoWidget * bvw);
-     EXPORT void bacon_video_widget_set_subtitle (BaconVideoWidget * bvw,
-    int subtitle);
-
-     EXPORT gboolean bacon_video_widget_has_next_track (BaconVideoWidget * bvw);
-     EXPORT gboolean bacon_video_widget_has_previous_track (BaconVideoWidget *
-    bvw);
 
 /* Screenshot functions */
      EXPORT gboolean bacon_video_widget_can_get_frames (BaconVideoWidget *
@@ -384,33 +303,6 @@ bacon_video_widget_error_quark (void)
      EXPORT GdkPixbuf *bacon_video_widget_get_current_frame (BaconVideoWidget
     * bvw);
      EXPORT void bacon_video_widget_unref_pixbuf (GdkPixbuf * pixbuf);
-
-/* Audio-out functions */
-/**
- * BvwAudioOutType:
- * @BVW_AUDIO_SOUND_STEREO: stereo output
- * @BVW_AUDIO_SOUND_4CHANNEL: 4-channel output
- * @BVW_AUDIO_SOUND_41CHANNEL: 4.1-channel output
- * @BVW_AUDIO_SOUND_5CHANNEL: 5-channel output
- * @BVW_AUDIO_SOUND_51CHANNEL: 5.1-channel output
- * @BVW_AUDIO_SOUND_AC3PASSTHRU: AC3 passthrough output
- *
- * The audio output types available for use with bacon_video_widget_set_audio_out_type().
- **/
-     typedef enum
-     {
-       BVW_AUDIO_SOUND_STEREO,
-       BVW_AUDIO_SOUND_CHANNEL4,
-       BVW_AUDIO_SOUND_CHANNEL41,
-       BVW_AUDIO_SOUND_CHANNEL5,
-       BVW_AUDIO_SOUND_CHANNEL51,
-       BVW_AUDIO_SOUND_AC3PASSTHRU
-     } BvwAudioOutType;
-
-     EXPORT BvwAudioOutType bacon_video_widget_get_audio_out_type
-         (BaconVideoWidget * bvw);
-     EXPORT gboolean bacon_video_widget_set_audio_out_type (BaconVideoWidget *
-    bvw, BvwAudioOutType type);
 
 G_END_DECLS
 #endif /* HAVE_BACON_VIDEO_WIDGET_H */

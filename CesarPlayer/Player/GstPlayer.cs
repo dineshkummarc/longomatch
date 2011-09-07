@@ -21,6 +21,8 @@ namespace LongoMatch.Video.Player {
 	using System;
 	using System.Collections;
 	using System.Runtime.InteropServices;
+	using Gdk;
+		
 	using LongoMatch.Video.Common;
 	using LongoMatch.Video.Utils;
 
@@ -32,15 +34,15 @@ namespace LongoMatch.Video.Player {
 		public GstPlayer(IntPtr raw) : base(raw) {}
 
 		[DllImport("libcesarplayer.dll")]
-		static extern unsafe IntPtr bacon_video_widget_new(int width, int height, int type, out IntPtr error);
+		static extern unsafe IntPtr bacon_video_widget_new(int type, out IntPtr error);
 
-		public unsafe GstPlayer(int width, int height, PlayerUseType type) : base(IntPtr.Zero)
+		public unsafe GstPlayer(PlayerUseType type) : base(IntPtr.Zero)
 		{
 			if(GetType() != typeof(GstPlayer)) {
 				throw new InvalidOperationException("Can't override this constructor.");
 			}
 			IntPtr error = IntPtr.Zero;
-			Raw = bacon_video_widget_new(width, height, (int) type, out error);
+			Raw = bacon_video_widget_new((int) type, out error);
 			if(error != IntPtr.Zero) throw new GLib.GException(error);
 		}
 
@@ -117,20 +119,6 @@ namespace LongoMatch.Video.Player {
 			}
 		}
 
-		[GLib.Property("showcursor")]
-		public bool Showcursor {
-			get {
-				GLib.Value val = GetProperty("showcursor");
-				bool ret = (bool) val;
-				val.Dispose();
-				return ret;
-			}
-			set {
-				GLib.Value val = new GLib.Value(value);
-				SetProperty("showcursor", val);
-				val.Dispose();
-			}
-		}
 
 		[GLib.Property("playing")]
 		public bool Playing {
@@ -1041,15 +1029,7 @@ namespace LongoMatch.Video.Player {
 			}
 		}
 
-		[DllImport("libcesarplayer.dll")]
-		static extern bool bacon_video_widget_set_audio_out_type(IntPtr raw, int type);
-
-		public bool SetAudioOutType(AudioOutType type) {
-			bool raw_ret = bacon_video_widget_set_audio_out_type(Handle, (int) type);
-			bool ret = raw_ret;
-			return ret;
-		}
-
+		
 		[DllImport("libcesarplayer.dll")]
 		static extern bool bacon_video_widget_has_previous_track(IntPtr raw);
 
@@ -1076,52 +1056,6 @@ namespace LongoMatch.Video.Player {
 		public Gdk.Pixbuf DrawingPixbuf {
 			set  {
 				bacon_video_widget_set_drawing_pixbuf(Handle, value == null ? IntPtr.Zero : value.Handle);
-			}
-		}
-
-		[DllImport("libcesarplayer.dll")]
-		static extern void bacon_video_widget_set_drawing_mode(IntPtr raw, bool drawing_mode);
-
-		public bool DrawingMode {
-			set  {
-				bacon_video_widget_set_drawing_mode(Handle, value);
-			}
-		}
-
-		/*[DllImport("libcesarplayer.dll")]
-		static extern void bacon_video_widget_set_visuals_quality(IntPtr raw, int quality);
-
-		public GstVisualsQuality VisualsQuality {
-			set {
-				bacon_video_widget_set_visuals_quality(Handle, (int) value);
-			}
-		}*/
-
-		[DllImport("libcesarplayer.dll")]
-		static extern int bacon_video_widget_get_connection_speed(IntPtr raw);
-
-		[DllImport("libcesarplayer.dll")]
-		static extern void bacon_video_widget_set_connection_speed(IntPtr raw, int speed);
-
-		public int ConnectionSpeed {
-			get {
-				int raw_ret = bacon_video_widget_get_connection_speed(Handle);
-				int ret = raw_ret;
-				return ret;
-			}
-			set {
-				bacon_video_widget_set_connection_speed(Handle, value);
-			}
-		}
-
-		[DllImport("libcesarplayer.dll")]
-		static extern IntPtr bacon_video_widget_get_subtitles(IntPtr raw);
-
-		public GLib.List Subtitles {
-			get {
-				IntPtr raw_ret = bacon_video_widget_get_subtitles(Handle);
-				GLib.List ret = new GLib.List(raw_ret);
-				return ret;
 			}
 		}
 
@@ -1187,15 +1121,6 @@ namespace LongoMatch.Video.Player {
 				IntPtr native_value = GLib.Marshaller.StringToPtrGStrdup(value);
 				bacon_video_widget_set_subtitle_encoding(Handle, native_value);
 				GLib.Marshaller.Free(native_value);
-			}
-		}
-
-		[DllImport("libcesarplayer.dll")]
-		static extern void bacon_video_widget_set_aspect_ratio(IntPtr raw, int ratio);
-
-		public AspectRatio AspectRatio {
-			set {
-				bacon_video_widget_set_aspect_ratio(Handle, (int) value);
 			}
 		}
 
@@ -1410,6 +1335,5 @@ namespace LongoMatch.Video.Player {
 		public void CancelProgramedStop() {
 			this.SegmentSeek(this.CurrentTime,this.StreamLength,1);
 		}
-
 	}
 }

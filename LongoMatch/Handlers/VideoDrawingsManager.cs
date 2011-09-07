@@ -94,26 +94,15 @@ namespace LongoMatch.Handlers
 		}
 
 		private void PrintDrawing() {
-			Pixbuf frame = null;
-			Pixbuf drawing = null;
-
+			Console.WriteLine (Drawing);
 			player.Pause();
 			player.SeekInSegment(Drawing.RenderTime);
-			while(frame == null)
-				frame = player.CurrentFrame;
-			player.LogoPixbuf = frame;
-			drawing = Drawing.Pixbuf;
-			player.DrawingPixbuf = drawing;
-			player.LogoMode = true;
-			player.DrawingMode = true;
+			player.DrawingPixbuf = Drawing.Pixbuf;
 			inKeyFrame = true;
-			frame.Dispose();
-			drawing.Dispose();
 		}
 
 		private void ResetPlayerWindow() {
-			player.LogoMode = false;
-			player.DrawingMode = false;
+			player.DrawingPixbuf = null;
 			player.SetLogo(System.IO.Path.Combine(MainClass.ImagesDir(),"background.png"));
 		}
 
@@ -132,7 +121,7 @@ namespace LongoMatch.Handlers
 		protected virtual void OnStateChanged(object sender, StateChangeArgs args) {
 			//Check if we are currently paused displaying the key frame waiting for the user to
 			//go in to Play. If so we can stop
-			if(inKeyFrame) {
+			if(inKeyFrame && args.Playing == true) {
 				ResetPlayerWindow();
 				inKeyFrame = false;
 			}

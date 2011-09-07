@@ -25,20 +25,16 @@ pkglib_LTLIBRARIES = \
 
 libcesarplayer_la_SOURCES = \
 	$(BVWMARSHALFILES) \
-	common.h\
 	bacon-video-widget.h\
 	bacon-video-widget-gst-0.10.c\
-	gstscreenshot.c \
-	gstscreenshot.h \
+	longomatch-aspect-frame.h\
+	longomatch-aspect-frame.c\
 	gst-camera-capturer.c\
 	gst-camera-capturer.h\
-	gst-video-editor.c\
-	gst-video-editor.h\
-	bacon-resize.c\
-	bacon-resize.h\
+	gst-helpers.c\
+	gst-helpers.h\
 	video-utils.c\
-	video-utils.h\
-	macros.h 
+	video-utils.h
 
 libcesarplayer_la_LDFLAGS = \
 	$(CESARPLAYER_LIBS)
