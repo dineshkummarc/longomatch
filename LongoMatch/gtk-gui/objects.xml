@@ -282,4 +282,12 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Gui.Component.RenderingStateBar" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="RenderingStateBar Properties">
+        <property name="Fraction" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
 </objects>

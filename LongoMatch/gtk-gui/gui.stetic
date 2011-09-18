@@ -1823,7 +1823,7 @@
                   <widget class="Gtk.Notebook" id="notebook1">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="CurrentPage">0</property>
+                    <property name="CurrentPage">3</property>
                     <property name="TabPos">Bottom</property>
                     <child>
                       <widget class="LongoMatch.Gui.Component.PlaysListTreeWidget" id="treewidget1">
@@ -2054,16 +2054,13 @@
               <placeholder />
             </child>
             <child>
-              <widget class="Gtk.ProgressBar" id="videoprogressbar">
+              <widget class="LongoMatch.Gui.Component.RenderingQueue" id="renderingqueue1">
                 <property name="MemberName" />
-                <property name="Visible">False</property>
-                <property name="Text" translatable="yes">Creating video...</property>
+                <property name="Events">ButtonPressMask</property>
               </widget>
               <packing>
                 <property name="Position">3</property>
-                <property name="AutoSize">False</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
+                <property name="AutoSize">True</property>
               </packing>
             </child>
           </widget>
@@ -6424,6 +6421,55 @@ You can continue with the current capture, cancel it or save your project.
           </widget>
           <packing>
             <property name="type">label_item</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.RenderingStateBar" design-size="300 28">
+    <property name="MemberName" />
+    <property name="Visible">False</property>
+    <child>
+      <widget class="Gtk.HBox" id="hbox1">
+        <property name="MemberName" />
+        <property name="Spacing">6</property>
+        <child>
+          <widget class="Gtk.Button" id="statebutton">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label" translatable="yes" />
+            <property name="UseUnderline">True</property>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.ProgressBar" id="progressbar">
+            <property name="MemberName" />
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="cancellbutton">
+            <property name="MemberName" />
+            <property name="Visible">False</property>
+            <property name="CanFocus">True</property>
+            <property name="Type">TextAndIcon</property>
+            <property name="Icon">stock:gtk-cancel Menu</property>
+            <property name="Label" translatable="yes" />
+            <property name="UseUnderline">True</property>
+          </widget>
+          <packing>
+            <property name="Position">2</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
           </packing>
         </child>
       </widget>

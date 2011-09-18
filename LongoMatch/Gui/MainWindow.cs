@@ -29,6 +29,7 @@ using LongoMatch.Gui.Dialog;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
+using LongoMatch.Services.VideoRenderer;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Common;
 using LongoMatch.Video.Utils;
@@ -49,6 +50,7 @@ namespace LongoMatch.Gui
 		private EventsManager eManager;
 		private HotKeysManager hkManager;
 		private KeyPressEventHandler hotkeysListener;
+		VideoRenderer videoRenderer;
 
 
 		#region Constructors
@@ -72,7 +74,6 @@ namespace LongoMatch.Gui
 			                             playlistwidget2,
 			                             playerbin1,
 			                             timelinewidget1,
-			                             videoprogressbar,
 			                             noteswidget1,
 			                             capturerBin);
 
@@ -85,6 +86,7 @@ namespace LongoMatch.Gui
 			DrawingManager dManager = new DrawingManager(drawingtoolbox1,playerbin1.VideoWidget);
 			//Forward Key and Button events to the Drawing Manager
 			KeyPressEvent += new KeyPressEventHandler(dManager.OnKeyPressEvent);
+			
 
 			playerbin1.SetLogo(System.IO.Path.Combine(MainClass.ImagesDir(),"background.png"));
 			playerbin1.LogoMode = true;
@@ -95,6 +97,8 @@ namespace LongoMatch.Gui
 				CloseCaptureProject();
 			};
 
+			videoRenderer = new VideoRenderer();
+			
 			buttonswidget1.Mode = TagMode.Predifined;
 
 			playlistwidget2.SetPlayer(playerbin1);
@@ -106,6 +110,8 @@ namespace LongoMatch.Gui
 		#endregion
 
 		#region Private Methods
+		
+		
 		private void SetProject(Project project, ProjectType projectType, CaptureSettings props)
 		{
 			bool isLive = false;
@@ -285,7 +291,7 @@ namespace LongoMatch.Gui
 		}
 
 		private void ShowWidgets() {
-			leftbox.Show();
+			leftbox1.Show();
 			if(TaggingViewAction.Active || ManualTaggingViewAction.Active)
 				buttonswidget1.Show();
 			else
@@ -293,7 +299,7 @@ namespace LongoMatch.Gui
 		}
 
 		private void HideWidgets() {
-			leftbox.Hide();
+			leftbox1.Hide();
 			rightvbox.Hide();
 			buttonswidget1.Hide();
 			timelinewidget1.Hide();
@@ -471,7 +477,7 @@ namespace LongoMatch.Gui
 		protected virtual void OnHideAllWidgetsActionToggled(object sender, System.EventArgs e)
 		{
 			if(openedProject != null) {
-				leftbox.Visible = !((Gtk.ToggleAction)sender).Active;
+				leftbox1.Visible = !((Gtk.ToggleAction)sender).Active;
 				timelinewidget1.Visible = !((Gtk.ToggleAction)sender).Active && TimelineViewAction.Active;
 				buttonswidget1.Visible = !((Gtk.ToggleAction)sender).Active &&
 				                         (TaggingViewAction.Active || ManualTaggingViewAction.Active);
