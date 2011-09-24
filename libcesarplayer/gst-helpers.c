@@ -31,6 +31,7 @@
  */
 
 #include <gst/tag/tag.h>
+#include <clutter-gtk/clutter-gtk.h>
 #include "gst-helpers.h"
 
 void
