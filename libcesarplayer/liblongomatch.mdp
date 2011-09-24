@@ -32,11 +32,11 @@
     <File subtype="Code" buildaction="Nothing" name="video-utils.h" />
     <File subtype="Code" buildaction="Compile" name="baconvideowidget-marshal.c" />
     <File subtype="Code" buildaction="Nothing" name="baconvideowidget-marshal.h" />
-    <File subtype="Code" buildaction="Compile" name="totem-gst-helpers.c" />
-    <File subtype="Code" buildaction="Nothing" name="totem-gst-helpers.h" />
     <File subtype="Code" buildaction="Nothing" name="common.h" />
     <File subtype="Code" buildaction="Compile" name="longomatch-aspect-frame.c" />
     <File subtype="Code" buildaction="Nothing" name="longomatch-aspect-frame.h" />
+    <File subtype="Code" buildaction="Compile" name="gst-helpers.c" />
+    <File subtype="Code" buildaction="Nothing" name="gst-helpers.h" />
   </Contents>
   <Packages>
     <Package file="/usr/lib/pkgconfig/gdk-2.0.pc" name="GDK" IsProject="False" />
