@@ -96,7 +96,6 @@ gboolean
 totem_ratio_fits_screen (GtkWidget * video_widget,
     int video_width, int video_height, gfloat ratio)
 {
-  GdkDisplay *display;
   int new_w, new_h;
   GtkWidget *window;
 
