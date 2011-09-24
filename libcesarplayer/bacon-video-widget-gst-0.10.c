@@ -641,6 +641,7 @@ bvw_handle_application_message (BaconVideoWidget * bvw, GstMessage * msg)
      * display to be taken into account. */
     get_media_size (bvw, &w, &h);
     clutter_actor_set_size (bvw->priv->texture, w, h);
+    clutter_actor_set_size (bvw->priv->drawings, w, h);
 
     bvw->priv->window_resized = TRUE;
     set_current_actor (bvw);
@@ -3268,7 +3269,7 @@ bacon_video_widget_new (BvwUseType use_type, GError ** err)
       bvw->priv->drawings_frame);
   constraint =
       clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
-  clutter_actor_add_constraint_with_name (bvw->priv->drawings, "size",
+  clutter_actor_add_constraint_with_name (bvw->priv->drawings_frame, "size",
       constraint);
 
   clutter_actor_raise (CLUTTER_ACTOR (bvw->priv->drawings_frame),
