@@ -10,7 +10,7 @@
   </MonoDevelop.Autotools.MakefileInfo>
   <Configurations active="Release">
     <Configuration name="Debug" SourceDirectory="." ctype="CProjectConfiguration">
-      <Output directory="../LongoMatch/bin/Debug" output="libcesarplayer.dll" />
+      <Output directory="../bin" output="libcesarplayer.dll" />
       <Build debugmode="True" target="SharedLibrary" />
       <Execution consolepause="True" runwithwarnings="True" />
       <CodeGeneration WarningLevel="Normal" WarningsAsErrors="False" OptimizationLevel="0" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="DEBUG MONODEVELOP" ctype="CCompilationParameters" />

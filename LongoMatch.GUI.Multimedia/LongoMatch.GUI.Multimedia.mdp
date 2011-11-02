@@ -11,33 +11,29 @@
   </MonoDevelop.Autotools.MakefileInfo>
   <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="../bin" assembly="a" assemblyKeyFile="/home/andoni/Proyectos/longomatch/CesarPlayer/." />
+      <Output directory="../bin" assembly="LongoMatch.GUI.Multimedia" assemblyKeyFile="/home/andoni/Proyectos/longomatch/CesarPlayer/." />
       <Build debugmode="True" target="Library" />
       <Execution consolepause="True" runwithwarnings="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="True" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="../bin" assembly="CesarPlayer.dll" assemblyKeyFile="/home/andoni/Proyectos/longomatch/CesarPlayer/." />
+      <Output directory="../bin" assembly="LongoMatch.GUI.Multimedia" assemblyKeyFile="/home/andoni/Proyectos/longomatch/CesarPlayer/." />
       <Build debugmode="True" target="Library" />
       <Execution consolepause="True" runwithwarnings="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="True" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File subtype="Code" buildaction="EmbedAsResource" name="gtk-gui/objects.xml" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="gtk-gui/gui.stetic" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/generated.cs" />
     <File subtype="Directory" buildaction="Compile" name="Gui" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.PlayerBin.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.VolumeWindow.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/VolumeWindow.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/CapturerBin.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/PlayerBin.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/VolumeWindow.cs" />
+    <File subtype="Directory" buildaction="Compile" name="." />
+    <File subtype="Code" buildaction="EmbedAsResource" name="gtk-gui/gui.stetic" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/generated.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.CapturerBin.cs" />
-    <File subtype="Directory" buildaction="Compile" name="." />
-    <File subtype="Directory" buildaction="Compile" name="." />
-    <File subtype="Directory" buildaction="Compile" name="." />
-    <File subtype="Directory" buildaction="Compile" name="." />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.VolumeWindow.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.PlayerBin.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

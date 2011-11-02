@@ -1,4 +1,13 @@
 <objects attr-sync="on">
+  <object type="LongoMatch.Gui.CapturerBin" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="CapturerBin Signals">
+        <signal name="CaptureFinished" />
+        <signal name="Error" />
+      </itemgroup>
+    </signals>
+  </object>
   <object type="LongoMatch.Gui.PlayerBin" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="PlayerBin Properties">
@@ -11,20 +20,11 @@
         <signal name="SegmentClosedEvent" />
         <signal name="Tick" />
         <signal name="Error" />
+        <signal name="PlayStateChanged" />
         <signal name="Next" />
         <signal name="Prev" />
         <signal name="DrawFrame" />
         <signal name="SeekEvent" />
-        <signal name="PlayStateChanged" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.CapturerBin" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="CapturerBin Signals">
-        <signal name="CaptureFinished" />
-        <signal name="Error" />
       </itemgroup>
     </signals>
   </object>
