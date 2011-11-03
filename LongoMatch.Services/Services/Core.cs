@@ -39,9 +39,6 @@ namespace LongoMatch.Services
 			/* Init internationalization support */
 			Catalog.Init(Constants.SOFTWARE_NAME.ToLower(),Config.RelativeToPrefix("share/locale"));
 
-			/* Init Gtk */
-			Application.Init();
-
 			SetupBaseDir();
 
 			/* Check default folders */

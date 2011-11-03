@@ -44,6 +44,9 @@ namespace LongoMatch
 			if (!GStreamer.CheckInstallation())
 				return;
 
+			/* Init Gtk */
+			Application.Init();
+
 			//try {
 				MainWindow win = new MainWindow();
 				win.Show();
