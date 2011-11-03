@@ -5,23 +5,15 @@ namespace LongoMatch.Gui
 	public partial class CapturerBin
 	{
 		private global::Gtk.VBox vbox1;
-
 		private global::Gtk.HBox capturerhbox;
-
 		private global::Gtk.DrawingArea logodrawingarea;
-
 		private global::Gtk.HBox hbox2;
-
 		private global::Gtk.HBox buttonsbox;
-
 		private global::Gtk.Button recbutton;
-
 		private global::Gtk.Button pausebutton;
-
 		private global::Gtk.Button stopbutton;
-
 		private global::Gtk.Label timelabel;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -37,13 +29,13 @@ namespace LongoMatch.Gui
 			this.capturerhbox.Name = "capturerhbox";
 			this.capturerhbox.Spacing = 6;
 			this.vbox1.Add (this.capturerhbox);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.capturerhbox]));
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.capturerhbox]));
 			w1.Position = 0;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.logodrawingarea = new global::Gtk.DrawingArea ();
 			this.logodrawingarea.Name = "logodrawingarea";
 			this.vbox1.Add (this.logodrawingarea);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.logodrawingarea]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.logodrawingarea]));
 			w2.Position = 1;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.hbox2 = new global::Gtk.HBox ();
@@ -59,7 +51,7 @@ namespace LongoMatch.Gui
 			this.recbutton.Name = "recbutton";
 			this.recbutton.UseUnderline = true;
 			// Container child recbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w3 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w3 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w4 = new global::Gtk.HBox ();
 			w4.Spacing = 2;
@@ -73,7 +65,7 @@ namespace LongoMatch.Gui
 			w3.Add (w4);
 			this.recbutton.Add (w3);
 			this.buttonsbox.Add (this.recbutton);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.buttonsbox[this.recbutton]));
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.buttonsbox [this.recbutton]));
 			w11.Position = 0;
 			w11.Expand = false;
 			w11.Fill = false;
@@ -83,7 +75,7 @@ namespace LongoMatch.Gui
 			this.pausebutton.Name = "pausebutton";
 			this.pausebutton.UseUnderline = true;
 			// Container child pausebutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w12 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w12 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w13 = new global::Gtk.HBox ();
 			w13.Spacing = 2;
@@ -97,7 +89,7 @@ namespace LongoMatch.Gui
 			w12.Add (w13);
 			this.pausebutton.Add (w12);
 			this.buttonsbox.Add (this.pausebutton);
-			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.buttonsbox[this.pausebutton]));
+			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.buttonsbox [this.pausebutton]));
 			w20.Position = 1;
 			w20.Expand = false;
 			w20.Fill = false;
@@ -107,7 +99,7 @@ namespace LongoMatch.Gui
 			this.stopbutton.Name = "stopbutton";
 			this.stopbutton.UseUnderline = true;
 			// Container child stopbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w21 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w21 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w22 = new global::Gtk.HBox ();
 			w22.Spacing = 2;
@@ -121,27 +113,27 @@ namespace LongoMatch.Gui
 			w21.Add (w22);
 			this.stopbutton.Add (w21);
 			this.buttonsbox.Add (this.stopbutton);
-			global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.buttonsbox[this.stopbutton]));
+			global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.buttonsbox [this.stopbutton]));
 			w29.Position = 2;
 			w29.Expand = false;
 			w29.Fill = false;
 			this.hbox2.Add (this.buttonsbox);
-			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.buttonsbox]));
+			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.buttonsbox]));
 			w30.Position = 0;
 			w30.Expand = false;
 			w30.Fill = false;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.timelabel = new global::Gtk.Label ();
 			this.timelabel.Name = "timelabel";
-			this.timelabel.Xalign = 1f;
+			this.timelabel.Xalign = 1F;
 			this.timelabel.LabelProp = "Time: 0:00:00";
 			this.hbox2.Add (this.timelabel);
-			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.timelabel]));
+			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.timelabel]));
 			w31.PackType = ((global::Gtk.PackType)(1));
 			w31.Position = 1;
 			w31.Expand = false;
 			this.vbox1.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox2]));
+			global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox2]));
 			w32.Position = 2;
 			w32.Expand = false;
 			w32.Fill = false;

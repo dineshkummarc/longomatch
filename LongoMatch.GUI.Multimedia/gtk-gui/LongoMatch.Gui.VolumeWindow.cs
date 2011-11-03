@@ -5,13 +5,10 @@ namespace LongoMatch.Gui
 	public partial class VolumeWindow
 	{
 		private global::Gtk.VBox vbox2;
-
 		private global::Gtk.Button morebutton;
-
 		private global::Gtk.VScale volumescale;
-
 		private global::Gtk.Button lessbutton;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -32,7 +29,7 @@ namespace LongoMatch.Gui
 			this.morebutton.Relief = ((global::Gtk.ReliefStyle)(2));
 			this.morebutton.Label = "+";
 			this.vbox2.Add (this.morebutton);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.morebutton]));
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.morebutton]));
 			w1.Position = 0;
 			w1.Expand = false;
 			w1.Fill = false;
@@ -49,7 +46,7 @@ namespace LongoMatch.Gui
 			this.volumescale.Digits = 0;
 			this.volumescale.ValuePos = ((global::Gtk.PositionType)(2));
 			this.vbox2.Add (this.volumescale);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.volumescale]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.volumescale]));
 			w2.Position = 1;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.lessbutton = new global::Gtk.Button ();
@@ -57,7 +54,7 @@ namespace LongoMatch.Gui
 			this.lessbutton.Relief = ((global::Gtk.ReliefStyle)(2));
 			this.lessbutton.Label = "-";
 			this.vbox2.Add (this.lessbutton);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.lessbutton]));
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.lessbutton]));
 			w3.Position = 2;
 			w3.Expand = false;
 			w3.Fill = false;

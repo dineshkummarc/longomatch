@@ -5,51 +5,29 @@ namespace LongoMatch.Gui.Component
 	public partial class DrawingToolBox
 	{
 		private global::Gtk.VBox vbox2;
-
 		private global::Gtk.Label toolslabel;
-
 		private global::Gtk.Table toolstable;
-
 		private global::Gtk.RadioButton circlebutton;
-
 		private global::Gtk.Image image79;
-
 		private global::Gtk.RadioButton crossbutton;
-
 		private global::Gtk.Image image83;
-
 		private global::Gtk.RadioButton eraserbutton;
-
 		private global::Gtk.Image image81;
-
 		private global::Gtk.RadioButton linebutton;
-
 		private global::Gtk.Image image82;
-
 		private global::Gtk.RadioButton penbutton;
-
 		private global::Gtk.Image image80;
-
 		private global::Gtk.RadioButton rectanglebutton;
-
 		private global::Gtk.Image image84;
-
 		private global::Gtk.Label colorslabel;
-
 		private global::Gtk.ColorButton colorbutton;
-
 		private global::Gtk.Label label3;
-
 		private global::Gtk.ComboBox combobox1;
-
 		private global::Gtk.Label transparencylabel;
-
 		private global::Gtk.SpinButton spinbutton1;
-
 		private global::Gtk.Button clearbutton;
-
 		private global::Gtk.Label label1;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -63,11 +41,11 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.toolslabel = new global::Gtk.Label ();
 			this.toolslabel.Name = "toolslabel";
-			this.toolslabel.Xalign = 0f;
+			this.toolslabel.Xalign = 0F;
 			this.toolslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Tools</b>");
 			this.toolslabel.UseMarkup = true;
 			this.vbox2.Add (this.toolslabel);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.toolslabel]));
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.toolslabel]));
 			w1.Position = 0;
 			w1.Expand = false;
 			w1.Fill = false;
@@ -91,7 +69,7 @@ namespace LongoMatch.Gui.Component
 			this.image79.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("stock_draw-circle-unfilled.png");
 			this.circlebutton.Add (this.image79);
 			this.toolstable.Add (this.circlebutton);
-			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.toolstable[this.circlebutton]));
+			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.toolstable [this.circlebutton]));
 			w3.TopAttach = ((uint)(2));
 			w3.BottomAttach = ((uint)(3));
 			w3.LeftAttach = ((uint)(1));
@@ -112,7 +90,7 @@ namespace LongoMatch.Gui.Component
 			this.image83.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("stock_draw-line-45.png");
 			this.crossbutton.Add (this.image83);
 			this.toolstable.Add (this.crossbutton);
-			global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.toolstable[this.crossbutton]));
+			global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.toolstable [this.crossbutton]));
 			w5.TopAttach = ((uint)(1));
 			w5.BottomAttach = ((uint)(2));
 			w5.LeftAttach = ((uint)(1));
@@ -133,7 +111,7 @@ namespace LongoMatch.Gui.Component
 			this.image81.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-delete", global::Gtk.IconSize.Menu);
 			this.eraserbutton.Add (this.image81);
 			this.toolstable.Add (this.eraserbutton);
-			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.toolstable[this.eraserbutton]));
+			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.toolstable [this.eraserbutton]));
 			w7.LeftAttach = ((uint)(1));
 			w7.RightAttach = ((uint)(2));
 			w7.YOptions = ((global::Gtk.AttachOptions)(4));
@@ -152,7 +130,7 @@ namespace LongoMatch.Gui.Component
 			this.image82.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("stock_draw-line-ends-with-arrow.png");
 			this.linebutton.Add (this.image82);
 			this.toolstable.Add (this.linebutton);
-			global::Gtk.Table.TableChild w9 = ((global::Gtk.Table.TableChild)(this.toolstable[this.linebutton]));
+			global::Gtk.Table.TableChild w9 = ((global::Gtk.Table.TableChild)(this.toolstable [this.linebutton]));
 			w9.TopAttach = ((uint)(1));
 			w9.BottomAttach = ((uint)(2));
 			w9.YOptions = ((global::Gtk.AttachOptions)(4));
@@ -172,7 +150,7 @@ namespace LongoMatch.Gui.Component
 			this.image80.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("stock_draw-freeform-line.png");
 			this.penbutton.Add (this.image80);
 			this.toolstable.Add (this.penbutton);
-			global::Gtk.Table.TableChild w11 = ((global::Gtk.Table.TableChild)(this.toolstable[this.penbutton]));
+			global::Gtk.Table.TableChild w11 = ((global::Gtk.Table.TableChild)(this.toolstable [this.penbutton]));
 			w11.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child toolstable.Gtk.Table+TableChild
 			this.rectanglebutton = new global::Gtk.RadioButton ("");
@@ -189,22 +167,22 @@ namespace LongoMatch.Gui.Component
 			this.image84.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("stock_draw-rectangle-unfilled.png");
 			this.rectanglebutton.Add (this.image84);
 			this.toolstable.Add (this.rectanglebutton);
-			global::Gtk.Table.TableChild w13 = ((global::Gtk.Table.TableChild)(this.toolstable[this.rectanglebutton]));
+			global::Gtk.Table.TableChild w13 = ((global::Gtk.Table.TableChild)(this.toolstable [this.rectanglebutton]));
 			w13.TopAttach = ((uint)(2));
 			w13.BottomAttach = ((uint)(3));
 			w13.YOptions = ((global::Gtk.AttachOptions)(4));
 			this.vbox2.Add (this.toolstable);
-			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.toolstable]));
+			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.toolstable]));
 			w14.Position = 1;
 			w14.Expand = false;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.colorslabel = new global::Gtk.Label ();
 			this.colorslabel.Name = "colorslabel";
-			this.colorslabel.Xalign = 0f;
+			this.colorslabel.Xalign = 0F;
 			this.colorslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Color</b>");
 			this.colorslabel.UseMarkup = true;
 			this.vbox2.Add (this.colorslabel);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.colorslabel]));
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.colorslabel]));
 			w15.Position = 2;
 			w15.Expand = false;
 			w15.Fill = false;
@@ -214,18 +192,18 @@ namespace LongoMatch.Gui.Component
 			this.colorbutton.Events = ((global::Gdk.EventMask)(784));
 			this.colorbutton.Name = "colorbutton";
 			this.vbox2.Add (this.colorbutton);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.colorbutton]));
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.colorbutton]));
 			w16.Position = 3;
 			w16.Expand = false;
 			w16.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
-			this.label3.Xalign = 0f;
+			this.label3.Xalign = 0F;
 			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Width</b>");
 			this.label3.UseMarkup = true;
 			this.vbox2.Add (this.label3);
-			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.label3]));
+			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.label3]));
 			w17.Position = 4;
 			w17.Expand = false;
 			w17.Fill = false;
@@ -240,18 +218,18 @@ namespace LongoMatch.Gui.Component
 			this.combobox1.Name = "combobox1";
 			this.combobox1.Active = 2;
 			this.vbox2.Add (this.combobox1);
-			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.combobox1]));
+			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.combobox1]));
 			w18.Position = 5;
 			w18.Expand = false;
 			w18.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.transparencylabel = new global::Gtk.Label ();
 			this.transparencylabel.Name = "transparencylabel";
-			this.transparencylabel.Xalign = 0f;
+			this.transparencylabel.Xalign = 0F;
 			this.transparencylabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Transparency</b>");
 			this.transparencylabel.UseMarkup = true;
 			this.vbox2.Add (this.transparencylabel);
-			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.transparencylabel]));
+			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.transparencylabel]));
 			w19.Position = 6;
 			w19.Expand = false;
 			w19.Fill = false;
@@ -265,7 +243,7 @@ namespace LongoMatch.Gui.Component
 			this.spinbutton1.Numeric = true;
 			this.spinbutton1.Value = 80;
 			this.vbox2.Add (this.spinbutton1);
-			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.spinbutton1]));
+			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.spinbutton1]));
 			w20.Position = 7;
 			w20.Expand = false;
 			w20.Fill = false;
@@ -276,7 +254,7 @@ namespace LongoMatch.Gui.Component
 			this.clearbutton.Name = "clearbutton";
 			this.clearbutton.UseUnderline = true;
 			// Container child clearbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w21 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w21 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w22 = new global::Gtk.HBox ();
 			w22.Spacing = 2;
@@ -290,7 +268,7 @@ namespace LongoMatch.Gui.Component
 			w21.Add (w22);
 			this.clearbutton.Add (w21);
 			this.vbox2.Add (this.clearbutton);
-			global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.clearbutton]));
+			global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.clearbutton]));
 			w29.Position = 8;
 			w29.Expand = false;
 			w29.Fill = false;
@@ -300,7 +278,7 @@ namespace LongoMatch.Gui.Component
 			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Draw-><b> D</b>\nClear-><b> C</b>\nHide-><b> S</b>\nShow-><b> S</b>\n");
 			this.label1.UseMarkup = true;
 			this.vbox2.Add (this.label1);
-			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.label1]));
+			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.label1]));
 			w30.Position = 9;
 			w30.Expand = false;
 			w30.Fill = false;

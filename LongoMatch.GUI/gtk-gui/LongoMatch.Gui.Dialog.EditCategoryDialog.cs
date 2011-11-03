@@ -5,9 +5,8 @@ namespace LongoMatch.Gui.Dialog
 	public partial class EditCategoryDialog
 	{
 		private global::LongoMatch.Gui.Component.CategoryProperties timenodeproperties2;
-
 		private global::Gtk.Button buttonOk;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -26,7 +25,7 @@ namespace LongoMatch.Gui.Dialog
 			this.timenodeproperties2.Events = ((global::Gdk.EventMask)(256));
 			this.timenodeproperties2.Name = "timenodeproperties2";
 			w1.Add (this.timenodeproperties2);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(w1[this.timenodeproperties2]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(w1 [this.timenodeproperties2]));
 			w2.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.EditCategoryDialog.ActionArea
 			global::Gtk.HButtonBox w3 = this.ActionArea;
@@ -43,7 +42,7 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
 			this.AddActionWidget (this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w4 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w3[this.buttonOk]));
+			global::Gtk.ButtonBox.ButtonBoxChild w4 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w3 [this.buttonOk]));
 			w4.Expand = false;
 			w4.Fill = false;
 			if ((this.Child != null)) {

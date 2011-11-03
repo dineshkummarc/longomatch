@@ -5,9 +5,8 @@ namespace LongoMatch.Gui.Dialog
 	public partial class HotKeySelectorDialog
 	{
 		private global::Gtk.Label label1;
-
 		private global::Gtk.Button buttonCancel;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -28,7 +27,7 @@ namespace LongoMatch.Gui.Dialog
 			this.label1.Name = "label1";
 			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Press a key combination using  Shift+key or Alt+key.\nHotkeys with a single key are also allowed with Ctrl+key.");
 			w1.Add (this.label1);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(w1[this.label1]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(w1 [this.label1]));
 			w2.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.HotKeySelectorDialog.ActionArea
 			global::Gtk.HButtonBox w3 = this.ActionArea;
@@ -45,7 +44,7 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonCancel.UseUnderline = true;
 			this.buttonCancel.Label = "gtk-cancel";
 			this.AddActionWidget (this.buttonCancel, -6);
-			global::Gtk.ButtonBox.ButtonBoxChild w4 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w3[this.buttonCancel]));
+			global::Gtk.ButtonBox.ButtonBoxChild w4 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w3 [this.buttonCancel]));
 			w4.Expand = false;
 			w4.Fill = false;
 			if ((this.Child != null)) {

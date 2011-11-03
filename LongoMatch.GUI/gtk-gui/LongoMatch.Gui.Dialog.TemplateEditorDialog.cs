@@ -5,9 +5,8 @@ namespace LongoMatch.Gui.Dialog
 	public partial class TemplateEditorDialog
 	{
 		private global::Gtk.HBox templateeditorbox;
-
 		private global::Gtk.Button buttonOk;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -29,7 +28,7 @@ namespace LongoMatch.Gui.Dialog
 			this.templateeditorbox.Name = "templateeditorbox";
 			this.templateeditorbox.Spacing = 6;
 			w1.Add (this.templateeditorbox);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(w1[this.templateeditorbox]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(w1 [this.templateeditorbox]));
 			w2.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.TemplateEditorDialog.ActionArea
 			global::Gtk.HButtonBox w3 = this.ActionArea;
@@ -46,7 +45,7 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-apply";
 			this.AddActionWidget (this.buttonOk, -10);
-			global::Gtk.ButtonBox.ButtonBoxChild w4 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w3[this.buttonOk]));
+			global::Gtk.ButtonBox.ButtonBoxChild w4 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w3 [this.buttonOk]));
 			w4.Expand = false;
 			w4.Fill = false;
 			if ((this.Child != null)) {

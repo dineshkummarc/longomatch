@@ -5,21 +5,14 @@ namespace LongoMatch.Gui.Dialog
 	public partial class RenderingJobsDialog
 	{
 		private global::Gtk.HBox hbox1;
-
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
-
 		private global::LongoMatch.Gui.Component.RenderingJobsTreeView renderingjobstreeview2;
-
 		private global::Gtk.VBox vbox2;
-
 		private global::Gtk.Button clearbutton;
-
 		private global::Gtk.Button cancelbutton;
-
 		private global::Gtk.Button retrybutton;
-
 		private global::Gtk.Button buttonOk;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -49,7 +42,7 @@ namespace LongoMatch.Gui.Dialog
 			this.renderingjobstreeview2.Name = "renderingjobstreeview2";
 			this.GtkScrolledWindow.Add (this.renderingjobstreeview2);
 			this.hbox1.Add (this.GtkScrolledWindow);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.GtkScrolledWindow]));
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.GtkScrolledWindow]));
 			w3.Position = 0;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.vbox2 = new global::Gtk.VBox ();
@@ -61,7 +54,7 @@ namespace LongoMatch.Gui.Dialog
 			this.clearbutton.Name = "clearbutton";
 			this.clearbutton.UseUnderline = true;
 			// Container child clearbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w4 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w4 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w5 = new global::Gtk.HBox ();
 			w5.Spacing = 2;
@@ -77,7 +70,7 @@ namespace LongoMatch.Gui.Dialog
 			w4.Add (w5);
 			this.clearbutton.Add (w4);
 			this.vbox2.Add (this.clearbutton);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.clearbutton]));
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.clearbutton]));
 			w12.Position = 0;
 			w12.Expand = false;
 			w12.Fill = false;
@@ -87,7 +80,7 @@ namespace LongoMatch.Gui.Dialog
 			this.cancelbutton.Name = "cancelbutton";
 			this.cancelbutton.UseUnderline = true;
 			// Container child cancelbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w13 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w13 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w14 = new global::Gtk.HBox ();
 			w14.Spacing = 2;
@@ -103,7 +96,7 @@ namespace LongoMatch.Gui.Dialog
 			w13.Add (w14);
 			this.cancelbutton.Add (w13);
 			this.vbox2.Add (this.cancelbutton);
-			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.cancelbutton]));
+			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.cancelbutton]));
 			w21.Position = 1;
 			w21.Expand = false;
 			w21.Fill = false;
@@ -113,7 +106,7 @@ namespace LongoMatch.Gui.Dialog
 			this.retrybutton.Name = "retrybutton";
 			this.retrybutton.UseUnderline = true;
 			// Container child retrybutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w22 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w22 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w23 = new global::Gtk.HBox ();
 			w23.Spacing = 2;
@@ -129,17 +122,17 @@ namespace LongoMatch.Gui.Dialog
 			w22.Add (w23);
 			this.retrybutton.Add (w22);
 			this.vbox2.Add (this.retrybutton);
-			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.retrybutton]));
+			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.retrybutton]));
 			w30.Position = 2;
 			w30.Expand = false;
 			w30.Fill = false;
 			this.hbox1.Add (this.vbox2);
-			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox2]));
+			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vbox2]));
 			w31.Position = 1;
 			w31.Expand = false;
 			w31.Fill = false;
 			w1.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(w1[this.hbox1]));
+			global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(w1 [this.hbox1]));
 			w32.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.RenderingJobsDialog.ActionArea
 			global::Gtk.HButtonBox w33 = this.ActionArea;
@@ -156,7 +149,7 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
 			this.AddActionWidget (this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w34 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w33[this.buttonOk]));
+			global::Gtk.ButtonBox.ButtonBoxChild w34 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w33 [this.buttonOk]));
 			w34.Expand = false;
 			w34.Fill = false;
 			if ((this.Child != null)) {

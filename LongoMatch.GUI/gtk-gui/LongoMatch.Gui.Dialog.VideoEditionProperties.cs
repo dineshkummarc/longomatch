@@ -5,45 +5,26 @@ namespace LongoMatch.Gui.Dialog
 	public partial class VideoEditionProperties
 	{
 		private global::Gtk.VBox vbox2;
-
 		private global::Gtk.HBox hbox2;
-
 		private global::Gtk.Label label1;
-
 		private global::Gtk.ComboBox qualitycombobox;
-
 		private global::Gtk.HBox hbox4;
-
 		private global::Gtk.Label label2;
-
 		private global::Gtk.ComboBox sizecombobox;
-
 		private global::Gtk.HBox hbox5;
-
 		private global::Gtk.Label label3;
-
 		private global::Gtk.ComboBox formatcombobox;
-
 		private global::Gtk.HBox hbox6;
-
 		private global::Gtk.CheckButton descriptioncheckbutton;
-
 		private global::Gtk.CheckButton audiocheckbutton;
-
 		private global::Gtk.HBox hbox1;
-
 		private global::Gtk.Label filenamelabel;
-
 		private global::Gtk.HBox hbox3;
-
 		private global::Gtk.Entry fileentry;
-
 		private global::Gtk.Button openbutton;
-
 		private global::Gtk.Button buttonCancel;
-
 		private global::Gtk.Button buttonOk;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -72,10 +53,10 @@ namespace LongoMatch.Gui.Dialog
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
-			this.label1.Xalign = 0f;
+			this.label1.Xalign = 0F;
 			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Video Quality:");
 			this.hbox2.Add (this.label1);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.label1]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.label1]));
 			w2.Position = 0;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.qualitycombobox = global::Gtk.ComboBox.NewText ();
@@ -86,10 +67,10 @@ namespace LongoMatch.Gui.Dialog
 			this.qualitycombobox.Name = "qualitycombobox";
 			this.qualitycombobox.Active = 1;
 			this.hbox2.Add (this.qualitycombobox);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.qualitycombobox]));
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.qualitycombobox]));
 			w3.Position = 1;
 			this.vbox2.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox2]));
 			w4.Position = 0;
 			w4.Expand = false;
 			w4.Fill = false;
@@ -101,19 +82,19 @@ namespace LongoMatch.Gui.Dialog
 			// Container child hbox4.Gtk.Box+BoxChild
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
-			this.label2.Xalign = 0f;
+			this.label2.Xalign = 0F;
 			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Size: ");
 			this.hbox4.Add (this.label2);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox4[this.label2]));
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.label2]));
 			w5.Position = 0;
 			// Container child hbox4.Gtk.Box+BoxChild
 			this.sizecombobox = global::Gtk.ComboBox.NewText ();
 			this.sizecombobox.Name = "sizecombobox";
 			this.hbox4.Add (this.sizecombobox);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox4[this.sizecombobox]));
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.sizecombobox]));
 			w6.Position = 1;
 			this.vbox2.Add (this.hbox4);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox4]));
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox4]));
 			w7.Position = 1;
 			w7.Expand = false;
 			w7.Fill = false;
@@ -125,19 +106,19 @@ namespace LongoMatch.Gui.Dialog
 			// Container child hbox5.Gtk.Box+BoxChild
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
-			this.label3.Xalign = 0f;
+			this.label3.Xalign = 0F;
 			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("Ouput Format:");
 			this.hbox5.Add (this.label3);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox5[this.label3]));
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox5 [this.label3]));
 			w8.Position = 0;
 			// Container child hbox5.Gtk.Box+BoxChild
 			this.formatcombobox = global::Gtk.ComboBox.NewText ();
 			this.formatcombobox.Name = "formatcombobox";
 			this.hbox5.Add (this.formatcombobox);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox5[this.formatcombobox]));
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox5 [this.formatcombobox]));
 			w9.Position = 1;
 			this.vbox2.Add (this.hbox5);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox5]));
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox5]));
 			w10.Position = 2;
 			w10.Expand = false;
 			w10.Fill = false;
@@ -154,7 +135,7 @@ namespace LongoMatch.Gui.Dialog
 			this.descriptioncheckbutton.DrawIndicator = true;
 			this.descriptioncheckbutton.UseUnderline = true;
 			this.hbox6.Add (this.descriptioncheckbutton);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox6[this.descriptioncheckbutton]));
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox6 [this.descriptioncheckbutton]));
 			w11.Position = 0;
 			// Container child hbox6.Gtk.Box+BoxChild
 			this.audiocheckbutton = new global::Gtk.CheckButton ();
@@ -164,10 +145,10 @@ namespace LongoMatch.Gui.Dialog
 			this.audiocheckbutton.DrawIndicator = true;
 			this.audiocheckbutton.UseUnderline = true;
 			this.hbox6.Add (this.audiocheckbutton);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.hbox6[this.audiocheckbutton]));
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.hbox6 [this.audiocheckbutton]));
 			w12.Position = 1;
 			this.vbox2.Add (this.hbox6);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox6]));
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox6]));
 			w13.Position = 3;
 			w13.Expand = false;
 			w13.Fill = false;
@@ -180,7 +161,7 @@ namespace LongoMatch.Gui.Dialog
 			this.filenamelabel.Name = "filenamelabel";
 			this.filenamelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("File name: ");
 			this.hbox1.Add (this.filenamelabel);
-			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.filenamelabel]));
+			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.filenamelabel]));
 			w14.Position = 0;
 			w14.Expand = false;
 			w14.Fill = false;
@@ -195,7 +176,7 @@ namespace LongoMatch.Gui.Dialog
 			this.fileentry.IsEditable = false;
 			this.fileentry.InvisibleChar = '●';
 			this.hbox3.Add (this.fileentry);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.fileentry]));
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.fileentry]));
 			w15.Position = 0;
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.openbutton = new global::Gtk.Button ();
@@ -205,20 +186,20 @@ namespace LongoMatch.Gui.Dialog
 			this.openbutton.UseUnderline = true;
 			this.openbutton.Label = "gtk-save-as";
 			this.hbox3.Add (this.openbutton);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.openbutton]));
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.openbutton]));
 			w16.Position = 1;
 			w16.Expand = false;
 			w16.Fill = false;
 			this.hbox1.Add (this.hbox3);
-			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.hbox3]));
+			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.hbox3]));
 			w17.Position = 1;
 			this.vbox2.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
+			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox1]));
 			w18.Position = 4;
 			w18.Expand = false;
 			w18.Fill = false;
 			w1.Add (this.vbox2);
-			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(w1[this.vbox2]));
+			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(w1 [this.vbox2]));
 			w19.Position = 0;
 			w19.Expand = false;
 			w19.Fill = false;
@@ -237,7 +218,7 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonCancel.UseUnderline = true;
 			this.buttonCancel.Label = "gtk-cancel";
 			this.AddActionWidget (this.buttonCancel, -6);
-			global::Gtk.ButtonBox.ButtonBoxChild w21 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w20[this.buttonCancel]));
+			global::Gtk.ButtonBox.ButtonBoxChild w21 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w20 [this.buttonCancel]));
 			w21.Expand = false;
 			w21.Fill = false;
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
@@ -249,7 +230,7 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
 			this.AddActionWidget (this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w22 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w20[this.buttonOk]));
+			global::Gtk.ButtonBox.ButtonBoxChild w22 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w20 [this.buttonOk]));
 			w22.Position = 1;
 			w22.Expand = false;
 			w22.Fill = false;

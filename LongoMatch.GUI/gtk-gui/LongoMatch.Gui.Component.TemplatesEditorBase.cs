@@ -5,27 +5,17 @@ namespace LongoMatch.Gui.Component
 	public partial class TemplatesEditorBase
 	{
 		private global::Gtk.HBox hbox1;
-
 		private global::Gtk.VBox mainbox;
-
 		private global::Gtk.ScrolledWindow scrolledwindow2;
-
 		private global::Gtk.VBox vbox2;
-
 		private global::Gtk.VBox upbox;
-
 		private global::Gtk.Button newprevbutton;
-
 		private global::Gtk.Button newafterbutton;
-
 		private global::Gtk.Button removebutton;
-
 		private global::Gtk.Button editbutton;
-
 		private global::Gtk.Button exportbutton;
-
 		private global::Gtk.HSeparator hseparator1;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -47,10 +37,10 @@ namespace LongoMatch.Gui.Component
 			this.scrolledwindow2.Name = "scrolledwindow2";
 			this.scrolledwindow2.ShadowType = ((global::Gtk.ShadowType)(1));
 			this.mainbox.Add (this.scrolledwindow2);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.mainbox[this.scrolledwindow2]));
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.mainbox [this.scrolledwindow2]));
 			w1.Position = 0;
 			this.hbox1.Add (this.mainbox);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.mainbox]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.mainbox]));
 			w2.Position = 0;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.vbox2 = new global::Gtk.VBox ();
@@ -61,7 +51,7 @@ namespace LongoMatch.Gui.Component
 			this.upbox.Name = "upbox";
 			this.upbox.Spacing = 6;
 			this.vbox2.Add (this.upbox);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.upbox]));
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.upbox]));
 			w3.Position = 0;
 			w3.Expand = false;
 			w3.Fill = false;
@@ -73,7 +63,7 @@ namespace LongoMatch.Gui.Component
 			this.newprevbutton.Name = "newprevbutton";
 			this.newprevbutton.UseUnderline = true;
 			// Container child newprevbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w4 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w4 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w5 = new global::Gtk.HBox ();
 			w5.Spacing = 2;
@@ -89,7 +79,7 @@ namespace LongoMatch.Gui.Component
 			w4.Add (w5);
 			this.newprevbutton.Add (w4);
 			this.vbox2.Add (this.newprevbutton);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.newprevbutton]));
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.newprevbutton]));
 			w12.Position = 1;
 			w12.Expand = false;
 			w12.Fill = false;
@@ -101,7 +91,7 @@ namespace LongoMatch.Gui.Component
 			this.newafterbutton.Name = "newafterbutton";
 			this.newafterbutton.UseUnderline = true;
 			// Container child newafterbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w13 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w13 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w14 = new global::Gtk.HBox ();
 			w14.Spacing = 2;
@@ -117,7 +107,7 @@ namespace LongoMatch.Gui.Component
 			w13.Add (w14);
 			this.newafterbutton.Add (w13);
 			this.vbox2.Add (this.newafterbutton);
-			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.newafterbutton]));
+			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.newafterbutton]));
 			w21.Position = 2;
 			w21.Expand = false;
 			w21.Fill = false;
@@ -129,7 +119,7 @@ namespace LongoMatch.Gui.Component
 			this.removebutton.Name = "removebutton";
 			this.removebutton.UseUnderline = true;
 			// Container child removebutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w22 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w22 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w23 = new global::Gtk.HBox ();
 			w23.Spacing = 2;
@@ -145,7 +135,7 @@ namespace LongoMatch.Gui.Component
 			w22.Add (w23);
 			this.removebutton.Add (w22);
 			this.vbox2.Add (this.removebutton);
-			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.removebutton]));
+			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.removebutton]));
 			w30.Position = 3;
 			w30.Expand = false;
 			w30.Fill = false;
@@ -157,7 +147,7 @@ namespace LongoMatch.Gui.Component
 			this.editbutton.Name = "editbutton";
 			this.editbutton.UseUnderline = true;
 			// Container child editbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w31 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w31 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w32 = new global::Gtk.HBox ();
 			w32.Spacing = 2;
@@ -173,7 +163,7 @@ namespace LongoMatch.Gui.Component
 			w31.Add (w32);
 			this.editbutton.Add (w31);
 			this.vbox2.Add (this.editbutton);
-			global::Gtk.Box.BoxChild w39 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.editbutton]));
+			global::Gtk.Box.BoxChild w39 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.editbutton]));
 			w39.Position = 4;
 			w39.Expand = false;
 			w39.Fill = false;
@@ -184,7 +174,7 @@ namespace LongoMatch.Gui.Component
 			this.exportbutton.Name = "exportbutton";
 			this.exportbutton.UseUnderline = true;
 			// Container child exportbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w40 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w40 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w41 = new global::Gtk.HBox ();
 			w41.Spacing = 2;
@@ -200,7 +190,7 @@ namespace LongoMatch.Gui.Component
 			w40.Add (w41);
 			this.exportbutton.Add (w40);
 			this.vbox2.Add (this.exportbutton);
-			global::Gtk.Box.BoxChild w48 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.exportbutton]));
+			global::Gtk.Box.BoxChild w48 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.exportbutton]));
 			w48.PackType = ((global::Gtk.PackType)(1));
 			w48.Position = 5;
 			w48.Expand = false;
@@ -209,13 +199,13 @@ namespace LongoMatch.Gui.Component
 			this.hseparator1 = new global::Gtk.HSeparator ();
 			this.hseparator1.Name = "hseparator1";
 			this.vbox2.Add (this.hseparator1);
-			global::Gtk.Box.BoxChild w49 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hseparator1]));
+			global::Gtk.Box.BoxChild w49 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hseparator1]));
 			w49.PackType = ((global::Gtk.PackType)(1));
 			w49.Position = 6;
 			w49.Expand = false;
 			w49.Fill = false;
 			this.hbox1.Add (this.vbox2);
-			global::Gtk.Box.BoxChild w50 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox2]));
+			global::Gtk.Box.BoxChild w50 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vbox2]));
 			w50.Position = 1;
 			w50.Expand = false;
 			w50.Fill = false;

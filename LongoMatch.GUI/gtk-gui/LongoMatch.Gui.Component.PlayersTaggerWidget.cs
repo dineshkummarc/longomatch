@@ -5,19 +5,13 @@ namespace LongoMatch.Gui.Component
 	public partial class PlayersTaggerWidget
 	{
 		private global::Gtk.Frame frame1;
-
 		private global::Gtk.Alignment GtkAlignment;
-
 		private global::Gtk.HBox hbox1;
-
 		private global::Gtk.Label label2;
-
 		private global::Gtk.Label playerslabel;
-
 		private global::Gtk.Button editbutton;
-
 		private global::Gtk.Label CategoryLabel;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -29,7 +23,7 @@ namespace LongoMatch.Gui.Component
 			this.frame1.Name = "frame1";
 			this.frame1.ShadowType = ((global::Gtk.ShadowType)(2));
 			// Container child frame1.Gtk.Container+ContainerChild
-			this.GtkAlignment = new global::Gtk.Alignment (0f, 0f, 1f, 1f);
+			this.GtkAlignment = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
 			this.GtkAlignment.Name = "GtkAlignment";
 			this.GtkAlignment.LeftPadding = ((uint)(12));
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
@@ -39,20 +33,20 @@ namespace LongoMatch.Gui.Component
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
-			this.label2.Xalign = 0f;
+			this.label2.Xalign = 0F;
 			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Players:");
 			this.hbox1.Add (this.label2);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.label2]));
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.label2]));
 			w1.Position = 0;
 			w1.Expand = false;
 			w1.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.playerslabel = new global::Gtk.Label ();
 			this.playerslabel.Name = "playerslabel";
-			this.playerslabel.Xalign = 0f;
+			this.playerslabel.Xalign = 0F;
 			this.playerslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("None");
 			this.hbox1.Add (this.playerslabel);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.playerslabel]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.playerslabel]));
 			w2.Position = 1;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.editbutton = new global::Gtk.Button ();
@@ -62,7 +56,7 @@ namespace LongoMatch.Gui.Component
 			this.editbutton.UseUnderline = true;
 			this.editbutton.Label = "gtk-edit";
 			this.hbox1.Add (this.editbutton);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.editbutton]));
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.editbutton]));
 			w3.Position = 2;
 			w3.Expand = false;
 			w3.Fill = false;

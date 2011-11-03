@@ -5,97 +5,52 @@ namespace LongoMatch.Gui.Component
 	public partial class ProjectDetailsWidget
 	{
 		private global::Gtk.VBox vbox2;
-
 		private global::Gtk.Table table1;
-
 		private global::Gtk.Entry competitionentry;
-
 		private global::Gtk.Label Competitionlabel;
-
 		private global::Gtk.HBox filehbox;
-
 		private global::Gtk.Entry fileEntry;
-
 		private global::Gtk.Button openbutton;
-
 		private global::Gtk.Label filelabel;
-
 		private global::Gtk.HBox hbox1;
-
 		private global::Gtk.ComboBox localcombobox;
-
 		private global::Gtk.Label localteamlabel;
-
 		private global::Gtk.Button localtemplatebutton;
-
 		private global::Gtk.HBox hbox2;
-
 		private global::Gtk.ComboBox visitorcombobox;
-
 		private global::Gtk.Label visitorteamlabel;
-
 		private global::Gtk.Button visitorbutton;
-
 		private global::Gtk.HBox hbox3;
-
 		private global::Gtk.ComboBox tagscombobox;
-
 		private global::Gtk.Button editbutton;
-
 		private global::Gtk.HBox hbox4;
-
 		private global::Gtk.SpinButton localSpinButton;
-
 		private global::Gtk.Label label1;
-
 		private global::Gtk.SpinButton visitorSpinButton;
-
 		private global::Gtk.HBox hbox5;
-
 		private global::Gtk.Entry dateEntry;
-
 		private global::Gtk.Button calendarbutton;
-
 		private global::Gtk.Label label10;
-
 		private global::Gtk.Label label11;
-
 		private global::Gtk.Label label5;
-
 		private global::Gtk.Label label8;
-
 		private global::Gtk.Label label9;
-
 		private global::Gtk.Entry seasonentry;
-
 		private global::Gtk.Label seasonlabel;
-
 		private global::Gtk.Expander expander1;
-
 		private global::Gtk.Table table2;
-
 		private global::Gtk.Label audiobitratelabel;
-
 		private global::Gtk.SpinButton audiobitratespinbutton;
-
 		private global::Gtk.Label device;
-
 		private global::Gtk.ComboBox devicecombobox;
-
 		private global::Gtk.ComboBox sizecombobox;
-
 		private global::Gtk.Label sizelabel;
-
 		private global::Gtk.Label videobitratelabel1;
-
 		private global::Gtk.SpinButton videobitratespinbutton;
-
 		private global::Gtk.ComboBox videoformatcombobox;
-
 		private global::Gtk.Label videoformatlabel;
-
 		private global::Gtk.Label GtkLabel5;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -118,7 +73,7 @@ namespace LongoMatch.Gui.Component
 			this.competitionentry.IsEditable = true;
 			this.competitionentry.InvisibleChar = '●';
 			this.table1.Add (this.competitionentry);
-			global::Gtk.Table.TableChild w1 = ((global::Gtk.Table.TableChild)(this.table1[this.competitionentry]));
+			global::Gtk.Table.TableChild w1 = ((global::Gtk.Table.TableChild)(this.table1 [this.competitionentry]));
 			w1.TopAttach = ((uint)(4));
 			w1.BottomAttach = ((uint)(5));
 			w1.LeftAttach = ((uint)(1));
@@ -130,7 +85,7 @@ namespace LongoMatch.Gui.Component
 			this.Competitionlabel.Name = "Competitionlabel";
 			this.Competitionlabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Competition:");
 			this.table1.Add (this.Competitionlabel);
-			global::Gtk.Table.TableChild w2 = ((global::Gtk.Table.TableChild)(this.table1[this.Competitionlabel]));
+			global::Gtk.Table.TableChild w2 = ((global::Gtk.Table.TableChild)(this.table1 [this.Competitionlabel]));
 			w2.TopAttach = ((uint)(4));
 			w2.BottomAttach = ((uint)(5));
 			w2.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -146,7 +101,7 @@ namespace LongoMatch.Gui.Component
 			this.fileEntry.IsEditable = false;
 			this.fileEntry.InvisibleChar = '●';
 			this.filehbox.Add (this.fileEntry);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.filehbox[this.fileEntry]));
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.filehbox [this.fileEntry]));
 			w3.Position = 0;
 			// Container child filehbox.Gtk.Box+BoxChild
 			this.openbutton = new global::Gtk.Button ();
@@ -156,11 +111,11 @@ namespace LongoMatch.Gui.Component
 			this.openbutton.UseUnderline = true;
 			this.openbutton.Label = "gtk-open";
 			this.filehbox.Add (this.openbutton);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.filehbox[this.openbutton]));
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.filehbox [this.openbutton]));
 			w4.Position = 1;
 			w4.Expand = false;
 			this.table1.Add (this.filehbox);
-			global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.table1[this.filehbox]));
+			global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.table1 [this.filehbox]));
 			w5.TopAttach = ((uint)(7));
 			w5.BottomAttach = ((uint)(8));
 			w5.LeftAttach = ((uint)(1));
@@ -172,7 +127,7 @@ namespace LongoMatch.Gui.Component
 			this.filelabel.Name = "filelabel";
 			this.filelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("File:");
 			this.table1.Add (this.filelabel);
-			global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.table1[this.filelabel]));
+			global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.table1 [this.filelabel]));
 			w6.TopAttach = ((uint)(7));
 			w6.BottomAttach = ((uint)(8));
 			w6.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -185,13 +140,13 @@ namespace LongoMatch.Gui.Component
 			this.localcombobox = global::Gtk.ComboBox.NewText ();
 			this.localcombobox.Name = "localcombobox";
 			this.hbox1.Add (this.localcombobox);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.localcombobox]));
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.localcombobox]));
 			w7.Position = 0;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.localteamlabel = new global::Gtk.Label ();
 			this.localteamlabel.Name = "localteamlabel";
 			this.hbox1.Add (this.localteamlabel);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.localteamlabel]));
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.localteamlabel]));
 			w8.Position = 1;
 			w8.Expand = false;
 			w8.Fill = false;
@@ -203,13 +158,13 @@ namespace LongoMatch.Gui.Component
 			this.localtemplatebutton.UseUnderline = true;
 			this.localtemplatebutton.Label = "gtk-edit";
 			this.hbox1.Add (this.localtemplatebutton);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.localtemplatebutton]));
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.localtemplatebutton]));
 			w9.PackType = ((global::Gtk.PackType)(1));
 			w9.Position = 2;
 			w9.Expand = false;
 			w9.Fill = false;
 			this.table1.Add (this.hbox1);
-			global::Gtk.Table.TableChild w10 = ((global::Gtk.Table.TableChild)(this.table1[this.hbox1]));
+			global::Gtk.Table.TableChild w10 = ((global::Gtk.Table.TableChild)(this.table1 [this.hbox1]));
 			w10.LeftAttach = ((uint)(1));
 			w10.RightAttach = ((uint)(2));
 			w10.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -222,13 +177,13 @@ namespace LongoMatch.Gui.Component
 			this.visitorcombobox = global::Gtk.ComboBox.NewText ();
 			this.visitorcombobox.Name = "visitorcombobox";
 			this.hbox2.Add (this.visitorcombobox);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.visitorcombobox]));
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.visitorcombobox]));
 			w11.Position = 0;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.visitorteamlabel = new global::Gtk.Label ();
 			this.visitorteamlabel.Name = "visitorteamlabel";
 			this.hbox2.Add (this.visitorteamlabel);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.visitorteamlabel]));
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.visitorteamlabel]));
 			w12.Position = 1;
 			w12.Expand = false;
 			w12.Fill = false;
@@ -240,13 +195,13 @@ namespace LongoMatch.Gui.Component
 			this.visitorbutton.UseUnderline = true;
 			this.visitorbutton.Label = "gtk-edit";
 			this.hbox2.Add (this.visitorbutton);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.visitorbutton]));
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.visitorbutton]));
 			w13.PackType = ((global::Gtk.PackType)(1));
 			w13.Position = 2;
 			w13.Expand = false;
 			w13.Fill = false;
 			this.table1.Add (this.hbox2);
-			global::Gtk.Table.TableChild w14 = ((global::Gtk.Table.TableChild)(this.table1[this.hbox2]));
+			global::Gtk.Table.TableChild w14 = ((global::Gtk.Table.TableChild)(this.table1 [this.hbox2]));
 			w14.TopAttach = ((uint)(1));
 			w14.BottomAttach = ((uint)(2));
 			w14.LeftAttach = ((uint)(1));
@@ -261,7 +216,7 @@ namespace LongoMatch.Gui.Component
 			this.tagscombobox = global::Gtk.ComboBox.NewText ();
 			this.tagscombobox.Name = "tagscombobox";
 			this.hbox3.Add (this.tagscombobox);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.tagscombobox]));
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.tagscombobox]));
 			w15.Position = 0;
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.editbutton = new global::Gtk.Button ();
@@ -271,13 +226,13 @@ namespace LongoMatch.Gui.Component
 			this.editbutton.UseUnderline = true;
 			this.editbutton.Label = "gtk-edit";
 			this.hbox3.Add (this.editbutton);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.editbutton]));
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.editbutton]));
 			w16.PackType = ((global::Gtk.PackType)(1));
 			w16.Position = 1;
 			w16.Expand = false;
 			w16.Fill = false;
 			this.table1.Add (this.hbox3);
-			global::Gtk.Table.TableChild w17 = ((global::Gtk.Table.TableChild)(this.table1[this.hbox3]));
+			global::Gtk.Table.TableChild w17 = ((global::Gtk.Table.TableChild)(this.table1 [this.hbox3]));
 			w17.TopAttach = ((uint)(5));
 			w17.BottomAttach = ((uint)(6));
 			w17.LeftAttach = ((uint)(1));
@@ -296,7 +251,7 @@ namespace LongoMatch.Gui.Component
 			this.localSpinButton.ClimbRate = 1;
 			this.localSpinButton.Numeric = true;
 			this.hbox4.Add (this.localSpinButton);
-			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.hbox4[this.localSpinButton]));
+			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.localSpinButton]));
 			w18.Position = 0;
 			w18.Fill = false;
 			// Container child hbox4.Gtk.Box+BoxChild
@@ -304,7 +259,7 @@ namespace LongoMatch.Gui.Component
 			this.label1.Name = "label1";
 			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("-");
 			this.hbox4.Add (this.label1);
-			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.hbox4[this.label1]));
+			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.label1]));
 			w19.Position = 1;
 			w19.Expand = false;
 			w19.Fill = false;
@@ -316,11 +271,11 @@ namespace LongoMatch.Gui.Component
 			this.visitorSpinButton.ClimbRate = 1;
 			this.visitorSpinButton.Numeric = true;
 			this.hbox4.Add (this.visitorSpinButton);
-			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.hbox4[this.visitorSpinButton]));
+			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.visitorSpinButton]));
 			w20.Position = 2;
 			w20.Fill = false;
 			this.table1.Add (this.hbox4);
-			global::Gtk.Table.TableChild w21 = ((global::Gtk.Table.TableChild)(this.table1[this.hbox4]));
+			global::Gtk.Table.TableChild w21 = ((global::Gtk.Table.TableChild)(this.table1 [this.hbox4]));
 			w21.TopAttach = ((uint)(2));
 			w21.BottomAttach = ((uint)(3));
 			w21.LeftAttach = ((uint)(1));
@@ -337,7 +292,7 @@ namespace LongoMatch.Gui.Component
 			this.dateEntry.IsEditable = false;
 			this.dateEntry.InvisibleChar = '●';
 			this.hbox5.Add (this.dateEntry);
-			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.hbox5[this.dateEntry]));
+			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.hbox5 [this.dateEntry]));
 			w22.Position = 0;
 			// Container child hbox5.Gtk.Box+BoxChild
 			this.calendarbutton = new global::Gtk.Button ();
@@ -345,7 +300,7 @@ namespace LongoMatch.Gui.Component
 			this.calendarbutton.Name = "calendarbutton";
 			this.calendarbutton.UseUnderline = true;
 			// Container child calendarbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w23 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w23 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w24 = new global::Gtk.HBox ();
 			w24.Spacing = 2;
@@ -361,12 +316,12 @@ namespace LongoMatch.Gui.Component
 			w23.Add (w24);
 			this.calendarbutton.Add (w23);
 			this.hbox5.Add (this.calendarbutton);
-			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.hbox5[this.calendarbutton]));
+			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.hbox5 [this.calendarbutton]));
 			w31.Position = 1;
 			w31.Expand = false;
 			w31.Fill = false;
 			this.table1.Add (this.hbox5);
-			global::Gtk.Table.TableChild w32 = ((global::Gtk.Table.TableChild)(this.table1[this.hbox5]));
+			global::Gtk.Table.TableChild w32 = ((global::Gtk.Table.TableChild)(this.table1 [this.hbox5]));
 			w32.TopAttach = ((uint)(6));
 			w32.BottomAttach = ((uint)(7));
 			w32.LeftAttach = ((uint)(1));
@@ -377,7 +332,7 @@ namespace LongoMatch.Gui.Component
 			this.label10.Name = "label10";
 			this.label10.LabelProp = global::Mono.Unix.Catalog.GetString ("Visitor Team:");
 			this.table1.Add (this.label10);
-			global::Gtk.Table.TableChild w33 = ((global::Gtk.Table.TableChild)(this.table1[this.label10]));
+			global::Gtk.Table.TableChild w33 = ((global::Gtk.Table.TableChild)(this.table1 [this.label10]));
 			w33.TopAttach = ((uint)(1));
 			w33.BottomAttach = ((uint)(2));
 			w33.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -387,7 +342,7 @@ namespace LongoMatch.Gui.Component
 			this.label11.Name = "label11";
 			this.label11.LabelProp = global::Mono.Unix.Catalog.GetString ("Score:");
 			this.table1.Add (this.label11);
-			global::Gtk.Table.TableChild w34 = ((global::Gtk.Table.TableChild)(this.table1[this.label11]));
+			global::Gtk.Table.TableChild w34 = ((global::Gtk.Table.TableChild)(this.table1 [this.label11]));
 			w34.TopAttach = ((uint)(2));
 			w34.BottomAttach = ((uint)(3));
 			w34.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -397,7 +352,7 @@ namespace LongoMatch.Gui.Component
 			this.label5.Name = "label5";
 			this.label5.LabelProp = global::Mono.Unix.Catalog.GetString ("Date:");
 			this.table1.Add (this.label5);
-			global::Gtk.Table.TableChild w35 = ((global::Gtk.Table.TableChild)(this.table1[this.label5]));
+			global::Gtk.Table.TableChild w35 = ((global::Gtk.Table.TableChild)(this.table1 [this.label5]));
 			w35.TopAttach = ((uint)(6));
 			w35.BottomAttach = ((uint)(7));
 			w35.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -407,7 +362,7 @@ namespace LongoMatch.Gui.Component
 			this.label8.Name = "label8";
 			this.label8.LabelProp = global::Mono.Unix.Catalog.GetString ("Local Team:");
 			this.table1.Add (this.label8);
-			global::Gtk.Table.TableChild w36 = ((global::Gtk.Table.TableChild)(this.table1[this.label8]));
+			global::Gtk.Table.TableChild w36 = ((global::Gtk.Table.TableChild)(this.table1 [this.label8]));
 			w36.XOptions = ((global::Gtk.AttachOptions)(4));
 			w36.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
@@ -415,7 +370,7 @@ namespace LongoMatch.Gui.Component
 			this.label9.Name = "label9";
 			this.label9.LabelProp = global::Mono.Unix.Catalog.GetString ("Categories Template:");
 			this.table1.Add (this.label9);
-			global::Gtk.Table.TableChild w37 = ((global::Gtk.Table.TableChild)(this.table1[this.label9]));
+			global::Gtk.Table.TableChild w37 = ((global::Gtk.Table.TableChild)(this.table1 [this.label9]));
 			w37.TopAttach = ((uint)(5));
 			w37.BottomAttach = ((uint)(6));
 			w37.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -427,7 +382,7 @@ namespace LongoMatch.Gui.Component
 			this.seasonentry.IsEditable = true;
 			this.seasonentry.InvisibleChar = '●';
 			this.table1.Add (this.seasonentry);
-			global::Gtk.Table.TableChild w38 = ((global::Gtk.Table.TableChild)(this.table1[this.seasonentry]));
+			global::Gtk.Table.TableChild w38 = ((global::Gtk.Table.TableChild)(this.table1 [this.seasonentry]));
 			w38.TopAttach = ((uint)(3));
 			w38.BottomAttach = ((uint)(4));
 			w38.LeftAttach = ((uint)(1));
@@ -439,13 +394,13 @@ namespace LongoMatch.Gui.Component
 			this.seasonlabel.Name = "seasonlabel";
 			this.seasonlabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Season:");
 			this.table1.Add (this.seasonlabel);
-			global::Gtk.Table.TableChild w39 = ((global::Gtk.Table.TableChild)(this.table1[this.seasonlabel]));
+			global::Gtk.Table.TableChild w39 = ((global::Gtk.Table.TableChild)(this.table1 [this.seasonlabel]));
 			w39.TopAttach = ((uint)(3));
 			w39.BottomAttach = ((uint)(4));
 			w39.XOptions = ((global::Gtk.AttachOptions)(4));
 			w39.YOptions = ((global::Gtk.AttachOptions)(4));
 			this.vbox2.Add (this.table1);
-			global::Gtk.Box.BoxChild w40 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.table1]));
+			global::Gtk.Box.BoxChild w40 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.table1]));
 			w40.Position = 0;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.expander1 = new global::Gtk.Expander (null);
@@ -461,7 +416,7 @@ namespace LongoMatch.Gui.Component
 			this.audiobitratelabel.Name = "audiobitratelabel";
 			this.audiobitratelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Audio Bitrate (kbps):");
 			this.table2.Add (this.audiobitratelabel);
-			global::Gtk.Table.TableChild w41 = ((global::Gtk.Table.TableChild)(this.table2[this.audiobitratelabel]));
+			global::Gtk.Table.TableChild w41 = ((global::Gtk.Table.TableChild)(this.table2 [this.audiobitratelabel]));
 			w41.TopAttach = ((uint)(4));
 			w41.BottomAttach = ((uint)(5));
 			w41.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -475,7 +430,7 @@ namespace LongoMatch.Gui.Component
 			this.audiobitratespinbutton.Numeric = true;
 			this.audiobitratespinbutton.Value = 64;
 			this.table2.Add (this.audiobitratespinbutton);
-			global::Gtk.Table.TableChild w42 = ((global::Gtk.Table.TableChild)(this.table2[this.audiobitratespinbutton]));
+			global::Gtk.Table.TableChild w42 = ((global::Gtk.Table.TableChild)(this.table2 [this.audiobitratespinbutton]));
 			w42.TopAttach = ((uint)(4));
 			w42.BottomAttach = ((uint)(5));
 			w42.LeftAttach = ((uint)(1));
@@ -487,14 +442,14 @@ namespace LongoMatch.Gui.Component
 			this.device.Name = "device";
 			this.device.LabelProp = global::Mono.Unix.Catalog.GetString ("Device:");
 			this.table2.Add (this.device);
-			global::Gtk.Table.TableChild w43 = ((global::Gtk.Table.TableChild)(this.table2[this.device]));
+			global::Gtk.Table.TableChild w43 = ((global::Gtk.Table.TableChild)(this.table2 [this.device]));
 			w43.XOptions = ((global::Gtk.AttachOptions)(4));
 			w43.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table2.Gtk.Table+TableChild
 			this.devicecombobox = global::Gtk.ComboBox.NewText ();
 			this.devicecombobox.Name = "devicecombobox";
 			this.table2.Add (this.devicecombobox);
-			global::Gtk.Table.TableChild w44 = ((global::Gtk.Table.TableChild)(this.table2[this.devicecombobox]));
+			global::Gtk.Table.TableChild w44 = ((global::Gtk.Table.TableChild)(this.table2 [this.devicecombobox]));
 			w44.LeftAttach = ((uint)(1));
 			w44.RightAttach = ((uint)(2));
 			w44.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -503,7 +458,7 @@ namespace LongoMatch.Gui.Component
 			this.sizecombobox = global::Gtk.ComboBox.NewText ();
 			this.sizecombobox.Name = "sizecombobox";
 			this.table2.Add (this.sizecombobox);
-			global::Gtk.Table.TableChild w45 = ((global::Gtk.Table.TableChild)(this.table2[this.sizecombobox]));
+			global::Gtk.Table.TableChild w45 = ((global::Gtk.Table.TableChild)(this.table2 [this.sizecombobox]));
 			w45.TopAttach = ((uint)(2));
 			w45.BottomAttach = ((uint)(3));
 			w45.LeftAttach = ((uint)(1));
@@ -515,7 +470,7 @@ namespace LongoMatch.Gui.Component
 			this.sizelabel.Name = "sizelabel";
 			this.sizelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Video Size:");
 			this.table2.Add (this.sizelabel);
-			global::Gtk.Table.TableChild w46 = ((global::Gtk.Table.TableChild)(this.table2[this.sizelabel]));
+			global::Gtk.Table.TableChild w46 = ((global::Gtk.Table.TableChild)(this.table2 [this.sizelabel]));
 			w46.TopAttach = ((uint)(2));
 			w46.BottomAttach = ((uint)(3));
 			w46.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -525,7 +480,7 @@ namespace LongoMatch.Gui.Component
 			this.videobitratelabel1.Name = "videobitratelabel1";
 			this.videobitratelabel1.LabelProp = global::Mono.Unix.Catalog.GetString ("Video Bitrate (kbps):");
 			this.table2.Add (this.videobitratelabel1);
-			global::Gtk.Table.TableChild w47 = ((global::Gtk.Table.TableChild)(this.table2[this.videobitratelabel1]));
+			global::Gtk.Table.TableChild w47 = ((global::Gtk.Table.TableChild)(this.table2 [this.videobitratelabel1]));
 			w47.TopAttach = ((uint)(3));
 			w47.BottomAttach = ((uint)(4));
 			w47.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -539,7 +494,7 @@ namespace LongoMatch.Gui.Component
 			this.videobitratespinbutton.Numeric = true;
 			this.videobitratespinbutton.Value = 4000;
 			this.table2.Add (this.videobitratespinbutton);
-			global::Gtk.Table.TableChild w48 = ((global::Gtk.Table.TableChild)(this.table2[this.videobitratespinbutton]));
+			global::Gtk.Table.TableChild w48 = ((global::Gtk.Table.TableChild)(this.table2 [this.videobitratespinbutton]));
 			w48.TopAttach = ((uint)(3));
 			w48.BottomAttach = ((uint)(4));
 			w48.LeftAttach = ((uint)(1));
@@ -550,7 +505,7 @@ namespace LongoMatch.Gui.Component
 			this.videoformatcombobox = global::Gtk.ComboBox.NewText ();
 			this.videoformatcombobox.Name = "videoformatcombobox";
 			this.table2.Add (this.videoformatcombobox);
-			global::Gtk.Table.TableChild w49 = ((global::Gtk.Table.TableChild)(this.table2[this.videoformatcombobox]));
+			global::Gtk.Table.TableChild w49 = ((global::Gtk.Table.TableChild)(this.table2 [this.videoformatcombobox]));
 			w49.TopAttach = ((uint)(1));
 			w49.BottomAttach = ((uint)(2));
 			w49.LeftAttach = ((uint)(1));
@@ -562,7 +517,7 @@ namespace LongoMatch.Gui.Component
 			this.videoformatlabel.Name = "videoformatlabel";
 			this.videoformatlabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Video Format:");
 			this.table2.Add (this.videoformatlabel);
-			global::Gtk.Table.TableChild w50 = ((global::Gtk.Table.TableChild)(this.table2[this.videoformatlabel]));
+			global::Gtk.Table.TableChild w50 = ((global::Gtk.Table.TableChild)(this.table2 [this.videoformatlabel]));
 			w50.TopAttach = ((uint)(1));
 			w50.BottomAttach = ((uint)(2));
 			w50.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -574,7 +529,7 @@ namespace LongoMatch.Gui.Component
 			this.GtkLabel5.UseUnderline = true;
 			this.expander1.LabelWidget = this.GtkLabel5;
 			this.vbox2.Add (this.expander1);
-			global::Gtk.Box.BoxChild w52 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.expander1]));
+			global::Gtk.Box.BoxChild w52 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.expander1]));
 			w52.Position = 1;
 			w52.Expand = false;
 			w52.Fill = false;

@@ -5,9 +5,8 @@ namespace LongoMatch.Gui.Component
 	public partial class TaggerWidget
 	{
 		private global::Gtk.VBox vbox2;
-
 		private global::Gtk.Table table1;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -24,7 +23,7 @@ namespace LongoMatch.Gui.Component
 			this.table1.RowSpacing = ((uint)(6));
 			this.table1.ColumnSpacing = ((uint)(6));
 			this.vbox2.Add (this.table1);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.table1]));
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.table1]));
 			w1.Position = 0;
 			w1.Expand = false;
 			w1.Fill = false;

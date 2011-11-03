@@ -5,29 +5,18 @@ namespace LongoMatch.Gui.Dialog
 	public partial class ProjectSelectionDialog
 	{
 		private global::Gtk.VBox vbox2;
-
 		private global::Gtk.HBox hbox1;
-
 		private global::Gtk.RadioButton fromfileradiobutton;
-
 		private global::Gtk.Image image61;
-
 		private global::Gtk.HBox hbox2;
-
 		private global::Gtk.RadioButton liveradiobutton;
-
 		private global::Gtk.Image image63;
-
 		private global::Gtk.HBox hbox3;
-
 		private global::Gtk.RadioButton fakeliveradiobutton;
-
 		private global::Gtk.Image image62;
-
 		private global::Gtk.Button buttonCancel;
-
 		private global::Gtk.Button buttonOk;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -62,19 +51,19 @@ namespace LongoMatch.Gui.Dialog
 			this.fromfileradiobutton.FocusOnClick = false;
 			this.fromfileradiobutton.Group = new global::GLib.SList (global::System.IntPtr.Zero);
 			this.hbox1.Add (this.fromfileradiobutton);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.fromfileradiobutton]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.fromfileradiobutton]));
 			w2.Position = 0;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.image61 = new global::Gtk.Image ();
 			this.image61.Name = "image61";
 			this.image61.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("video.png");
 			this.hbox1.Add (this.image61);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.image61]));
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.image61]));
 			w3.Position = 1;
 			w3.Expand = false;
 			w3.Fill = false;
 			this.vbox2.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox1]));
 			w4.Position = 0;
 			w4.Expand = false;
 			w4.Fill = false;
@@ -90,19 +79,19 @@ namespace LongoMatch.Gui.Dialog
 			this.liveradiobutton.UseUnderline = true;
 			this.liveradiobutton.Group = this.fromfileradiobutton.Group;
 			this.hbox2.Add (this.liveradiobutton);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.liveradiobutton]));
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.liveradiobutton]));
 			w5.Position = 0;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.image63 = new global::Gtk.Image ();
 			this.image63.Name = "image63";
 			this.image63.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("camera-video.png");
 			this.hbox2.Add (this.image63);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.image63]));
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.image63]));
 			w6.Position = 1;
 			w6.Expand = false;
 			w6.Fill = false;
 			this.vbox2.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox2]));
 			w7.Position = 1;
 			w7.Expand = false;
 			w7.Fill = false;
@@ -118,24 +107,24 @@ namespace LongoMatch.Gui.Dialog
 			this.fakeliveradiobutton.UseUnderline = true;
 			this.fakeliveradiobutton.Group = this.fromfileradiobutton.Group;
 			this.hbox3.Add (this.fakeliveradiobutton);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.fakeliveradiobutton]));
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.fakeliveradiobutton]));
 			w8.Position = 0;
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.image62 = new global::Gtk.Image ();
 			this.image62.Name = "image62";
 			this.image62.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("camera-video.png");
 			this.hbox3.Add (this.image62);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.image62]));
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.image62]));
 			w9.Position = 1;
 			w9.Expand = false;
 			w9.Fill = false;
 			this.vbox2.Add (this.hbox3);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox3]));
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox3]));
 			w10.Position = 2;
 			w10.Expand = false;
 			w10.Fill = false;
 			w1.Add (this.vbox2);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(w1[this.vbox2]));
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(w1 [this.vbox2]));
 			w11.Position = 0;
 			w11.Expand = false;
 			w11.Fill = false;
@@ -154,7 +143,7 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonCancel.UseUnderline = true;
 			this.buttonCancel.Label = "gtk-cancel";
 			this.AddActionWidget (this.buttonCancel, -6);
-			global::Gtk.ButtonBox.ButtonBoxChild w13 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w12[this.buttonCancel]));
+			global::Gtk.ButtonBox.ButtonBoxChild w13 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w12 [this.buttonCancel]));
 			w13.Expand = false;
 			w13.Fill = false;
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
@@ -166,7 +155,7 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
 			this.AddActionWidget (this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w14 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w12[this.buttonOk]));
+			global::Gtk.ButtonBox.ButtonBoxChild w14 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w12 [this.buttonOk]));
 			w14.Position = 1;
 			w14.Expand = false;
 			w14.Fill = false;

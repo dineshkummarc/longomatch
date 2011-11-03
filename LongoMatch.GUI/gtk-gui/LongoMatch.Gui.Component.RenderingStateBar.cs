@@ -5,13 +5,10 @@ namespace LongoMatch.Gui.Component
 	public partial class RenderingStateBar
 	{
 		private global::Gtk.HBox hbox1;
-
 		private global::Gtk.Button statebutton;
-
 		private global::Gtk.ProgressBar progressbar;
-
 		private global::Gtk.Button cancellbutton;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -29,13 +26,13 @@ namespace LongoMatch.Gui.Component
 			this.statebutton.UseUnderline = true;
 			this.statebutton.Label = "";
 			this.hbox1.Add (this.statebutton);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.statebutton]));
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.statebutton]));
 			w1.Position = 0;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.progressbar = new global::Gtk.ProgressBar ();
 			this.progressbar.Name = "progressbar";
 			this.hbox1.Add (this.progressbar);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.progressbar]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.progressbar]));
 			w2.Position = 1;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.cancellbutton = new global::Gtk.Button ();
@@ -43,7 +40,7 @@ namespace LongoMatch.Gui.Component
 			this.cancellbutton.Name = "cancellbutton";
 			this.cancellbutton.UseUnderline = true;
 			// Container child cancellbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w3 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w3 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w4 = new global::Gtk.HBox ();
 			w4.Spacing = 2;
@@ -57,7 +54,7 @@ namespace LongoMatch.Gui.Component
 			w3.Add (w4);
 			this.cancellbutton.Add (w3);
 			this.hbox1.Add (this.cancellbutton);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.cancellbutton]));
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.cancellbutton]));
 			w11.Position = 2;
 			w11.Expand = false;
 			w11.Fill = false;

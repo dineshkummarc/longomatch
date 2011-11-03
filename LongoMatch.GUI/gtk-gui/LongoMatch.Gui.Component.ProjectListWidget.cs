@@ -5,17 +5,12 @@ namespace LongoMatch.Gui.Component
 	public partial class ProjectListWidget
 	{
 		private global::Gtk.VBox vbox2;
-
 		private global::Gtk.HBox hbox1;
-
 		private global::Gtk.Label filterlabel;
-
 		private global::Gtk.Entry filterEntry;
-
 		private global::Gtk.ScrolledWindow scrolledwindow2;
-
 		private global::Gtk.TreeView treeview;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -35,7 +30,7 @@ namespace LongoMatch.Gui.Component
 			this.filterlabel.Name = "filterlabel";
 			this.filterlabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Projects Search:");
 			this.hbox1.Add (this.filterlabel);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.filterlabel]));
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.filterlabel]));
 			w1.Position = 0;
 			w1.Expand = false;
 			w1.Fill = false;
@@ -46,10 +41,10 @@ namespace LongoMatch.Gui.Component
 			this.filterEntry.IsEditable = true;
 			this.filterEntry.InvisibleChar = '●';
 			this.hbox1.Add (this.filterEntry);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.filterEntry]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.filterEntry]));
 			w2.Position = 1;
 			this.vbox2.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox1]));
 			w3.Position = 0;
 			w3.Expand = false;
 			w3.Fill = false;
@@ -63,7 +58,7 @@ namespace LongoMatch.Gui.Component
 			this.treeview.Name = "treeview";
 			this.scrolledwindow2.Add (this.treeview);
 			this.vbox2.Add (this.scrolledwindow2);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.scrolledwindow2]));
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.scrolledwindow2]));
 			w5.Position = 1;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {

@@ -5,107 +5,57 @@ namespace LongoMatch.Gui
 	public partial class MainWindow
 	{
 		private global::Gtk.UIManager UIManager;
-
 		private global::Gtk.Action FileAction;
-
 		private global::Gtk.Action NewPojectAction;
-
 		private global::Gtk.Action openAction;
-
 		private global::Gtk.Action QuitAction;
-
 		private global::Gtk.Action CloseProjectAction;
-
 		private global::Gtk.Action ToolsAction;
-
 		private global::Gtk.Action ProjectsManagerAction;
-
 		private global::Gtk.Action CategoriesTemplatesManagerAction;
-
 		private global::Gtk.Action ViewAction;
-
 		private global::Gtk.ToggleAction FullScreenAction;
-
 		private global::Gtk.ToggleAction PlaylistAction;
-
 		private global::Gtk.RadioAction TaggingViewAction;
-
 		private global::Gtk.RadioAction TimelineViewAction;
-
 		private global::Gtk.Action SaveProjectAction;
-
 		private global::Gtk.Action HelpAction;
-
 		private global::Gtk.Action AboutAction;
-
 		private global::Gtk.Action ExportProjectToCSVFileAction;
-
 		private global::Gtk.Action TeamsTemplatesManagerAction;
-
 		private global::Gtk.ToggleAction HideAllWidgetsAction;
-
 		private global::Gtk.Action HelpAction1;
-
 		private global::Gtk.ToggleAction DrawingToolAction;
-
 		private global::Gtk.Action ImportProjectAction;
-
 		private global::Gtk.RadioAction ManualTaggingViewAction;
-
 		private global::Gtk.VBox vbox1;
-
 		private global::Gtk.VBox menubox;
-
 		private global::Gtk.MenuBar menubar1;
-
 		private global::Gtk.HPaned hpaned;
-
 		private global::Gtk.VBox leftbox;
-
 		private global::Gtk.Notebook notebook1;
-
 		private global::LongoMatch.Gui.Component.PlaysListTreeWidget playsList;
-
 		private global::Gtk.Label playslabel;
-
 		private global::LongoMatch.Gui.Component.PlayersListTreeWidget localPlayersList;
-
 		private global::Gtk.Label localteamlabel;
-
 		private global::LongoMatch.Gui.Component.PlayersListTreeWidget visitorPlayersList;
-
 		private global::Gtk.Label visitorteamlabel;
-
 		private global::LongoMatch.Gui.Component.TagsTreeWidget tagsList;
-
 		private global::Gtk.Label tagslabel;
-
 		private global::Gtk.HPaned hpaned1;
-
 		private global::Gtk.VBox vbox5;
-
 		private global::Gtk.HBox videowidgetsbox;
-
 		private global::LongoMatch.Gui.Component.DrawingToolBox drawingtoolbox1;
-
 		private global::LongoMatch.Gui.PlayerBin player;
-
 		private global::LongoMatch.Gui.CapturerBin capturer;
-
 		private global::LongoMatch.Gui.Component.TimeLineWidget timeline;
-
 		private global::LongoMatch.Gui.Component.ButtonsWidget buttonswidget;
-
 		private global::Gtk.VBox rightvbox;
-
 		private global::LongoMatch.Gui.Component.NotesWidget notes;
-
 		private global::LongoMatch.Gui.Component.PlayListWidget playlist;
-
 		private global::Gtk.Statusbar statusbar1;
-
 		private global::LongoMatch.Gui.Component.RenderingStateBar renderingstatebar1;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -212,12 +162,12 @@ namespace LongoMatch.Gui
 			this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
 			this.menubar1.Name = "menubar1";
 			this.menubox.Add (this.menubar1);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.menubox[this.menubar1]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.menubox [this.menubar1]));
 			w2.Position = 0;
 			w2.Expand = false;
 			w2.Fill = false;
 			this.vbox1.Add (this.menubox);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.menubox]));
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.menubox]));
 			w3.Position = 0;
 			w3.Expand = false;
 			w3.Fill = false;
@@ -252,7 +202,7 @@ namespace LongoMatch.Gui
 			this.localPlayersList.Events = ((global::Gdk.EventMask)(256));
 			this.localPlayersList.Name = "localPlayersList";
 			this.notebook1.Add (this.localPlayersList);
-			global::Gtk.Notebook.NotebookChild w5 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1[this.localPlayersList]));
+			global::Gtk.Notebook.NotebookChild w5 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.localPlayersList]));
 			w5.Position = 1;
 			// Notebook tab
 			this.localteamlabel = new global::Gtk.Label ();
@@ -265,7 +215,7 @@ namespace LongoMatch.Gui
 			this.visitorPlayersList.Events = ((global::Gdk.EventMask)(256));
 			this.visitorPlayersList.Name = "visitorPlayersList";
 			this.notebook1.Add (this.visitorPlayersList);
-			global::Gtk.Notebook.NotebookChild w6 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1[this.visitorPlayersList]));
+			global::Gtk.Notebook.NotebookChild w6 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.visitorPlayersList]));
 			w6.Position = 2;
 			// Notebook tab
 			this.visitorteamlabel = new global::Gtk.Label ();
@@ -279,7 +229,7 @@ namespace LongoMatch.Gui
 			this.tagsList.Events = ((global::Gdk.EventMask)(256));
 			this.tagsList.Name = "tagsList";
 			this.notebook1.Add (this.tagsList);
-			global::Gtk.Notebook.NotebookChild w7 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1[this.tagsList]));
+			global::Gtk.Notebook.NotebookChild w7 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.tagsList]));
 			w7.Position = 3;
 			// Notebook tab
 			this.tagslabel = new global::Gtk.Label ();
@@ -288,10 +238,10 @@ namespace LongoMatch.Gui
 			this.notebook1.SetTabLabel (this.tagsList, this.tagslabel);
 			this.tagslabel.ShowAll ();
 			this.leftbox.Add (this.notebook1);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.leftbox[this.notebook1]));
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.leftbox [this.notebook1]));
 			w8.Position = 0;
 			this.hpaned.Add (this.leftbox);
-			global::Gtk.Paned.PanedChild w9 = ((global::Gtk.Paned.PanedChild)(this.hpaned[this.leftbox]));
+			global::Gtk.Paned.PanedChild w9 = ((global::Gtk.Paned.PanedChild)(this.hpaned [this.leftbox]));
 			w9.Resize = false;
 			// Container child hpaned.Gtk.Paned+PanedChild
 			this.hpaned1 = new global::Gtk.HPaned ();
@@ -311,7 +261,7 @@ namespace LongoMatch.Gui
 			this.drawingtoolbox1.Events = ((global::Gdk.EventMask)(256));
 			this.drawingtoolbox1.Name = "drawingtoolbox1";
 			this.videowidgetsbox.Add (this.drawingtoolbox1);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.videowidgetsbox[this.drawingtoolbox1]));
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.videowidgetsbox [this.drawingtoolbox1]));
 			w10.Position = 0;
 			w10.Expand = false;
 			w10.Fill = false;
@@ -319,20 +269,20 @@ namespace LongoMatch.Gui
 			this.player = new global::LongoMatch.Gui.PlayerBin ();
 			this.player.Events = ((global::Gdk.EventMask)(256));
 			this.player.Name = "player";
-			this.player.Rate = 1f;
+			this.player.Rate = 1F;
 			this.player.ExpandLogo = true;
 			this.videowidgetsbox.Add (this.player);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.videowidgetsbox[this.player]));
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.videowidgetsbox [this.player]));
 			w11.Position = 1;
 			// Container child videowidgetsbox.Gtk.Box+BoxChild
 			this.capturer = new global::LongoMatch.Gui.CapturerBin ();
 			this.capturer.Events = ((global::Gdk.EventMask)(256));
 			this.capturer.Name = "capturer";
 			this.videowidgetsbox.Add (this.capturer);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.videowidgetsbox[this.capturer]));
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.videowidgetsbox [this.capturer]));
 			w12.Position = 2;
 			this.vbox5.Add (this.videowidgetsbox);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.videowidgetsbox]));
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.videowidgetsbox]));
 			w13.Position = 0;
 			// Container child vbox5.Gtk.Box+BoxChild
 			this.timeline = new global::LongoMatch.Gui.Component.TimeLineWidget ();
@@ -341,7 +291,7 @@ namespace LongoMatch.Gui
 			this.timeline.Name = "timeline";
 			this.timeline.CurrentFrame = ((uint)(0));
 			this.vbox5.Add (this.timeline);
-			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.timeline]));
+			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.timeline]));
 			w14.Position = 1;
 			w14.Expand = false;
 			// Container child vbox5.Gtk.Box+BoxChild
@@ -349,11 +299,11 @@ namespace LongoMatch.Gui
 			this.buttonswidget.Events = ((global::Gdk.EventMask)(256));
 			this.buttonswidget.Name = "buttonswidget";
 			this.vbox5.Add (this.buttonswidget);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.buttonswidget]));
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.buttonswidget]));
 			w15.Position = 2;
 			w15.Expand = false;
 			this.hpaned1.Add (this.vbox5);
-			global::Gtk.Paned.PanedChild w16 = ((global::Gtk.Paned.PanedChild)(this.hpaned1[this.vbox5]));
+			global::Gtk.Paned.PanedChild w16 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.vbox5]));
 			w16.Resize = false;
 			w16.Shrink = false;
 			// Container child hpaned1.Gtk.Paned+PanedChild
@@ -366,7 +316,7 @@ namespace LongoMatch.Gui
 			this.notes.Events = ((global::Gdk.EventMask)(256));
 			this.notes.Name = "notes";
 			this.rightvbox.Add (this.notes);
-			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.rightvbox[this.notes]));
+			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.rightvbox [this.notes]));
 			w17.Position = 0;
 			// Container child rightvbox.Gtk.Box+BoxChild
 			this.playlist = new global::LongoMatch.Gui.Component.PlayListWidget ();
@@ -374,18 +324,18 @@ namespace LongoMatch.Gui
 			this.playlist.Events = ((global::Gdk.EventMask)(256));
 			this.playlist.Name = "playlist";
 			this.rightvbox.Add (this.playlist);
-			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.rightvbox[this.playlist]));
+			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.rightvbox [this.playlist]));
 			w18.Position = 1;
 			this.hpaned1.Add (this.rightvbox);
-			global::Gtk.Paned.PanedChild w19 = ((global::Gtk.Paned.PanedChild)(this.hpaned1[this.rightvbox]));
+			global::Gtk.Paned.PanedChild w19 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.rightvbox]));
 			w19.Resize = false;
 			w19.Shrink = false;
 			this.hpaned.Add (this.hpaned1);
-			global::Gtk.Paned.PanedChild w20 = ((global::Gtk.Paned.PanedChild)(this.hpaned[this.hpaned1]));
+			global::Gtk.Paned.PanedChild w20 = ((global::Gtk.Paned.PanedChild)(this.hpaned [this.hpaned1]));
 			w20.Resize = false;
 			w20.Shrink = false;
 			this.vbox1.Add (this.hpaned);
-			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hpaned]));
+			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hpaned]));
 			w21.Position = 1;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.statusbar1 = new global::Gtk.Statusbar ();
@@ -397,12 +347,12 @@ namespace LongoMatch.Gui
 			this.renderingstatebar1.Name = "renderingstatebar1";
 			this.renderingstatebar1.Fraction = 0;
 			this.statusbar1.Add (this.renderingstatebar1);
-			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.statusbar1[this.renderingstatebar1]));
+			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.statusbar1 [this.renderingstatebar1]));
 			w22.Position = 2;
 			w22.Expand = false;
 			w22.Fill = false;
 			this.vbox1.Add (this.statusbar1);
-			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.statusbar1]));
+			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.statusbar1]));
 			w23.Position = 2;
 			w23.Expand = false;
 			w23.Fill = false;

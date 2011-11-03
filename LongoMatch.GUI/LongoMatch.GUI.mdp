@@ -1,14 +1,5 @@
-<Project name="LongoMatch.GUI" fileversion="2.0" DefaultNamespace="LongoMatch" language="C#" clr-version="Net_2_0" targetFramework="3.5" ctype="DotNetProject">
+<Project name="LongoMatch.GUI" fileversion="2.0" DefaultNamespace="LongoMatch" language="C#" clr-version="Net_2_0" targetFramework="4.0" ctype="DotNetProject">
   <Deployment.LinuxDeployData />
-  <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="../CesarPlayer/Makefile.am" RelativeConfigureInPath="../">
-    <BuildFilesVar Name="FILES" />
-    <DeployFilesVar />
-    <ResourcesVar Name="RESOURCES" />
-    <OthersVar />
-    <GacRefVar Name="REFERENCES" />
-    <AsmRefVar Name="REFERENCES" />
-    <ProjectRefVar Name="REFERENCES" />
-  </MonoDevelop.Autotools.MakefileInfo>
   <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../bin" assembly="LongoMatch.Gui" assemblyKeyFile="/home/andoni/Proyectos/longomatch/LongoMatch/." />
@@ -138,7 +129,6 @@
     <File subtype="Directory" buildaction="Compile" name="." />
     <File subtype="Directory" buildaction="Compile" name="." />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/About.cs" />
-    <File subtype="Directory" buildaction="Compile" name="images" />
     <File subtype="Code" buildaction="Nothing" name="../images/longomatch.png" />
     <File subtype="Code" buildaction="Nothing" name="../images/stock_draw-circle-unfilled.png" />
     <File subtype="Code" buildaction="Nothing" name="../images/stock_draw-freeform-line.png" />
@@ -146,19 +136,28 @@
     <File subtype="Code" buildaction="Nothing" name="../images/stock_draw-line-ends-with-arrow.png" />
     <File subtype="Code" buildaction="Nothing" name="../images/stock_draw-rectangle-unfilled.png" />
   </Contents>
+  <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="../CesarPlayer/Makefile.am" RelativeConfigureInPath="../">
+    <BuildFilesVar Name="FILES" />
+    <DeployFilesVar />
+    <ResourcesVar Name="RESOURCES" />
+    <OthersVar />
+    <GacRefVar Name="REFERENCES" />
+    <AsmRefVar Name="REFERENCES" />
+    <ProjectRefVar Name="REFERENCES" />
+  </MonoDevelop.Autotools.MakefileInfo>
   <References>
-    <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
-    <ProjectReference type="Gac" localcopy="True" refto="Mono.Cairo, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
-    <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <ProjectReference type="Gac" localcopy="True" refto="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Project" localcopy="True" refto="LongoMatch.GUI.Multimedia" />
     <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Multimedia" />
     <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Core" />
+    <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <ProjectReference type="Gac" localcopy="True" refto="Mono.Cairo, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   </References>
   <LanguageParameters ApplicationIcon="." CodePage="65001" ctype="CSharpProjectParameters" />
 </Project>

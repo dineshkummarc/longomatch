@@ -300,4 +300,19 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Gui.Component.TeamTemplateEditorWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.CategoriesTemplateEditorWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.TemplatesEditorWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+    </itemgroups>
+    <signals />
+  </object>
 </objects>

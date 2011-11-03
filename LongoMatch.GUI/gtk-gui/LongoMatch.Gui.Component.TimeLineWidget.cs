@@ -5,33 +5,20 @@ namespace LongoMatch.Gui.Component
 	public partial class TimeLineWidget
 	{
 		private global::Gtk.VBox vbox3;
-
 		private global::Gtk.HSeparator hseparator1;
-
 		private global::Gtk.HBox hbox3;
-
 		private global::Gtk.VBox leftbox;
-
 		private global::Gtk.HBox toolsbox;
-
 		private global::Gtk.Button fitbutton;
-
 		private global::Gtk.HScale zoomscale;
-
 		private global::Gtk.Alignment categoriesalignment1;
-
 		private global::Gtk.HBox categoriesbox;
-
 		private global::Gtk.VSeparator vseparator1;
-
 		private global::Gtk.VBox vbox2;
-
 		private global::Gtk.VBox timescalebox;
-
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
-
 		private global::Gtk.VBox vbox1;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -46,7 +33,7 @@ namespace LongoMatch.Gui.Component
 			this.hseparator1 = new global::Gtk.HSeparator ();
 			this.hseparator1.Name = "hseparator1";
 			this.vbox3.Add (this.hseparator1);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.hseparator1]));
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.hseparator1]));
 			w1.Position = 0;
 			w1.Expand = false;
 			w1.Fill = false;
@@ -66,7 +53,7 @@ namespace LongoMatch.Gui.Component
 			this.fitbutton.Name = "fitbutton";
 			this.fitbutton.UseUnderline = true;
 			// Container child fitbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w2 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w2 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w3 = new global::Gtk.HBox ();
 			w3.Spacing = 2;
@@ -80,7 +67,7 @@ namespace LongoMatch.Gui.Component
 			w2.Add (w3);
 			this.fitbutton.Add (w2);
 			this.toolsbox.Add (this.fitbutton);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.toolsbox[this.fitbutton]));
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.toolsbox [this.fitbutton]));
 			w10.Position = 0;
 			w10.Expand = false;
 			w10.Fill = false;
@@ -98,15 +85,15 @@ namespace LongoMatch.Gui.Component
 			this.zoomscale.Digits = 0;
 			this.zoomscale.ValuePos = ((global::Gtk.PositionType)(2));
 			this.toolsbox.Add (this.zoomscale);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.toolsbox[this.zoomscale]));
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.toolsbox [this.zoomscale]));
 			w11.Position = 1;
 			this.leftbox.Add (this.toolsbox);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.leftbox[this.toolsbox]));
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.leftbox [this.toolsbox]));
 			w12.Position = 0;
 			w12.Expand = false;
 			w12.Fill = false;
 			// Container child leftbox.Gtk.Box+BoxChild
-			this.categoriesalignment1 = new global::Gtk.Alignment (0.5f, 0.5f, 1f, 1f);
+			this.categoriesalignment1 = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
 			this.categoriesalignment1.Name = "categoriesalignment1";
 			// Container child categoriesalignment1.Gtk.Container+ContainerChild
 			this.categoriesbox = new global::Gtk.HBox ();
@@ -114,10 +101,10 @@ namespace LongoMatch.Gui.Component
 			this.categoriesbox.Spacing = 6;
 			this.categoriesalignment1.Add (this.categoriesbox);
 			this.leftbox.Add (this.categoriesalignment1);
-			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.leftbox[this.categoriesalignment1]));
+			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.leftbox [this.categoriesalignment1]));
 			w14.Position = 1;
 			this.hbox3.Add (this.leftbox);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.leftbox]));
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.leftbox]));
 			w15.Position = 0;
 			w15.Expand = false;
 			w15.Fill = false;
@@ -125,7 +112,7 @@ namespace LongoMatch.Gui.Component
 			this.vseparator1 = new global::Gtk.VSeparator ();
 			this.vseparator1.Name = "vseparator1";
 			this.hbox3.Add (this.vseparator1);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.vseparator1]));
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.vseparator1]));
 			w16.Position = 1;
 			w16.Expand = false;
 			w16.Fill = false;
@@ -138,7 +125,7 @@ namespace LongoMatch.Gui.Component
 			this.timescalebox.Name = "timescalebox";
 			this.timescalebox.Spacing = 6;
 			this.vbox2.Add (this.timescalebox);
-			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.timescalebox]));
+			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.timescalebox]));
 			w17.Position = 0;
 			w17.Expand = false;
 			w17.Fill = false;
@@ -155,13 +142,13 @@ namespace LongoMatch.Gui.Component
 			w18.Add (this.vbox1);
 			this.GtkScrolledWindow.Add (w18);
 			this.vbox2.Add (this.GtkScrolledWindow);
-			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.GtkScrolledWindow]));
+			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.GtkScrolledWindow]));
 			w21.Position = 1;
 			this.hbox3.Add (this.vbox2);
-			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.vbox2]));
+			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.vbox2]));
 			w22.Position = 2;
 			this.vbox3.Add (this.hbox3);
-			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.hbox3]));
+			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.hbox3]));
 			w23.Position = 1;
 			this.Add (this.vbox3);
 			if ((this.Child != null)) {

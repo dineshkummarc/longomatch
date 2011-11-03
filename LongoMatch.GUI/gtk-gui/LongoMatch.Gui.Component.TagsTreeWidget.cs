@@ -5,23 +5,15 @@ namespace LongoMatch.Gui.Component
 	public partial class TagsTreeWidget
 	{
 		private global::Gtk.VBox vbox1;
-
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
-
 		private global::LongoMatch.Gui.Component.TagsTreeView treeview;
-
 		private global::Gtk.VBox tagsvbox;
-
 		private global::Gtk.HBox hbox1;
-
 		private global::Gtk.ComboBox tagscombobox;
-
 		private global::Gtk.Button AddFilterButton;
-
 		private global::Gtk.HBox hbox2;
-
 		private global::Gtk.ComboBox filtercombobox;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -43,14 +35,14 @@ namespace LongoMatch.Gui.Component
 			this.treeview.Colors = false;
 			this.GtkScrolledWindow.Add (this.treeview);
 			this.vbox1.Add (this.GtkScrolledWindow);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.GtkScrolledWindow]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.GtkScrolledWindow]));
 			w2.Position = 0;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.tagsvbox = new global::Gtk.VBox ();
 			this.tagsvbox.Name = "tagsvbox";
 			this.tagsvbox.Spacing = 6;
 			this.vbox1.Add (this.tagsvbox);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.tagsvbox]));
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.tagsvbox]));
 			w3.Position = 1;
 			w3.Expand = false;
 			w3.Fill = false;
@@ -62,7 +54,7 @@ namespace LongoMatch.Gui.Component
 			this.tagscombobox = global::Gtk.ComboBox.NewText ();
 			this.tagscombobox.Name = "tagscombobox";
 			this.hbox1.Add (this.tagscombobox);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.tagscombobox]));
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.tagscombobox]));
 			w4.Position = 0;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.AddFilterButton = new global::Gtk.Button ();
@@ -70,7 +62,7 @@ namespace LongoMatch.Gui.Component
 			this.AddFilterButton.Name = "AddFilterButton";
 			this.AddFilterButton.UseUnderline = true;
 			// Container child AddFilterButton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w5 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w5 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w6 = new global::Gtk.HBox ();
 			w6.Spacing = 2;
@@ -86,12 +78,12 @@ namespace LongoMatch.Gui.Component
 			w5.Add (w6);
 			this.AddFilterButton.Add (w5);
 			this.hbox1.Add (this.AddFilterButton);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.AddFilterButton]));
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.AddFilterButton]));
 			w13.Position = 1;
 			w13.Expand = false;
 			w13.Fill = false;
 			this.vbox1.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
+			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox1]));
 			w14.Position = 2;
 			w14.Expand = false;
 			w14.Fill = false;
@@ -103,10 +95,10 @@ namespace LongoMatch.Gui.Component
 			this.filtercombobox = global::Gtk.ComboBox.NewText ();
 			this.filtercombobox.Name = "filtercombobox";
 			this.hbox2.Add (this.filtercombobox);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.filtercombobox]));
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.filtercombobox]));
 			w15.Position = 0;
 			this.vbox1.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox2]));
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox2]));
 			w16.Position = 3;
 			w16.Expand = false;
 			w16.Fill = false;

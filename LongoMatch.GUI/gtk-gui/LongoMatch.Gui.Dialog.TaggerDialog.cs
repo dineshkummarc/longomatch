@@ -5,21 +5,14 @@ namespace LongoMatch.Gui.Dialog
 	public partial class TaggerDialog
 	{
 		private global::Gtk.HBox hbox1;
-
 		private global::Gtk.Notebook tagsnotebook;
-
 		private global::LongoMatch.Gui.Component.TaggerWidget taggerwidget1;
-
 		private global::Gtk.Label label1;
-
 		private global::Gtk.Notebook playersnotebook;
-
 		private global::Gtk.VBox playersbox;
-
 		private global::Gtk.Label label2;
-
 		private global::Gtk.Button buttonOk;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -53,7 +46,7 @@ namespace LongoMatch.Gui.Dialog
 			this.tagsnotebook.SetTabLabel (this.taggerwidget1, this.label1);
 			this.label1.ShowAll ();
 			this.hbox1.Add (this.tagsnotebook);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.tagsnotebook]));
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.tagsnotebook]));
 			w3.Position = 0;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.playersnotebook = new global::Gtk.Notebook ();
@@ -72,10 +65,10 @@ namespace LongoMatch.Gui.Dialog
 			this.playersnotebook.SetTabLabel (this.playersbox, this.label2);
 			this.label2.ShowAll ();
 			this.hbox1.Add (this.playersnotebook);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.playersnotebook]));
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.playersnotebook]));
 			w5.Position = 1;
 			w1.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(w1[this.hbox1]));
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(w1 [this.hbox1]));
 			w6.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.TaggerDialog.ActionArea
 			global::Gtk.HButtonBox w7 = this.ActionArea;
@@ -92,7 +85,7 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
 			this.AddActionWidget (this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w8 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w7[this.buttonOk]));
+			global::Gtk.ButtonBox.ButtonBoxChild w8 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w7 [this.buttonOk]));
 			w8.Expand = false;
 			w8.Fill = false;
 			if ((this.Child != null)) {

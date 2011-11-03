@@ -48,6 +48,7 @@ namespace LongoMatch
 			Application.Init();
 
 			//try {
+				Log.Information("TEST");
 				MainWindow win = new MainWindow();
 				win.Show();
 				Core.Init(win);

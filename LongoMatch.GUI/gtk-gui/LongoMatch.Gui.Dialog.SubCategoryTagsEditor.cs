@@ -5,37 +5,22 @@ namespace LongoMatch.Gui.Dialog
 	public partial class SubCategoryTagsEditor
 	{
 		private global::Gtk.VBox vbox2;
-
 		private global::Gtk.Table table1;
-
 		private global::Gtk.CheckButton fastcheckbutton;
-
 		private global::Gtk.Label label1;
-
 		private global::Gtk.CheckButton multicheckbutton;
-
 		private global::Gtk.Entry nameentry;
-
 		private global::Gtk.Frame frame1;
-
 		private global::Gtk.Alignment GtkAlignment2;
-
 		private global::Gtk.VBox vbox3;
-
 		private global::Gtk.ScrolledWindow scrolledwindow1;
-
 		private global::Gtk.VBox tagsbox;
-
 		private global::Gtk.HBox hbox1;
-
 		private global::Gtk.Entry tagentry;
-
 		private global::Gtk.Button addtagbutton;
-
 		private global::Gtk.Label GtkLabel4;
-
 		private global::Gtk.Button buttonOk;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -71,7 +56,7 @@ namespace LongoMatch.Gui.Dialog
 			this.fastcheckbutton.DrawIndicator = true;
 			this.fastcheckbutton.UseUnderline = true;
 			this.table1.Add (this.fastcheckbutton);
-			global::Gtk.Table.TableChild w2 = ((global::Gtk.Table.TableChild)(this.table1[this.fastcheckbutton]));
+			global::Gtk.Table.TableChild w2 = ((global::Gtk.Table.TableChild)(this.table1 [this.fastcheckbutton]));
 			w2.TopAttach = ((uint)(1));
 			w2.BottomAttach = ((uint)(2));
 			w2.LeftAttach = ((uint)(1));
@@ -83,7 +68,7 @@ namespace LongoMatch.Gui.Dialog
 			this.label1.Name = "label1";
 			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Subcategory name:");
 			this.table1.Add (this.label1);
-			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.table1[this.label1]));
+			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.table1 [this.label1]));
 			w3.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
 			this.multicheckbutton = new global::Gtk.CheckButton ();
@@ -95,7 +80,7 @@ namespace LongoMatch.Gui.Dialog
 			this.multicheckbutton.DrawIndicator = true;
 			this.multicheckbutton.UseUnderline = true;
 			this.table1.Add (this.multicheckbutton);
-			global::Gtk.Table.TableChild w4 = ((global::Gtk.Table.TableChild)(this.table1[this.multicheckbutton]));
+			global::Gtk.Table.TableChild w4 = ((global::Gtk.Table.TableChild)(this.table1 [this.multicheckbutton]));
 			w4.TopAttach = ((uint)(1));
 			w4.BottomAttach = ((uint)(2));
 			w4.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -108,12 +93,12 @@ namespace LongoMatch.Gui.Dialog
 			this.nameentry.IsEditable = true;
 			this.nameentry.InvisibleChar = '•';
 			this.table1.Add (this.nameentry);
-			global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.table1[this.nameentry]));
+			global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.table1 [this.nameentry]));
 			w5.LeftAttach = ((uint)(1));
 			w5.RightAttach = ((uint)(2));
 			w5.YOptions = ((global::Gtk.AttachOptions)(4));
 			this.vbox2.Add (this.table1);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.table1]));
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.table1]));
 			w6.Position = 0;
 			w6.Expand = false;
 			w6.Fill = false;
@@ -122,7 +107,7 @@ namespace LongoMatch.Gui.Dialog
 			this.frame1.Name = "frame1";
 			this.frame1.ShadowType = ((global::Gtk.ShadowType)(1));
 			// Container child frame1.Gtk.Container+ContainerChild
-			this.GtkAlignment2 = new global::Gtk.Alignment (0f, 0f, 1f, 1f);
+			this.GtkAlignment2 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
 			this.GtkAlignment2.Name = "GtkAlignment2";
 			this.GtkAlignment2.LeftPadding = ((uint)(12));
 			// Container child GtkAlignment2.Gtk.Container+ContainerChild
@@ -143,7 +128,7 @@ namespace LongoMatch.Gui.Dialog
 			w7.Add (this.tagsbox);
 			this.scrolledwindow1.Add (w7);
 			this.vbox3.Add (this.scrolledwindow1);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.scrolledwindow1]));
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.scrolledwindow1]));
 			w10.Position = 0;
 			// Container child vbox3.Gtk.Box+BoxChild
 			this.hbox1 = new global::Gtk.HBox ();
@@ -157,7 +142,7 @@ namespace LongoMatch.Gui.Dialog
 			this.tagentry.IsEditable = true;
 			this.tagentry.InvisibleChar = '•';
 			this.hbox1.Add (this.tagentry);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.tagentry]));
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.tagentry]));
 			w11.Position = 0;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.addtagbutton = new global::Gtk.Button ();
@@ -165,7 +150,7 @@ namespace LongoMatch.Gui.Dialog
 			this.addtagbutton.Name = "addtagbutton";
 			this.addtagbutton.UseUnderline = true;
 			// Container child addtagbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w12 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w12 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w13 = new global::Gtk.HBox ();
 			w13.Spacing = 2;
@@ -181,12 +166,12 @@ namespace LongoMatch.Gui.Dialog
 			w12.Add (w13);
 			this.addtagbutton.Add (w12);
 			this.hbox1.Add (this.addtagbutton);
-			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.addtagbutton]));
+			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.addtagbutton]));
 			w20.Position = 1;
 			w20.Expand = false;
 			w20.Fill = false;
 			this.vbox3.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.hbox1]));
+			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.hbox1]));
 			w21.Position = 1;
 			w21.Expand = false;
 			w21.Fill = false;
@@ -198,10 +183,10 @@ namespace LongoMatch.Gui.Dialog
 			this.GtkLabel4.UseMarkup = true;
 			this.frame1.LabelWidget = this.GtkLabel4;
 			this.vbox2.Add (this.frame1);
-			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.frame1]));
+			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.frame1]));
 			w24.Position = 1;
 			w1.Add (this.vbox2);
-			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(w1[this.vbox2]));
+			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(w1 [this.vbox2]));
 			w25.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.SubCategoryTagsEditor.ActionArea
 			global::Gtk.HButtonBox w26 = this.ActionArea;
@@ -218,7 +203,7 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
 			this.AddActionWidget (this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w27 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w26[this.buttonOk]));
+			global::Gtk.ButtonBox.ButtonBoxChild w27 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w26 [this.buttonOk]));
 			w27.Expand = false;
 			w27.Fill = false;
 			if ((this.Child != null)) {

@@ -5,15 +5,11 @@ namespace LongoMatch.Gui.Dialog
 	public partial class FramesCaptureProgressDialog
 	{
 		private global::Gtk.VBox vbox2;
-
 		private global::Gtk.ProgressBar progressbar;
-
 		private global::Gtk.Image image;
-
 		private global::Gtk.Button okbutton;
-
 		private global::Gtk.Button cancelbutton;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -41,18 +37,18 @@ namespace LongoMatch.Gui.Dialog
 			this.progressbar = new global::Gtk.ProgressBar ();
 			this.progressbar.Name = "progressbar";
 			this.vbox2.Add (this.progressbar);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.progressbar]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.progressbar]));
 			w2.Position = 0;
 			w2.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.image = new global::Gtk.Image ();
 			this.image.Name = "image";
 			this.vbox2.Add (this.image);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.image]));
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.image]));
 			w3.PackType = ((global::Gtk.PackType)(1));
 			w3.Position = 1;
 			w1.Add (this.vbox2);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(w1[this.vbox2]));
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(w1 [this.vbox2]));
 			w4.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.ActionArea
 			global::Gtk.HButtonBox w5 = this.ActionArea;
@@ -68,7 +64,7 @@ namespace LongoMatch.Gui.Dialog
 			this.okbutton.UseUnderline = true;
 			this.okbutton.Label = "gtk-ok";
 			this.AddActionWidget (this.okbutton, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w6 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w5[this.okbutton]));
+			global::Gtk.ButtonBox.ButtonBoxChild w6 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w5 [this.okbutton]));
 			w6.Expand = false;
 			w6.Fill = false;
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
@@ -80,7 +76,7 @@ namespace LongoMatch.Gui.Dialog
 			this.cancelbutton.UseUnderline = true;
 			this.cancelbutton.Label = "gtk-cancel";
 			this.AddActionWidget (this.cancelbutton, -6);
-			global::Gtk.ButtonBox.ButtonBoxChild w7 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w5[this.cancelbutton]));
+			global::Gtk.ButtonBox.ButtonBoxChild w7 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w5 [this.cancelbutton]));
 			w7.Position = 1;
 			w7.Expand = false;
 			w7.Fill = false;

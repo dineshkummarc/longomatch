@@ -5,9 +5,8 @@ namespace LongoMatch.Gui.Component
 	public partial class DrawingWidget
 	{
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
-
 		private global::Gtk.DrawingArea drawingarea;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

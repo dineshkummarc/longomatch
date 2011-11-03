@@ -5,13 +5,10 @@ namespace LongoMatch.Gui.Component
 	public partial class TeamTaggerWidget
 	{
 		private global::Gtk.Frame frame;
-
 		private global::Gtk.Alignment GtkAlignment;
-
 		private global::Gtk.HBox buttonsbox;
-
 		private global::Gtk.Label titlelabel;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -23,7 +20,7 @@ namespace LongoMatch.Gui.Component
 			this.frame.Name = "frame";
 			this.frame.ShadowType = ((global::Gtk.ShadowType)(2));
 			// Container child frame.Gtk.Container+ContainerChild
-			this.GtkAlignment = new global::Gtk.Alignment (0f, 0f, 1f, 1f);
+			this.GtkAlignment = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
 			this.GtkAlignment.Name = "GtkAlignment";
 			this.GtkAlignment.LeftPadding = ((uint)(12));
 			// Container child GtkAlignment.Gtk.Container+ContainerChild

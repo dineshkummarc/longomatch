@@ -5,11 +5,9 @@ namespace LongoMatch.Gui.Dialog
 	public partial class BusyDialog
 	{
 		private global::Gtk.VBox vbox2;
-
 		private global::Gtk.Label messagelabel;
-
 		private global::Gtk.ProgressBar progressbar1;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -32,13 +30,13 @@ namespace LongoMatch.Gui.Dialog
 			this.messagelabel = new global::Gtk.Label ();
 			this.messagelabel.Name = "messagelabel";
 			this.vbox2.Add (this.messagelabel);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.messagelabel]));
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.messagelabel]));
 			w1.Position = 0;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.progressbar1 = new global::Gtk.ProgressBar ();
 			this.progressbar1.Name = "progressbar1";
 			this.vbox2.Add (this.progressbar1);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.progressbar1]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.progressbar1]));
 			w2.Position = 1;
 			w2.Expand = false;
 			w2.Fill = false;

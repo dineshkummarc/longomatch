@@ -5,13 +5,10 @@ namespace LongoMatch.Gui.Component
 	public partial class ButtonsWidget
 	{
 		private global::Gtk.VBox vbox1;
-
 		private global::Gtk.Button cancelbutton;
-
 		private global::Gtk.Button starttagbutton;
-
 		private global::Gtk.Table table1;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -28,7 +25,7 @@ namespace LongoMatch.Gui.Component
 			this.cancelbutton.UseUnderline = true;
 			this.cancelbutton.Label = global::Mono.Unix.Catalog.GetString ("Cancel");
 			this.vbox1.Add (this.cancelbutton);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.cancelbutton]));
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.cancelbutton]));
 			w1.Position = 0;
 			w1.Expand = false;
 			w1.Fill = false;
@@ -38,7 +35,7 @@ namespace LongoMatch.Gui.Component
 			this.starttagbutton.UseUnderline = true;
 			this.starttagbutton.Label = global::Mono.Unix.Catalog.GetString ("Tag new play");
 			this.vbox1.Add (this.starttagbutton);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.starttagbutton]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.starttagbutton]));
 			w2.Position = 1;
 			w2.Expand = false;
 			w2.Fill = false;
@@ -48,7 +45,7 @@ namespace LongoMatch.Gui.Component
 			this.table1.RowSpacing = ((uint)(1));
 			this.table1.ColumnSpacing = ((uint)(1));
 			this.vbox1.Add (this.table1);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.table1]));
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.table1]));
 			w3.Position = 2;
 			this.Add (this.vbox1);
 			if ((this.Child != null)) {

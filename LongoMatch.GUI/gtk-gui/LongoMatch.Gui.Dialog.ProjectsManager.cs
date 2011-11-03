@@ -5,33 +5,20 @@ namespace LongoMatch.Gui.Dialog
 	public partial class ProjectsManager
 	{
 		private global::Gtk.VBox dialog1_VBox1;
-
 		private global::Gtk.HBox hbox2;
-
 		private global::Gtk.HPaned hpaned1;
-
 		private global::LongoMatch.Gui.Component.ProjectListWidget projectlistwidget1;
-
 		private global::Gtk.VBox vbox2;
-
 		private global::Gtk.Frame frame1;
-
 		private global::Gtk.Alignment GtkAlignment2;
-
 		private global::LongoMatch.Gui.Component.ProjectDetailsWidget projectdetails;
-
 		private global::Gtk.Label GtkLabel6;
-
 		private global::Gtk.Button saveButton;
-
 		private global::Gtk.Button deleteButton;
-
 		private global::Gtk.Button exportbutton;
-
 		private global::Gtk.HSeparator hseparator3;
-
 		private global::Gtk.Button buttonOk;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -66,7 +53,7 @@ namespace LongoMatch.Gui.Dialog
 			this.projectlistwidget1.Events = ((global::Gdk.EventMask)(256));
 			this.projectlistwidget1.Name = "projectlistwidget1";
 			this.hpaned1.Add (this.projectlistwidget1);
-			global::Gtk.Paned.PanedChild w2 = ((global::Gtk.Paned.PanedChild)(this.hpaned1[this.projectlistwidget1]));
+			global::Gtk.Paned.PanedChild w2 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.projectlistwidget1]));
 			w2.Resize = false;
 			// Container child hpaned1.Gtk.Paned+PanedChild
 			this.vbox2 = new global::Gtk.VBox ();
@@ -77,7 +64,7 @@ namespace LongoMatch.Gui.Dialog
 			this.frame1.Name = "frame1";
 			this.frame1.ShadowType = ((global::Gtk.ShadowType)(0));
 			// Container child frame1.Gtk.Container+ContainerChild
-			this.GtkAlignment2 = new global::Gtk.Alignment (0f, 0f, 1f, 1f);
+			this.GtkAlignment2 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
 			this.GtkAlignment2.Name = "GtkAlignment2";
 			this.GtkAlignment2.LeftPadding = ((uint)(12));
 			// Container child GtkAlignment2.Gtk.Container+ContainerChild
@@ -97,7 +84,7 @@ namespace LongoMatch.Gui.Dialog
 			this.GtkLabel6.UseMarkup = true;
 			this.frame1.LabelWidget = this.GtkLabel6;
 			this.vbox2.Add (this.frame1);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.frame1]));
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.frame1]));
 			w5.Position = 0;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.saveButton = new global::Gtk.Button ();
@@ -109,7 +96,7 @@ namespace LongoMatch.Gui.Dialog
 			this.saveButton.UseUnderline = true;
 			this.saveButton.Label = "gtk-save";
 			this.vbox2.Add (this.saveButton);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.saveButton]));
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.saveButton]));
 			w6.Position = 1;
 			w6.Expand = false;
 			w6.Fill = false;
@@ -123,7 +110,7 @@ namespace LongoMatch.Gui.Dialog
 			this.deleteButton.UseUnderline = true;
 			this.deleteButton.Label = "gtk-delete";
 			this.vbox2.Add (this.deleteButton);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.deleteButton]));
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.deleteButton]));
 			w7.Position = 2;
 			w7.Expand = false;
 			w7.Fill = false;
@@ -135,7 +122,7 @@ namespace LongoMatch.Gui.Dialog
 			this.exportbutton.Name = "exportbutton";
 			this.exportbutton.UseUnderline = true;
 			// Container child exportbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w8 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w8 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w9 = new global::Gtk.HBox ();
 			w9.Spacing = 2;
@@ -151,28 +138,28 @@ namespace LongoMatch.Gui.Dialog
 			w8.Add (w9);
 			this.exportbutton.Add (w8);
 			this.vbox2.Add (this.exportbutton);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.exportbutton]));
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.exportbutton]));
 			w16.Position = 3;
 			w16.Expand = false;
 			w16.Fill = false;
 			this.hpaned1.Add (this.vbox2);
 			this.hbox2.Add (this.hpaned1);
-			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.hpaned1]));
+			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.hpaned1]));
 			w18.Position = 0;
 			this.dialog1_VBox1.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.dialog1_VBox1[this.hbox2]));
+			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.dialog1_VBox1 [this.hbox2]));
 			w19.Position = 0;
 			// Container child dialog1_VBox1.Gtk.Box+BoxChild
 			this.hseparator3 = new global::Gtk.HSeparator ();
 			this.hseparator3.Name = "hseparator3";
 			this.dialog1_VBox1.Add (this.hseparator3);
-			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.dialog1_VBox1[this.hseparator3]));
+			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.dialog1_VBox1 [this.hseparator3]));
 			w20.PackType = ((global::Gtk.PackType)(1));
 			w20.Position = 1;
 			w20.Expand = false;
 			w20.Fill = false;
 			w1.Add (this.dialog1_VBox1);
-			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(w1[this.dialog1_VBox1]));
+			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(w1 [this.dialog1_VBox1]));
 			w21.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.ProjectsManager.ActionArea
 			global::Gtk.HButtonBox w22 = this.ActionArea;
@@ -189,7 +176,7 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-quit";
 			this.AddActionWidget (this.buttonOk, 0);
-			global::Gtk.ButtonBox.ButtonBoxChild w23 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w22[this.buttonOk]));
+			global::Gtk.ButtonBox.ButtonBoxChild w23 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w22 [this.buttonOk]));
 			w23.Expand = false;
 			w23.Fill = false;
 			if ((this.Child != null)) {

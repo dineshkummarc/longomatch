@@ -5,25 +5,16 @@ namespace LongoMatch.Gui.Component
 	public partial class PlayListWidget
 	{
 		private global::Gtk.VBox vbox2;
-
 		private global::Gtk.ScrolledWindow scrolledwindow1;
-
 		private global::Gtk.VBox vbox1;
-
 		private global::Gtk.Label label1;
-
 		private global::LongoMatch.Gui.Component.PlayListTreeView playlisttreeview1;
-
 		private global::Gtk.HBox hbox2;
-
 		private global::Gtk.Button newbutton;
-
 		private global::Gtk.Button openbutton;
-
 		private global::Gtk.Button savebutton;
-
 		private global::Gtk.Button newvideobutton;
-
+        
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -52,7 +43,7 @@ namespace LongoMatch.Gui.Component
 			this.label1.Name = "label1";
 			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Load a playlist\nor create a \nnew one.");
 			this.vbox1.Add (this.label1);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.label1]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.label1]));
 			w2.Position = 0;
 			w2.Expand = false;
 			w2.Fill = false;
@@ -62,12 +53,12 @@ namespace LongoMatch.Gui.Component
 			this.playlisttreeview1.CanFocus = true;
 			this.playlisttreeview1.Name = "playlisttreeview1";
 			this.vbox1.Add (this.playlisttreeview1);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.playlisttreeview1]));
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.playlisttreeview1]));
 			w3.Position = 1;
 			w1.Add (this.vbox1);
 			this.scrolledwindow1.Add (w1);
 			this.vbox2.Add (this.scrolledwindow1);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.scrolledwindow1]));
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.scrolledwindow1]));
 			w6.Position = 0;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.hbox2 = new global::Gtk.HBox ();
@@ -81,7 +72,7 @@ namespace LongoMatch.Gui.Component
 			this.newbutton.Name = "newbutton";
 			this.newbutton.UseUnderline = true;
 			// Container child newbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w7 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w7 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w8 = new global::Gtk.HBox ();
 			w8.Spacing = 2;
@@ -95,7 +86,7 @@ namespace LongoMatch.Gui.Component
 			w7.Add (w8);
 			this.newbutton.Add (w7);
 			this.hbox2.Add (this.newbutton);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.newbutton]));
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.newbutton]));
 			w15.Position = 0;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.openbutton = new global::Gtk.Button ();
@@ -104,7 +95,7 @@ namespace LongoMatch.Gui.Component
 			this.openbutton.Name = "openbutton";
 			this.openbutton.UseUnderline = true;
 			// Container child openbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w16 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w16 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w17 = new global::Gtk.HBox ();
 			w17.Spacing = 2;
@@ -118,7 +109,7 @@ namespace LongoMatch.Gui.Component
 			w16.Add (w17);
 			this.openbutton.Add (w16);
 			this.hbox2.Add (this.openbutton);
-			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.openbutton]));
+			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.openbutton]));
 			w24.Position = 1;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.savebutton = new global::Gtk.Button ();
@@ -127,7 +118,7 @@ namespace LongoMatch.Gui.Component
 			this.savebutton.Name = "savebutton";
 			this.savebutton.UseUnderline = true;
 			// Container child savebutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w25 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w25 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w26 = new global::Gtk.HBox ();
 			w26.Spacing = 2;
@@ -141,7 +132,7 @@ namespace LongoMatch.Gui.Component
 			w25.Add (w26);
 			this.savebutton.Add (w25);
 			this.hbox2.Add (this.savebutton);
-			global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.savebutton]));
+			global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.savebutton]));
 			w33.Position = 2;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.newvideobutton = new global::Gtk.Button ();
@@ -150,7 +141,7 @@ namespace LongoMatch.Gui.Component
 			this.newvideobutton.Name = "newvideobutton";
 			this.newvideobutton.UseUnderline = true;
 			// Container child newvideobutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w34 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
+			global::Gtk.Alignment w34 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w35 = new global::Gtk.HBox ();
 			w35.Spacing = 2;
@@ -164,10 +155,10 @@ namespace LongoMatch.Gui.Component
 			w34.Add (w35);
 			this.newvideobutton.Add (w34);
 			this.hbox2.Add (this.newvideobutton);
-			global::Gtk.Box.BoxChild w42 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.newvideobutton]));
+			global::Gtk.Box.BoxChild w42 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.newvideobutton]));
 			w42.Position = 3;
 			this.vbox2.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w43 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
+			global::Gtk.Box.BoxChild w43 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox2]));
 			w43.Position = 1;
 			w43.Expand = false;
 			w43.Fill = false;
