@@ -900,7 +900,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="LongoMatch.Gui.Popup.CalendarPopup" design-size="281 154">
+  <widget class="Gtk.Window" id="LongoMatch.Gui.Popup.CalendarPopup" design-size="281 214">
     <property name="MemberName" />
     <property name="Title" translatable="yes" />
     <property name="WindowPosition">Mouse</property>
@@ -2062,7 +2062,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CategoryProperties" design-size="438 392">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CategoryProperties" design-size="516 392">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.VBox" id="vbox2">
@@ -3647,7 +3647,7 @@ Extra</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.FramesCaptureProgressDialog" design-size="400 148">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.FramesCaptureProgressDialog" design-size="400 149">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Capture Progress</property>
     <property name="Icon">stock:longomatch Dialog</property>
@@ -3849,7 +3849,7 @@ You can download it using this direct link:</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.HotKeySelectorDialog" design-size="385 94">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.HotKeySelectorDialog" design-size="385 109">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Select a HotKey</property>
     <property name="Icon">stock:longomatch Dialog</property>
@@ -3902,7 +3902,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.PlayerProperties" design-size="270 286">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.PlayerProperties" design-size="278 318">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -4700,7 +4700,7 @@ No</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DrawingToolBox" design-size="86 382">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DrawingToolBox" design-size="94 398">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -5059,7 +5059,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EditCategoryDialog" design-size="492 191">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EditCategoryDialog" design-size="522 280">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Category Details</property>
     <property name="Icon">resource:longomatch.png</property>
@@ -5620,7 +5620,6 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
                     <property name="Label" translatable="yes">New project using a video file</property>
-                    <property name="Active">True</property>
                     <property name="DrawIndicator">True</property>
                     <property name="HasLabel">True</property>
                     <property name="UseUnderline">True</property>
@@ -5783,7 +5782,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EndCaptureDialog" design-size="517 175">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EndCaptureDialog" design-size="566 178">
     <property name="MemberName" />
     <property name="Title" translatable="yes" />
     <property name="Icon">stock:longomatch Menu</property>
@@ -6236,7 +6235,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.PlayersTaggerWidget" design-size="300 40">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.PlayersTaggerWidget" design-size="300 48">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>

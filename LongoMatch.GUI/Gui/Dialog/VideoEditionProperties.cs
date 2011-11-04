@@ -32,11 +32,9 @@ namespace LongoMatch.Gui.Dialog
 	[System.ComponentModel.ToolboxItem(false)]
 	public partial class VideoEditionProperties : Gtk.Dialog
 	{
-		private EncodingSettings encSettings;
-		private ListStore stdStore;
-		private ListStore encStore;
-		private string videosDir;
-
+		EncodingSettings encSettings;
+		ListStore stdStore;
+		ListStore encStore;
 
 		#region Constructors
 		public VideoEditionProperties()
@@ -148,7 +146,7 @@ namespace LongoMatch.Gui.Dialog
 			                FileChooserAction.Save,
 			                "gtk-cancel",ResponseType.Cancel,
 			                "gtk-save",ResponseType.Accept);
-			fChooser.SetCurrentFolder(videosDir);
+			fChooser.SetCurrentFolder(Config.VideosDir());
 			fChooser.CurrentName = "NewVideo."+GetExtension();
 			fChooser.DoOverwriteConfirmation = true;
 			FileFilter filter = new FileFilter();

@@ -689,27 +689,27 @@ namespace LongoMatch.Gui
 		}
 		
 		private void EmitOpenProject() {
-			if(OpenProjectEvent == null)
+			if(OpenProjectEvent != null)
 				OpenProjectEvent();
 		}
 		
 		private void EmitExportProject() {
-			if(ExportProjectEvent == null)
+			if(ExportProjectEvent != null)
 				ExportProjectEvent();
 		}
 		
 		private void EmitManageJobs() {
-			if(ManageJobsEvent == null)
+			if(ManageJobsEvent != null)
 				ManageJobsEvent();
 		}
 		
 		private void EmitManageTeams() {
-			if(ManageTeamsEvent == null)
+			if(ManageTeamsEvent != null)
 				ManageTeamsEvent();
 		}
 		
 		private void EmitManageCategories() {
-			if(ManageCategoriesEvent == null)
+			if(ManageCategoriesEvent != null)
 				ManageCategoriesEvent();
 		}
 		
@@ -730,7 +730,7 @@ namespace LongoMatch.Gui
 		}
 		
 		private void EmitSavePlaylist() {
-			if (SavePlaylistEvent != null) 
+			if (SavePlaylistEvent != null)
 				SavePlaylistEvent();
 		}
 		#endregion

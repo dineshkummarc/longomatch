@@ -44,14 +44,11 @@ namespace LongoMatch
 			if (!GStreamer.CheckInstallation())
 				return;
 
-			/* Init Gtk */
-			Application.Init();
-
 			//try {
-				Log.Information("TEST");
+				Core.Init();
 				MainWindow win = new MainWindow();
 				win.Show();
-				Core.Init(win);
+				Core.Start(win);
 				Application.Run();
 			//} catch(Exception ex) {
 			//	ProcessExecutionError(ex);

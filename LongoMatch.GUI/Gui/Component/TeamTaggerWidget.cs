@@ -26,10 +26,10 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class TeamTaggerWidget : Gtk.Bin
 	{
-		private Dictionary<TeamTag, CheckButton> dict;
-		private TeamSubCategory subcat;
-		private TeamsTagStore tags;
-		private string subcategory, localTeam, visitorTeam;
+		Dictionary<TeamTag, CheckButton> dict;
+		TeamSubCategory subcat;
+		TeamsTagStore tags;
+		string localTeam, visitorTeam;
 		
 		
 		public TeamTaggerWidget (TeamSubCategory subcat, TeamsTagStore tags, 

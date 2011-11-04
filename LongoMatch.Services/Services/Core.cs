@@ -31,19 +31,24 @@ namespace LongoMatch.Services
 		static DataBase db;
 		static TemplatesService ts;
 
-		public static void Init(MainWindow mainWindow)
+		public static void Init()
 		{
 			Log.Debugging = Debugging;
 			Log.Information("Starting " + Constants.SOFTWARE_NAME);
 
+			SetupBaseDir();
+
 			/* Init internationalization support */
 			Catalog.Init(Constants.SOFTWARE_NAME.ToLower(),Config.RelativeToPrefix("share/locale"));
 
-			SetupBaseDir();
+			/* Init Gtk */
+			Application.Init();
 
 			/* Check default folders */
 			CheckDirs();
-			
+		}
+
+		public static void Start(MainWindow mainWindow) {
 			StartServices(mainWindow);
 			BindEvents(mainWindow);
 		}

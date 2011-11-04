@@ -59,7 +59,6 @@ namespace LongoMatch.Gui.Component
 		ListStore encProfileList;
 		private const string DV_SOURCE = "DV Source";
 		private const string GCONF_SOURCE = "GConf Source";
-		string videosDir;
 
 
 		public ProjectDetailsWidget()
@@ -442,7 +441,7 @@ namespace LongoMatch.Gui.Component
 				                                 FileChooserAction.Save,
 				                                 "gtk-cancel",ResponseType.Cancel,
 				                                 "gtk-save",ResponseType.Accept);
-				fChooser.SetCurrentFolder(videosDir);
+				fChooser.SetCurrentFolder(Config.VideosDir());
 				fChooser.DoOverwriteConfirmation = true;
 				if(fChooser.Run() == (int)ResponseType.Accept)
 					fileEntry.Text = fChooser.Filename;

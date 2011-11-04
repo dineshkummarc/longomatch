@@ -32,7 +32,6 @@ namespace LongoMatch.Gui.Dialog
 	{
 		Play play;
 		int stopTime;
-		string snapshotsDir;
 
 		public DrawingTool()
 		{
@@ -102,7 +101,7 @@ namespace LongoMatch.Gui.Dialog
 			                                 FileChooserAction.Save,
 			                                 "gtk-cancel",ResponseType.Cancel,
 			                                 "gtk-save",ResponseType.Accept);
-			fChooser.SetCurrentFolder(snapshotsDir);
+			fChooser.SetCurrentFolder(Config.SnapshotsDir());
 			fChooser.Filter = filter;
 			fChooser.DoOverwriteConfirmation = true;
 

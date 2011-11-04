@@ -169,7 +169,7 @@ namespace LongoMatch.Gui
 					capturerhbox.Remove(capturer as Gtk.Widget);
 					capturer.Dispose();
 				}
-			} catch(Exception e) {}
+			} catch(Exception) {}
 			capturer = null;
 		}
 

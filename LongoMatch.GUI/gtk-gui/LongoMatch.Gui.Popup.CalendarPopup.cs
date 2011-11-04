@@ -30,7 +30,7 @@ namespace LongoMatch.Gui.Popup
 				this.Child.ShowAll ();
 			}
 			this.DefaultWidth = 281;
-			this.DefaultHeight = 154;
+			this.DefaultHeight = 214;
 			this.Show ();
 			this.FocusOutEvent += new global::Gtk.FocusOutEventHandler (this.OnFocusOutEvent);
 			this.calendar1.DaySelectedDoubleClick += new global::System.EventHandler (this.OnCalendar1DaySelectedDoubleClick);

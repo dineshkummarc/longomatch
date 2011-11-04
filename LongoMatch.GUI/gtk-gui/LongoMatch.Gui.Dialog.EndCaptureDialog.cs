@@ -165,8 +165,8 @@ namespace LongoMatch.Gui.Dialog
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 517;
-			this.DefaultHeight = 175;
+			this.DefaultWidth = 566;
+			this.DefaultHeight = 178;
 			w34.Hide ();
 			this.Show ();
 			this.returnbutton.Clicked += new global::System.EventHandler (this.OnQuit);

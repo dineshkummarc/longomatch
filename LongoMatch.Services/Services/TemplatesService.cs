@@ -136,10 +136,10 @@ namespace LongoMatch.Services
 	
 	public class TemplatesProvider<T, U>: ITemplateProvider<T, U> where T: ITemplate<U>
 	{
-		private readonly string basePath;
-		private readonly string extension;
-		private readonly MethodInfo methodLoad;
-		private readonly MethodInfo methodDefaultTemplate;
+		readonly string basePath;
+		readonly string extension;
+		readonly MethodInfo methodLoad;
+		readonly MethodInfo methodDefaultTemplate;
 		
 		public TemplatesProvider (string basePath, string extension)
 		{

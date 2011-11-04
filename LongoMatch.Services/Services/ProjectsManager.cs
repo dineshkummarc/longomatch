@@ -44,6 +44,18 @@ namespace LongoMatch.Services
 		
 		public ProjectsManager(MainWindow mainWindow) {
 			this.mainWindow = mainWindow;
+			ConnectSignals();
+		}
+
+		public void ConnectSignals() {
+			mainWindow.NewProjectEvent += NewProject;
+			mainWindow.OpenProjectEvent += OpenProject;
+			mainWindow.SaveProjectEvent += SaveProject;
+			mainWindow.ImportProjectEvent += ImportProject;
+			mainWindow.ExportProjectEvent += ExportProject;
+			mainWindow.ManageProjectsEvent += OpenProjectsManager;
+			mainWindow.ManageCategoriesEvent += OpenCategoriesTemplatesManager;
+			mainWindow.ManageTeamsEvent += OpenTeamsTemplatesManager;
 		}
 		
 		public Project OpenedProject {
@@ -446,7 +458,7 @@ namespace LongoMatch.Services
 			}
 		}
 		
-		protected virtual void OnNewProject() {
+		protected virtual void NewProject() {
 			Project project;
 			ProjectType projectType;
 			CaptureSettings captureSettings;
@@ -456,7 +468,7 @@ namespace LongoMatch.Services
 				SetProject(project, projectType, captureSettings);
 		}
 		
-		protected void OnOpenProject() {
+		protected void OpenProject() {
 			ProjectDescription project=null;
 			OpenProjectDialog opd = new OpenProjectDialog();
 			
@@ -468,17 +480,13 @@ namespace LongoMatch.Services
 				SetProject(Core.DB.GetProject(project.UUID), ProjectType.FileProject, new CaptureSettings());
 		}
 		
-		protected void OnImportProject() {
-			ImportProject();
-		}
-		
 		protected void ExportProject() {
 			/* FIXME:
 			 * ExportToCSV(this, openedProject);
 			 * */
 		}
 		
-		protected virtual void OnSectionsTemplatesManagerActivated(object sender, System.EventArgs e)
+		protected void OpenCategoriesTemplatesManager()
 		{
 			var tManager = new TemplatesManager<Categories, Category>(Core.TemplatesService.CategoriesTemplateProvider,
 			                                                          Core.TemplatesService.GetTemplateEditor<Categories, Category>());
@@ -486,7 +494,7 @@ namespace LongoMatch.Services
 			tManager.Show();
 		}
 
-		protected virtual void OnTeamsTemplatesManagerActionActivated(object sender, System.EventArgs e)
+		protected void OpenTeamsTemplatesManager()
 		{
 			var tManager = new TemplatesManager<TeamTemplate, Player>(Core.TemplatesService.TeamTemplateProvider,
 			                                                          Core.TemplatesService.GetTemplateEditor<TeamTemplate, Player>());
@@ -494,7 +502,7 @@ namespace LongoMatch.Services
 			tManager.Show();
 		}
 		
-		protected virtual void OnDatabaseManagerActivated(object sender, System.EventArgs e)
+		protected void OpenProjectsManager()
 		{
 			Gui.Dialog.ProjectsManager pm = new Gui.Dialog.ProjectsManager(openedProject, Core.DB);
 			pm.TransientFor = mainWindow;
