@@ -361,7 +361,7 @@ namespace LongoMatch.Gui
 				this.Child.ShowAll ();
 			}
 			this.DefaultWidth = 1259;
-			this.DefaultHeight = 853;
+			this.DefaultHeight = 860;
 			this.leftbox.Hide ();
 			this.drawingtoolbox1.Hide ();
 			this.timeline.Hide ();

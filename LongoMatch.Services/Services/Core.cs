@@ -23,6 +23,7 @@ using Mono.Unix;
 using LongoMatch.Gui;
 using LongoMatch.DB;
 using LongoMatch.Common;
+using LongoMatch.Store;
 
 namespace LongoMatch.Services
 {
@@ -30,6 +31,9 @@ namespace LongoMatch.Services
 	{
 		static DataBase db;
 		static TemplatesService ts;
+		static EventsManager eManager;
+		static HotKeysManager hkManager;
+		static MainWindow mainWindow;
 
 		public static void Init()
 		{
@@ -49,13 +53,12 @@ namespace LongoMatch.Services
 		}
 
 		public static void Start(MainWindow mainWindow) {
+			Core.mainWindow = mainWindow;
 			StartServices(mainWindow);
 			BindEvents(mainWindow);
 		}
 		
 		public static void StartServices(MainWindow mainWindow){
-			EventsManager eManager;
-			HotKeysManager hkManager;
 			RenderingJobsManager videoRenderer;
 			ProjectsManager projectsManager;
 				
@@ -71,18 +74,13 @@ namespace LongoMatch.Services
 			/* Start the hotkeys manager */
 			hkManager = new HotKeysManager();
 			hkManager.newMarkEvent += eManager.OnNewTag;
-			mainWindow.KeyPressEvent += hkManager.KeyListener;
 
 			/* Start the rendering jobs manager */
 			videoRenderer = new RenderingJobsManager(mainWindow.RenderingStateBar);
 			mainWindow.NewJobEvent += (job) => {videoRenderer.AddJob(job);};
 			
 			projectsManager = new ProjectsManager(mainWindow);
-			
-			/*
-			 OnProjectChange =>  hkManager.Categories=project.Categories;
-
-			 */
+			projectsManager.OpenedProjectChanged += OnOpenedProjectChanged;
 		}
 		
 		public static void BindEvents(MainWindow mainWindow) {
@@ -122,6 +120,18 @@ namespace LongoMatch.Services
 			get {
 				return ts;
 			}
+		}
+		
+		private static void OnOpenedProjectChanged (Project project, ProjectType projectType) {
+			if (project != null) {
+				hkManager.Categories=project.Categories;
+				mainWindow.KeyPressEvent -= hkManager.KeyListener;
+			} else {
+				mainWindow.KeyPressEvent += hkManager.KeyListener;
+			}
+			
+			eManager.OpenedProject = project;
+			eManager.OpenedProjectType = projectType;
 		}
 		
 		private static void SetupBaseDir() {

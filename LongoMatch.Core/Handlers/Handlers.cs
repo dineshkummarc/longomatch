@@ -47,6 +47,7 @@ namespace LongoMatch.Handlers
 	
 	/* Project Events */
 	public delegate void SaveProjectHandler(Project project, ProjectType projectType);
+	public delegate void OpenedProjectChangedHandler(Project project, ProjectType projectType);
 	public delegate void OpenProjectHandler();
 	public delegate void NewProjectHandler();
 	public delegate void ImportProjectHandler();

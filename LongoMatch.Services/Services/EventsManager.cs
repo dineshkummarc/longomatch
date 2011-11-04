@@ -18,6 +18,7 @@
 //
 //
 
+using System;
 using System.Collections.Generic;
 using Gdk;
 using Gtk;
@@ -86,8 +87,8 @@ namespace LongoMatch.Services
 			mainWindow.NewTagStopEvent += OnNewPlayStop;
 			mainWindow.NewTagAtFrameEvent += OnNewTagAtFrame;
 			mainWindow.TimeNodeChanged += OnTimeNodeChanged;
-			mainWindow.PlaysDeletedEvent += OnPlaysDeleted;;
-			mainWindow.PlaySelectedEvent += OnPlaySelected;;
+			mainWindow.PlaysDeletedEvent += OnPlaysDeleted;
+			mainWindow.PlaySelectedEvent += OnPlaySelected;
 
 			/* Connect playlist events */
 			mainWindow.PlayListNodeSelectedEvent += (tn) => {selectedTimeNode = tn;};
@@ -130,6 +131,8 @@ namespace LongoMatch.Services
 		private void AddNewPlay(Time start, Time stop, Category category) {
 			Pixbuf miniature;
 
+			Log.Debug(String.Format("New play created start:{0} stop:{1} category:{2}",
+									start, stop, category));
 			/* Get the current frame and get a thumbnail from it */
 			if(projectType == ProjectType.CaptureProject) {
 				if(!capturer.Capturing) {
@@ -173,12 +176,14 @@ namespace LongoMatch.Services
 
 		public virtual void OnNewPlayStart() {
 			startTime = new Time {MSeconds = (int)player.CurrentTime};
+			Log.Debug("New play start time: " + startTime);
 		}
 
 		public virtual void OnNewPlayStop(Category category) {
 			int diff;
 			Time stopTime = new Time {MSeconds = (int)player.CurrentTime};
 
+			Log.Debug("New play stop time: " + stopTime);
 			diff = stopTime.MSeconds - startTime.MSeconds;
 
 			if(diff < 0) {
@@ -207,6 +212,7 @@ namespace LongoMatch.Services
 
 		protected virtual void OnPlaySelected(Play play)
 		{
+			Log.Debug("Play selected: " + play);
 			selectedTimeNode = play;
 			player.SetStartStop(play.Start.MSeconds,play.Stop.MSeconds);
 			drawingManager.Play=play;
@@ -234,6 +240,7 @@ namespace LongoMatch.Services
 
 		protected virtual void OnPlaysDeleted(List<Play> plays)
 		{
+			Log.Debug(plays.Count + " plays deleted");
 			mainWindow.DeletePlays(plays);
 			openedProject.RemovePlays(plays);
 

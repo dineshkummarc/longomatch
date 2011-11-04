@@ -174,6 +174,7 @@ namespace LongoMatch.Gui
 			buttonswidget.NewMarkEvent += EmitNewTag;;
 			buttonswidget.NewMarkStartEvent += EmitNewTagStart;
 			buttonswidget.NewMarkStopEvent += EmitNewTagStop;
+			timeline.NewMarkEvent += EmitNewTagAtFrame;
 
 			/* Connect TimeNodeChanged events */
 			playsList.TimeNodeChanged += EmitTimeNodeChanged;
@@ -215,9 +216,6 @@ namespace LongoMatch.Gui
 			localPlayersList.SnapshotSeriesEvent += EmitSnapshotSeries;
 			visitorPlayersList.SnapshotSeriesEvent += EmitSnapshotSeries;
 			tagsList.SnapshotSeriesEvent += EmitSnapshotSeries;
-
-			/* Connect timeline events */
-			timeline.NewMarkEvent += EmitNewTagAtFrame;
 
 			playlist.NewRenderingJob += EmitNewJob;
 			playsList.NewRenderingJob += EmitNewJob;
@@ -268,7 +266,10 @@ namespace LongoMatch.Gui
 				capturer.Visible = true;
 				TaggingViewAction.Active = true;
 			}
-
+			
+			openedProject = project;
+			this.projectType = projectType;
+			
 			playsList.ProjectIsLive = isLive;
 			localPlayersList.ProjectIsLive = isLive;
 			visitorPlayersList.ProjectIsLive = isLive;
@@ -556,6 +557,8 @@ namespace LongoMatch.Gui
 		protected virtual void OnTimeNodeSelected(Play play)
 		{
 			rightvbox.Visible=true;
+			if (PlaySelectedEvent != null)
+				PlaySelectedEvent(play);
 		}
 
 		protected virtual void OnSegmentClosedEvent()

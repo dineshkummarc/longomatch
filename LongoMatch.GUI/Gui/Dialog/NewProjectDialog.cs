@@ -23,6 +23,7 @@ using LongoMatch.Common;
 using LongoMatch.Store;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Utils;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -62,6 +63,12 @@ namespace LongoMatch.Gui.Dialog
 		public CaptureSettings CaptureSettings {
 			get {
 				return fdwidget.CaptureSettings;
+			}
+		}
+		
+		public ITemplatesService TemplatesService {
+			set {
+				fdwidget.TemplatesService = value;
 			}
 		}
 	}

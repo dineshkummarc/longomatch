@@ -129,12 +129,14 @@
     <File subtype="Directory" buildaction="Compile" name="." />
     <File subtype="Directory" buildaction="Compile" name="." />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/About.cs" />
-    <File subtype="Code" buildaction="Nothing" name="../images/longomatch.png" />
-    <File subtype="Code" buildaction="Nothing" name="../images/stock_draw-circle-unfilled.png" />
-    <File subtype="Code" buildaction="Nothing" name="../images/stock_draw-freeform-line.png" />
-    <File subtype="Code" buildaction="Nothing" name="../images/stock_draw-line-45.png" />
-    <File subtype="Code" buildaction="Nothing" name="../images/stock_draw-line-ends-with-arrow.png" />
-    <File subtype="Code" buildaction="Nothing" name="../images/stock_draw-rectangle-unfilled.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/longomatch.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/stock_draw-circle-unfilled.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/stock_draw-freeform-line.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/stock_draw-line-45.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/stock_draw-line-ends-with-arrow.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/stock_draw-rectangle-unfilled.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/video.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/camera-video.png" />
   </Contents>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="../CesarPlayer/Makefile.am" RelativeConfigureInPath="../">
     <BuildFilesVar Name="FILES" />

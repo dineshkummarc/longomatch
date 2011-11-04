@@ -25,13 +25,14 @@ using Mono.Unix;
 using LongoMatch.Common;
 using LongoMatch.Gui;
 using LongoMatch.Gui.Dialog;
+using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using LongoMatch.Video;
 using LongoMatch.Video.Utils;
-using LongoMatch.Multimedia.Interfaces;
 using LongoMatch.Video.Common;
 using LongoMatch.Multimedia.Utils;
+using LongoMatch.Multimedia.Interfaces;
 
 namespace LongoMatch.Services
 {
@@ -39,11 +40,14 @@ namespace LongoMatch.Services
 
 	public class ProjectsManager
 	{
-		Project openedProject;
+		public event OpenedProjectChangedHandler OpenedProjectChanged;
+
 		MainWindow mainWindow;
 		
 		public ProjectsManager(MainWindow mainWindow) {
 			this.mainWindow = mainWindow;
+			Player = mainWindow.Player;
+			Capturer = mainWindow.Capturer;
 			ConnectSignals();
 		}
 
@@ -59,14 +63,10 @@ namespace LongoMatch.Services
 		}
 		
 		public Project OpenedProject {
-			set {
-				openedProject = value;
-				/* FIXME: Emit ProjectChanged */
-			}
-			get {
-				return openedProject;
-			}
+			set;
+			get;
 		}
+		
 		public ProjectType OpenedProjectType {
 			set;
 			get;
@@ -82,8 +82,13 @@ namespace LongoMatch.Services
 			set;
 		}
 		
-		public void SaveCaptureProject(Project project) {
-			MessageDialog md; 
+		private void EmitProjectChanged() {
+			if (OpenedProjectChanged != null)
+				OpenedProjectChanged(OpenedProject, OpenedProjectType);
+		}
+		
+		private void SaveCaptureProject(Project project) {
+			MessageDialog md;
 			string filePath = project.Description.File.FilePath;
 
 			Log.Debug ("Saving capture project: " + project);
@@ -116,7 +121,7 @@ namespace LongoMatch.Services
 			md.Destroy();
 		}
 	
-		public void SaveFakeLiveProject(Project project) {
+		private void SaveFakeLiveProject(Project project) {
 			int response;
 			MessageDialog md;
 			FileFilter filter;
@@ -150,7 +155,7 @@ namespace LongoMatch.Services
 			fChooser.Destroy();
 		}
 
-		public void ImportProject() {
+		private void ImportProject() {
 			Project project;
 			bool isFake, exists;
 			int res;
@@ -251,7 +256,7 @@ namespace LongoMatch.Services
 			                          Catalog.GetString("Project successfully imported."));
 		}
 
-		public void CreateNewProject(out Project project, out ProjectType projectType,
+		private void CreateNewProject(out Project project, out ProjectType projectType,
 		                             out CaptureSettings captureSettings) {
 			ProjectSelectionDialog psd;
 			NewProjectDialog npd;
@@ -272,7 +277,7 @@ namespace LongoMatch.Services
 			if(response != (int)ResponseType.Ok)
 				return;
 			projectType = psd.ProjectType;
-
+			
 			if(projectType == ProjectType.CaptureProject) {
 				devices = VideoDevice.ListVideoDevices();
 				if(devices.Count == 0) {
@@ -287,9 +292,11 @@ namespace LongoMatch.Services
 			npd = new NewProjectDialog();
 			npd.TransientFor = mainWindow;
 			npd.Use = projectType;
+			npd.TemplatesService = Core.TemplatesService;
 			if(projectType == ProjectType.CaptureProject)
 				npd.Devices = devices;
 			response = npd.Run();
+			
 			while(true) {
 				/* User cancelled: quit */
 				if(response != (int)ResponseType.Ok) {
@@ -322,7 +329,7 @@ namespace LongoMatch.Services
 				Core.DB.AddProject(project);
 		}
 		
-		public bool SetProject(Project project, ProjectType projectType, CaptureSettings props)
+		private bool SetProject(Project project, ProjectType projectType, CaptureSettings props)
 		{
 			if(OpenedProject != null)
 				CloseOpenedProject(true);
@@ -364,8 +371,8 @@ namespace LongoMatch.Services
 			OpenedProject = project;
 			OpenedProjectType = projectType;
 			mainWindow.SetProject(project, projectType, props);
+			EmitProjectChanged();
 			return true;
-			
 		}
 	
 		/*
@@ -395,7 +402,7 @@ namespace LongoMatch.Services
 			fChooser.Destroy();
 		}*/
 
-		public void CreateThumbnails(Project project) {
+		private void CreateThumbnails(Project project) {
 			MultimediaFactory factory;
 			IFramesCapturer capturer;
 			BusyDialog dialog;
@@ -439,6 +446,7 @@ namespace LongoMatch.Services
 				OpenedProject.Clear();
 			OpenedProject = null;
 			OpenedProjectType = ProjectType.None;
+			EmitProjectChanged();
 		}
 		
 		protected virtual void SaveProject(Project project, ProjectType projectType) {
@@ -447,7 +455,7 @@ namespace LongoMatch.Services
 			
 			if(projectType == ProjectType.FileProject) {
 				try {
-					Core.DB.UpdateProject(openedProject);
+					Core.DB.UpdateProject(project);
 				} catch(Exception e) {
 					Log.Exception(e);
 				}
@@ -504,7 +512,7 @@ namespace LongoMatch.Services
 		
 		protected void OpenProjectsManager()
 		{
-			Gui.Dialog.ProjectsManager pm = new Gui.Dialog.ProjectsManager(openedProject, Core.DB);
+			Gui.Dialog.ProjectsManager pm = new Gui.Dialog.ProjectsManager(OpenedProject, Core.DB);
 			pm.TransientFor = mainWindow;
 			pm.Show();
 		}
