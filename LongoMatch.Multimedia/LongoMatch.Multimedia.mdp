@@ -21,7 +21,6 @@
     <File subtype="Code" buildaction="Compile" name="Editor/VideoSegment.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Constants.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Enum.cs" />
-    <File subtype="Code" buildaction="Compile" name="Common/Handlers.cs" />
     <File subtype="Directory" buildaction="Compile" name="Capturer" />
     <File subtype="Code" buildaction="Compile" name="Capturer/ObjectManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Capturer/FakeCapturer.cs" />
@@ -52,9 +51,10 @@
     <File subtype="Code" buildaction="Compile" name="Interfaces/ICapturer.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/IFramesCapturer.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/IPlayer.cs" />
-    <File subtype="Code" buildaction="Compile" name="Interfaces/IVideoEditor.cs" />
     <File subtype="Code" buildaction="Compile" name="Utils/VideoDevice.cs" />
     <File subtype="Code" buildaction="Compile" name="Utils/GStreamer.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Interfaces" />
+    <File subtype="Directory" buildaction="Compile" name="Interfaces" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="libcesarplayer" />

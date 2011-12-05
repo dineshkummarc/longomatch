@@ -69,11 +69,23 @@
     <File subtype="Code" buildaction="Compile" name="Config.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/ITemplatesService.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/IDatabase.cs" />
-    <File subtype="Code" buildaction="Compile" name="Interfaces/IPlaylistWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/GameUnit.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/GameUnitsList.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/TimelineNode.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/ITimelineNode.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Interfaces/GUI" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IRenderingStateBar.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IPlayer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Handlers/Multimedia.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IMainWindow.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/ICapturer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IPlaylistWidget.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Interfaces" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IGUIToolkit.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Interfaces/Multimedia" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IMultimediaToolkit.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IVideoEditor.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Interfaces" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

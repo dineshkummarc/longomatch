@@ -16,25 +16,16 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Collections.Generic;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
 
-namespace LongoMatch.Interfaces
+using LongoMatch.Store;
+
+namespace LongoMatch.Interfaces.Multimedia
 {
-	public interface ITemplatesService
+	public interface IMultimediaToolkit
 	{
-		ITemplateProvider<T, U> GetTemplateProvider<T, U>() where T: ITemplate<U>;
+		IVideoEditor GetVideoEditor();
 		
-		ISubcategoriesTemplatesProvider SubCategoriesTemplateProvider {get;}
-		
-		ITeamTemplatesProvider TeamTemplateProvider {get;}
-		
-		ICategoriesTemplatesProvider CategoriesTemplateProvider {get;}
-		
-		List<PlayerSubCategory> PlayerSubcategories {get;}
-		
-		List<TeamSubCategory> TeamSubcategories {get;}
+		MediaFile DiscoverFile(string path);
 	}
 }
 

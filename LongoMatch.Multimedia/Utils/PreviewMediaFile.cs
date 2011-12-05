@@ -51,7 +51,7 @@ namespace LongoMatch.Video.Utils
 
 			try {
 				factory =  new MultimediaFactory();
-				reader = factory.getMetadataReader();
+				reader = factory.GetMetadataReader();
 				reader.Open(filePath);
 				hasVideo = (bool) reader.GetMetadata(MetadataType.HasVideo);
 				hasAudio = (bool) reader.GetMetadata(MetadataType.HasAudio);
@@ -61,7 +61,7 @@ namespace LongoMatch.Video.Utils
 				if(hasVideo) {
 					VideoEncoderType = (string) reader.GetMetadata(MetadataType.VideoEncoderType);
 					fps = (int) reader.GetMetadata(MetadataType.Fps);
-					thumbnailer = factory.getFramesCapturer();
+					thumbnailer = factory.GetFramesCapturer();
 					thumbnailer.Open(filePath);
 					thumbnailer.SeekTime(1000,false);
 					preview = thumbnailer.GetCurrentFrame(THUMBNAIL_MAX_WIDTH,THUMBNAIL_MAX_HEIGHT);

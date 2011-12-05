@@ -24,6 +24,7 @@ using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Interfaces;
+using LongoMatch.Interfaces.GUI;
 
 
 namespace LongoMatch.Gui.Component

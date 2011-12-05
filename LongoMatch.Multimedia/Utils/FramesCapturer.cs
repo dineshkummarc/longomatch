@@ -24,6 +24,8 @@ using LongoMatch.Video;
 using Gdk;
 using Gtk;
 using System.Threading;
+
+using LongoMatch.Handlers;
 using LongoMatch.Multimedia.Interfaces;
 using LongoMatch.Video.Common;
 
@@ -49,7 +51,7 @@ namespace LongoMatch.Video.Utils
 		public FramesSeriesCapturer(string videoFile,long start, long stop, uint interval, string outputDir)
 		{
 			MultimediaFactory mf= new MultimediaFactory();
-			this.capturer=mf.getFramesCapturer();
+			this.capturer=mf.GetFramesCapturer();
 			this.capturer.Open(videoFile);
 			this.start= start;
 			this.stop = stop;

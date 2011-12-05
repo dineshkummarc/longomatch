@@ -17,18 +17,13 @@
 // 
 using System;
 using System.Collections.Generic;
-using Gtk;
 using Mono.Unix;
 
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
-using LongoMatch.Gui.Component;
-using LongoMatch.Multimedia.Interfaces;
-using LongoMatch.Video;
+using LongoMatch.Interfaces.GUI;
+using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Store;
-using LongoMatch.Video.Editor;
-using LongoMatch.Gui;
-using LongoMatch.Gui.Dialog;
 
 namespace LongoMatch.Services
 {
@@ -37,26 +32,25 @@ namespace LongoMatch.Services
 		/* List of pending jobs */
 		List<Job> jobs, pendingJobs;
 		IVideoEditor videoEditor;
-		MultimediaFactory factory;
 		Job currentJob;
-		RenderingStateBar stateBar;
+		IRenderingStateBar stateBar;
+		IMultimediaToolkit multimediaToolkit;
+		IGUIToolkit guiToolkit;
 		
-		public RenderingJobsManager (RenderingStateBar stateBar)
+		public RenderingJobsManager (IMultimediaToolkit multimediaToolkit, IGUIToolkit guiToolkit)
 		{
+			this.guiToolkit = guiToolkit;
+			this.multimediaToolkit = multimediaToolkit; 
+			this.stateBar = guiToolkit.MainWindow.RenderingStateBar;
 			jobs = new List<Job>();
 			pendingJobs = new List<Job>();
-			factory = new MultimediaFactory();
-			this.stateBar = stateBar;
 			stateBar.Cancel += (sender, e) => CancelCurrentJob();
 			stateBar.ManageJobs += (sender, e) => ManageJobs();
 		}
 		
-		public TreeStore Model {
+		public List<Job> Jobs {
 			get {
-				TreeStore model = new TreeStore(typeof(Job));
-				foreach (Job job in jobs)
-					model.AppendValues(job);
-				return model;
+				return jobs;
 			}
 		}
 		
@@ -127,30 +121,7 @@ namespace LongoMatch.Services
 		}
 		
 		protected void ManageJobs() {
-			RenderingJobsDialog dialog = new RenderingJobsDialog(this);
-			dialog.TransientFor = (stateBar.Toplevel as Gtk.Window);
-			dialog.Run();
-			dialog.Destroy();
-		}
-		
-		public static Job ConfigureRenderingJob (IPlayList playlist, Gtk.Widget parent)
-		{
-			VideoEditionProperties vep;
-			Job job = null;
-			int response;
-
-			vep = new VideoEditionProperties();
-			vep.TransientFor = (Gtk.Window)parent.Toplevel;
-			response = vep.Run();
-			while(response == (int)ResponseType.Ok && vep.EncodingSettings.OutputFile == "") {
-				MessagePopup.PopupMessage(parent, MessageType.Warning,
-				                          Catalog.GetString("Please, select a video file."));
-				response=vep.Run();
-			}
-			if(response ==(int)ResponseType.Ok)
-				job = new Job(playlist, vep.EncodingSettings, vep.EnableAudio, vep.TitleOverlay);
-			vep.Destroy();
-			return job;
+			guiToolkit.ManageJobs(this);
 		}
 		
 		private void LoadJob(Job job) {
@@ -182,7 +153,7 @@ namespace LongoMatch.Services
 				return;
 			}
 			
-			videoEditor = factory.getVideoEditor();
+			videoEditor = multimediaToolkit.GetVideoEditor();
 			videoEditor.Progress += OnProgress;
 			currentJob = pendingJobs[0];
 			LoadJob(currentJob);

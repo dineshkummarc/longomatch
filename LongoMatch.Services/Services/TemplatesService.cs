@@ -22,7 +22,6 @@ using System.Reflection;
 using Mono.Unix;
 
 using LongoMatch.Common;
-using LongoMatch.Gui.Component;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
@@ -95,29 +94,21 @@ namespace LongoMatch.Services
 			return null;
 		}
 		
-		public ITemplateWidget<T, U> GetTemplateEditor<T, U>() where T: ITemplate<U>{
-			if (typeof(T) == typeof(Categories))
-				return (ITemplateWidget<T, U>) new CategoriesTemplateEditorWidget (CategoriesTemplateProvider);
-			if (typeof(T) == typeof(TeamTemplate))
-				return (ITemplateWidget<T, U>) new TeamTemplateEditorWidget(TeamTemplateProvider);
-			return null;
-		}
-		
-		public ITemplateProvider<SubCategoryTemplate, string> SubCategoriesTemplateProvider {
+		public ISubcategoriesTemplatesProvider SubCategoriesTemplateProvider {
 			get {
-				return (ITemplateProvider<SubCategoryTemplate, string>) dict[typeof(SubCategoryTemplate)]; 
+				return (ISubcategoriesTemplatesProvider) dict[typeof(SubCategoryTemplate)]; 
 			}
 		}
 		
-		public ITemplateProvider<TeamTemplate, Player> TeamTemplateProvider {
+		public ITeamTemplatesProvider TeamTemplateProvider {
 			get {
-				return (ITemplateProvider<TeamTemplate, Player>) dict[typeof(TeamTemplate)]; 
+				return (ITeamTemplatesProvider) dict[typeof(TeamTemplate)]; 
 			}
 		}
 
-		public ITemplateProvider<Categories, Category> CategoriesTemplateProvider {
+		public ICategoriesTemplatesProvider CategoriesTemplateProvider {
 			get {
-				return (ITemplateProvider<Categories, Category>) dict[typeof(Categories)]; 
+				return (ICategoriesTemplatesProvider) dict[typeof(Categories)]; 
 			}
 		}
 		

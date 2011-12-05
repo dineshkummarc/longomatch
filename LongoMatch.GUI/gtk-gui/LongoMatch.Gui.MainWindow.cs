@@ -387,9 +387,9 @@ namespace LongoMatch.Gui
 			this.ManualTaggingViewAction.Toggled += new global::System.EventHandler (this.OnViewToggled);
 			this.GameUnitsViewAction.Toggled += new global::System.EventHandler (this.OnViewToggled);
 			this.playsList.TimeNodeSelected += new global::LongoMatch.Handlers.PlaySelectedHandler (this.OnTimeNodeSelected);
-			this.player.Error += new global::LongoMatch.Video.Common.ErrorHandler (this.OnPlayerbin1Error);
-			this.player.SegmentClosedEvent += new global::LongoMatch.Video.Common.SegmentClosedHandler (this.OnSegmentClosedEvent);
-			this.capturer.Error += new global::LongoMatch.Video.Common.ErrorHandler (this.OnCapturerBinError);
+			this.player.Error += new global::LongoMatch.Handlers.ErrorHandler (this.OnPlayerbin1Error);
+			this.player.SegmentClosedEvent += new global::LongoMatch.Handlers.SegmentClosedHandler (this.OnSegmentClosedEvent);
+			this.capturer.Error += new global::LongoMatch.Handlers.ErrorHandler (this.OnCapturerBinError);
 		}
 	}
 }

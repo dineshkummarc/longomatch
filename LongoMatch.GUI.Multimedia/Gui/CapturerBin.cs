@@ -21,8 +21,10 @@
 using System;
 using Gtk;
 using Gdk;
+
 using LongoMatch.Common;
-using LongoMatch.Multimedia.Interfaces;
+using LongoMatch.Handlers;
+using LongoMatch.Interfaces.GUI;
 using LongoMatch.Video;
 using LongoMatch.Video.Common;
 using LongoMatch.Video.Capturer;
@@ -35,7 +37,7 @@ namespace LongoMatch.Gui
 
 	[System.ComponentModel.Category("CesarPlayer")]
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial class CapturerBin : Gtk.Bin
+	public partial class CapturerBin : Gtk.Bin, ICapturer
 	{
 		public event EventHandler CaptureFinished;
 		public event ErrorHandler Error;
@@ -47,7 +49,7 @@ namespace LongoMatch.Gui
 		private bool capturing;
 		private const int THUMBNAIL_MAX_WIDTH = 100;
 
-		ICapturer capturer;
+		LongoMatch.Multimedia.Interfaces.ICapturer capturer;
 
 		public CapturerBin()
 		{
@@ -62,7 +64,7 @@ namespace LongoMatch.Gui
 				Close();
 
 				MultimediaFactory factory = new MultimediaFactory();
-				capturer = factory.getCapturer(value);
+				capturer = factory.GetCapturer(value);
 				capturer.EllapsedTime += OnTick;
 				if(value != CapturerType.Fake) {
 					capturer.Error += OnError;

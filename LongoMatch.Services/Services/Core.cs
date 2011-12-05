@@ -17,10 +17,9 @@
 // 
 using System;
 using System.IO;
-using Gtk;
 using Mono.Unix;
 
-using LongoMatch.Gui;
+using LongoMatch.Interfaces.GUI;
 using LongoMatch.DB;
 using LongoMatch.Common;
 using LongoMatch.Store;
@@ -34,7 +33,8 @@ namespace LongoMatch.Services
 		static EventsManager eManager;
 		static HotKeysManager hkManager;
 		static GameUnitsManager guManager;
-		static MainWindow mainWindow;
+		static IMainWindow mainWindow;
+		static IGUIToolkit guiToolkit;
 
 		public static void Init()
 		{
@@ -53,13 +53,14 @@ namespace LongoMatch.Services
 			CheckDirs();
 		}
 
-		public static void Start(MainWindow mainWindow) {
-			Core.mainWindow = mainWindow;
-			StartServices(mainWindow);
-			BindEvents(mainWindow);
+		public static void Start(IGUIToolkit guiToolkit) {
+			Core.guiToolkit = guiToolkit;
+			Core.mainWindow = guiToolkit.MainWindow;
+			StartServices(Core.mainWindow);
+			BindEvents(Core.mainWindow);
 		}
 		
-		public static void StartServices(MainWindow mainWindow){
+		public static void StartServices(IMainWindow mainWindow){
 			RenderingJobsManager videoRenderer;
 			ProjectsManager projectsManager;
 				
@@ -70,7 +71,7 @@ namespace LongoMatch.Services
 			db = new DataBase(Path.Combine(Config.DBDir(),Constants.DB_FILE));
 			
 			/* Start the events manager */
-			eManager = new EventsManager(mainWindow);
+			eManager = new EventsManager(guiToolkit);
 
 			/* Start the hotkeys manager */
 			hkManager = new HotKeysManager();
@@ -84,11 +85,11 @@ namespace LongoMatch.Services
 			/* Start Game Units manager */
 			guManager = new GameUnitsManager(mainWindow, mainWindow.Player);
 			
-			projectsManager = new ProjectsManager(mainWindow);
+			projectsManager = new ProjectsManager(guiToolkit);
 			projectsManager.OpenedProjectChanged += OnOpenedProjectChanged;
 		}
 		
-		public static void BindEvents(MainWindow mainWindow) {
+		public static void BindEvents(IMainWindow mainWindow) {
 			/* Connect player events */
 			/* FIXME:
 			player.Prev += OnPrev;
@@ -124,6 +125,12 @@ namespace LongoMatch.Services
 		public static TemplatesService TemplatesService {
 			get {
 				return ts;
+			}
+		}
+		
+		public static IGUIToolkit GUIToolkit {
+			get {
+				return guiToolkit;
 			}
 		}
 		

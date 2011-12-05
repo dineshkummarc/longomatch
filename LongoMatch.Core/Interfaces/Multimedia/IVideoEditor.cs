@@ -21,9 +21,9 @@
 using System;
 using System.Collections.Generic;
 using LongoMatch.Common;
-using LongoMatch.Video.Common;
+using LongoMatch.Handlers;
 
-namespace LongoMatch.Multimedia.Interfaces
+namespace LongoMatch.Interfaces.Multimedia
 {
 
 	public interface IVideoEditor

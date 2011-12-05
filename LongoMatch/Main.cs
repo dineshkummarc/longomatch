@@ -45,9 +45,10 @@ namespace LongoMatch
 				return;
 
 			//try {
-				Core.Init();
-				MainWindow win = new MainWindow();
+			    GUIToolkit guiToolkit = new GUIToolkit();
+				IMainWindow win = guiToolkit.MainWindow;
 				win.Show();
+				Core.Init();
 				Core.Start(win);
 				Application.Run();
 			//} catch(Exception ex) {

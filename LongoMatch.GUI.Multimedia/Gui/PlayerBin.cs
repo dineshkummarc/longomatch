@@ -22,6 +22,9 @@ using Gtk;
 using Gdk;
 using Mono.Unix;
 using System.Runtime.InteropServices;
+
+using LongoMatch.Handlers;
+using LongoMatch.Interfaces.GUI;
 using LongoMatch.Multimedia.Interfaces;
 using LongoMatch.Video;
 using LongoMatch.Video.Common;
@@ -33,7 +36,7 @@ namespace LongoMatch.Gui
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 
-	public partial class PlayerBin : Gtk.Bin
+	public partial class PlayerBin : Gtk.Bin, LongoMatch.Interfaces.GUI.IPlayer
 	{
 
 		public event SegmentClosedHandler SegmentClosedEvent;
@@ -47,7 +50,7 @@ namespace LongoMatch.Gui
 
 		private const int THUMBNAIL_MAX_WIDTH = 100;
 		private TickHandler tickHandler;
-		private IPlayer player;
+		private LongoMatch.Multimedia.Interfaces.IPlayer player;
 		private long length=0;
 		private string slength;
 		private long segmentStartTime;
@@ -90,12 +93,6 @@ namespace LongoMatch.Gui
 		#endregion
 
 		#region Properties
-
-		public IPlayer Player {
-			get {
-				return player;
-			}
-		}
 
 		public long AccurateCurrentTime {
 			get {
@@ -385,7 +382,7 @@ namespace LongoMatch.Gui
 			Widget playerWidget;
 
 			factory= new MultimediaFactory();
-			player = factory.getPlayer(320,280);
+			player = factory.GetPlayer(320,280);
 
 			tickHandler = new TickHandler(OnTick);
 			player.Tick += tickHandler;

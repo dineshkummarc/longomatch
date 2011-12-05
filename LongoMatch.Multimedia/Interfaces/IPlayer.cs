@@ -21,7 +21,7 @@
 using System;
 using Gtk;
 using Gdk;
-using LongoMatch.Video.Common;
+using LongoMatch.Handlers;
 
 
 namespace LongoMatch.Multimedia.Interfaces

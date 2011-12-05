@@ -16,25 +16,30 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Collections.Generic;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
+using Gdk;
 
-namespace LongoMatch.Interfaces
+using LongoMatch.Common;
+using LongoMatch.Handlers;
+
+namespace LongoMatch.Interfaces.GUI
 {
-	public interface ITemplatesService
+	public interface ICapturer
 	{
-		ITemplateProvider<T, U> GetTemplateProvider<T, U>() where T: ITemplate<U>;
+		event EventHandler CaptureFinished;
+		event ErrorHandler Error;
 		
-		ISubcategoriesTemplatesProvider SubCategoriesTemplateProvider {get;}
-		
-		ITeamTemplatesProvider TeamTemplateProvider {get;}
-		
-		ICategoriesTemplatesProvider CategoriesTemplateProvider {get;}
-		
-		List<PlayerSubCategory> PlayerSubcategories {get;}
-		
-		List<TeamSubCategory> TeamSubcategories {get;}
+		CapturerType Type {set;}
+		string Logo {set;}
+		int CurrentTime {get;}
+		bool Capturing {get;}
+		CaptureSettings CaptureProperties {set;}
+		Pixbuf CurrentMiniatureFrame {get;}
+
+		void Start();
+		void TogglePause();
+		void Stop();
+		void Run();
+		void Close();
 	}
 }
 

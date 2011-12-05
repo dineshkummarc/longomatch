@@ -29,6 +29,11 @@ namespace LongoMatch.Common
 		EditProject,
 		None,
 	}
+	
+	public enum CapturerType {
+		Fake,
+		Live,
+	}
 
 	public enum EndCaptureResponse {
 		Return = 234,

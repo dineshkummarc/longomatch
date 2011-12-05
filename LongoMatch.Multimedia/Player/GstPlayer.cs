@@ -22,6 +22,7 @@ namespace LongoMatch.Video.Player {
 	using System.Collections;
 	using System.Runtime.InteropServices;
 	using LongoMatch.Multimedia.Interfaces;
+	using LongoMatch.Handlers;
 	using LongoMatch.Video.Common;
 	using LongoMatch.Video.Utils;
 

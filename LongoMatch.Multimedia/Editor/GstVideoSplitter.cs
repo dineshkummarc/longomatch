@@ -23,8 +23,11 @@ namespace LongoMatch.Video.Editor {
 	using System;
 	using System.Collections;
 	using System.Runtime.InteropServices;
+	
+	using LongoMatch.Interfaces;
+	using LongoMatch.Handlers;
 	using LongoMatch.Common;
-	using LongoMatch.Multimedia.Interfaces;
+	using LongoMatch.Interfaces.Multimedia;
 	using LongoMatch.Video.Common;
 
 

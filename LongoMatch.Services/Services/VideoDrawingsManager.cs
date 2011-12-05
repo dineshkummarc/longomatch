@@ -19,10 +19,10 @@
 using System;
 using System.Collections.Generic;
 using Gdk;
+
+using LongoMatch.Handlers;
+using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
-using LongoMatch.Gui;
-using LongoMatch.Video.Common;
-using LongoMatch.Multimedia.Interfaces;
 
 namespace LongoMatch.Services
 {
@@ -30,13 +30,13 @@ namespace LongoMatch.Services
 
 	public class VideoDrawingsManager
 	{
-		PlayerBin player;
+		IPlayer player;
 		uint timeout;
 		bool inKeyFrame;
 		bool canStop;
 		Play loadedPlay;
 
-		public VideoDrawingsManager(PlayerBin player)
+		public VideoDrawingsManager(IPlayer player)
 		{
 			this.player = player;
 			timeout = 0;

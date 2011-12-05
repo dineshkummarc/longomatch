@@ -32,7 +32,7 @@ namespace LongoMatch.Interfaces
 		void CancelJob(Job job);
 		void CancelAllJobs();
 		void AddJob(Job job);
-		TreeStore Model {get;}
+		List<Job> Jobs {get;}
 	}
 }
 

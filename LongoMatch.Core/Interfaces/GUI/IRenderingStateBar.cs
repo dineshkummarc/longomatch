@@ -17,16 +17,17 @@
 // 
 using System;
 
-using LongoMatch.Interfaces;
-using LongoMatch.Store;
-
-namespace LongoMatch.Interfaces
+namespace LongoMatch.Interfaces.GUI
 {
-	public interface IPlaylistWidget
+	public interface IRenderingStateBar
 	{
-		void Load(IPlayList playlist);
-		void Add(PlayListPlay playlistPlay);
-		void SetActivePlay (PlayListPlay playlistplay, int index);
+		event EventHandler Cancel;
+		event EventHandler ManageJobs;
+		
+		bool JobRunning {set;}
+		string Text {set;}
+		string ProgressText {set;}
+		double Fraction {set; get;}
 	}
 }
 

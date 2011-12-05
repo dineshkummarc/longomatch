@@ -24,25 +24,24 @@ using System.IO;
 using Gdk;
 using GLib;
 using Gtk;
+using Mono.Unix;
+
 using LongoMatch.Common;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Handlers;
 using LongoMatch.Interfaces;
+using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using LongoMatch.Video.Common;
-
-using Mono.Unix;
 using LongoMatch.Gui.Component;
-using LongoMatch.Multimedia.Interfaces;
-
 
 
 namespace LongoMatch.Gui
 {
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(false)]
-	public partial class MainWindow : Gtk.Window
+	public partial class MainWindow : Gtk.Window, IMainWindow
 	{
 	
 		/* Tags */
@@ -154,25 +153,25 @@ namespace LongoMatch.Gui
 			timeline.QueueDraw();
 		}
 		
-		public RenderingStateBar RenderingStateBar{
+		public IRenderingStateBar RenderingStateBar{
 			get {
 				return renderingstatebar1;
 			}
 		}
 		
-		public PlayerBin Player{
+		public IPlayer Player{
 			get {
 				return player;
 			}
 		}
 		
-		public CapturerBin Capturer{
+		public ICapturer Capturer{
 			get {
 				return capturer;
 			}
 		}
 		
-		public PlayListWidget Playlist{
+		public IPlaylistWidget Playlist{
 			get {
 				return playlist;
 			}
@@ -535,7 +534,7 @@ namespace LongoMatch.Gui
 		}
 		#endregion
 
-		protected virtual void OnPlayerbin1Error(object o, LongoMatch.Video.Common.ErrorArgs args)
+		protected virtual void OnPlayerbin1Error(object o, ErrorArgs args)
 		{
 			MessagePopup.PopupMessage(this, MessageType.Info,
 			                          Catalog.GetString("The actual project will be closed due to an error in the media player:")+"\n" +args.Message);
@@ -632,7 +631,7 @@ namespace LongoMatch.Gui
 			return true;
 		}
 
-		protected virtual void OnCapturerBinError(object o, LongoMatch.Video.Common.ErrorArgs args)
+		protected virtual void OnCapturerBinError(object o, ErrorArgs args)
 		{
 			MessagePopup.PopupMessage(this, MessageType.Info,
 			                          Catalog.GetString("An error occured in the video capturer and the current project will be closed:")+"\n" +args.Message);

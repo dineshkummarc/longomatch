@@ -24,6 +24,7 @@ namespace LongoMatch.Video.Capturer {
 	using System.Runtime.InteropServices;
 	using Mono.Unix;
 	
+	using LongoMatch.Handlers;
 	using LongoMatch.Common;
 	using LongoMatch.Multimedia.Interfaces;
 	using LongoMatch.Video.Common;

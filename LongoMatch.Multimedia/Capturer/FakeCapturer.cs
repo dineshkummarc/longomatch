@@ -19,6 +19,7 @@
 using System;
 using Mono.Unix;
 using GLib;
+using LongoMatch.Handlers;
 using LongoMatch.Common;
 using LongoMatch.Multimedia.Interfaces;
 using LongoMatch.Video.Common;
